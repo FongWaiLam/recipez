@@ -1,9 +1,9 @@
-# Recip(ez)
+# Recip(EZ)
 ## Coursework
-Recip(ez) is a assessed coursework for Internet Technology (M). This web application is developed using Python, Django, HTML, CSS and associated technologies including Javascript, JQuery or AJAX. The CSS framework Bootstrap is used to support the responsive web design.
+Recip(EZ) is a assessed coursework for Internet Technology (M). This web application is developed using Python, Django, HTML, CSS and associated technologies including Javascript, JQuery or AJAX. The CSS framework Bootstrap is used to support the responsive web design.
 
 ## Overview
-Recip(ez) is a website that provides a welcoming and engaging community for home cooks, which allows users to share and view recipes from other creators/community
+Recip(EZ) is a website that provides a welcoming and engaging community for home cooks, which allows users to share and view recipes from other creators/community
 members
 The goal of this website is to provide inspiration and convenience to people who are interested in cooking at home and exploring new dishes, which has become increasingly popular since the COVID 19 pandemic.
 - a user friendly interface with easy navigation
