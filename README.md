@@ -1,6 +1,6 @@
-# Recipze
+# Recip(ez)
 ## Coursework
-Recipze is a assessed coursework for Internet Technology (M). This web application is developed using Python, Django, HTML, CSS and associated technologies including Javascript, JQuery or AJAX.
+Recip(ez) is a assessed coursework for Internet Technology (M). This web application is developed using Python, Django, HTML, CSS and associated technologies including Javascript, JQuery or AJAX. The CSS framework Bootstrap is used to support the responsive web design.
 
 ## Overview
 Recip(ez) is a website that provides a welcoming and engaging community for home cooks, which allows users to share and view recipes from other creators/community
@@ -13,3 +13,4 @@ The goal of this website is to provide inspiration and convenience to people who
 - clear instructions, attractive photos, and ingredient information
 - simple, intuitive, mobile friendly interface
 
+![image](https://user-images.githubusercontent.com/119539611/222837322-89a38d68-39f8-4740-9a02-2e8a35cb7761.png)
