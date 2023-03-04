@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recip(EZ){% block title_block %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+<div class="container">
+{% block body_block %}
+{% endblock %}
+</div>
+    <hr />
+<div class="container">
+<ul>
+    <li><a href="{% url 'recipez:home' %}">Home</a></li>
+    <li><a href="{% url 'recipez:my_profile' %}">My Profile</a></li>
+    <li><a href="{% url 'recipez:help' %}">Help</a></li>
+</ul>
+    </div>
+</body>
+</html>

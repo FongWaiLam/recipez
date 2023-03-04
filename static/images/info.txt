@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Mogra-Regular
+font link: https://fonts.google.com/specimen/Mogra
+font author: Lipi Raval
+font author site: http://cargocollective.com/lipi
+
+
+icon designer: Lorena Salagre
+icon designer link: /lorens
+        
+{"bg":"#F1DEDA","icon-gradient-0":"#30223A","icon-gradient-1":"#F13800","font":"#250A05","slogan":"#391e19"}
+      
