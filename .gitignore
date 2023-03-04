@@ -48,9 +48,3 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-
-# Database
-db.sqlite3
-
-__pycache__/
-*.pyc
