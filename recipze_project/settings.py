@@ -125,6 +125,12 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+# List of paths with which Django will expect to find static files
+STATICFILES_DIRS = [STATIC_DIR]
+
+# Set up media files hosting
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

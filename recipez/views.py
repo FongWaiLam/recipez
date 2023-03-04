@@ -10,11 +10,13 @@ def index(request):
     # context_dict['recipe'] = recipe_list
     # context_dict['comment'] = recipe_list
 
-    return render(request, 'recipez/index.html', context=context_dict)
+    return render(request, 'recipez/index.html',
+                  # context=context_dict
+                  )
+
 
 # Recipe Detail Page
 def show_recipe(request):
-
     # # Data for recipe and existing comments display
     # context_dict = {}
     # try:
@@ -50,8 +52,11 @@ def show_recipe(request):
     #         else:
     #             print(form.errors)
 
-        # Go render the response and return it to the client.
-    return render(request, 'recipez/recipe.html', context=context_dict)
+    # Go render the response and return it to the client.
+    return render(request, 'recipez/recipe.html',
+                  # context=context_dict
+                  )
+
 
 # Post a new Recipe
 def add_recipe(request):
@@ -68,7 +73,10 @@ def add_recipe(request):
     #     else:
     #         print(form.errors)
 
-    return render(request, 'rango/add_recipe.html', {'form': form})
+    return render(request, 'recipez/add_recipe.html',
+                  # {'form': form}
+                  )
+
 
 # User Profile Page
 def user_profile(request):
@@ -86,8 +94,8 @@ def login(request):
 
 # User Registration Form
 def register(request):
-
     return render(request, 'recipez/register.html')
+
 
 # Help Page (About us and Contact us)
 def help(request):
