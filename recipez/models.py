@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 
 MAX_LENGTH = 128
 
+
 class UserProfile(models.Model):
     # includes username, password, email
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    bookmark = models.JSONField()
+    bookmark = models.JSONField(null=True)
     creation_time = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
-    is_deleted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     avatar = models.ImageField(upload_to='profile_images', blank=True)
     # recipes
 
@@ -33,7 +34,7 @@ class Recipe(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
     average_rating = models.FloatField(default=0)
-    is_deleted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     cooking_duration = models.CharField(max_length=MAX_LENGTH)
     difficulty = models.CharField(max_length=MAX_LENGTH)
     is_vegan = models.BooleanField(default=False)
@@ -66,7 +67,7 @@ class Comment(models.Model):
     username = models.CharField(max_length=MAX_LENGTH)
     rating = models.FloatField()
     creation_time = models.DateTimeField(auto_now_add=True)
-    is_deleted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     detail = models.TextField()
 
     def __str__(self):
