@@ -57,9 +57,9 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active"><img alt="{{ selected_recipe.creator.username }}'s profile image"
+                    <a class="nav-link active"><img alt="{{ request.user.username }}'s profile image"
                                                     class="rounded-circle"
-                                                    src="{{ MEDIA_URL }}{{ selected_recipe.user.picture }}"
+                                                    src="{{ MEDIA_URL }}{{ avatar.url }}"
                                                     width="60"></a>
                 </li>
             </ul>
