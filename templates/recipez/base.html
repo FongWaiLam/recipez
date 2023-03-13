@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load recipez_template_tags %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -59,7 +60,7 @@
                 <li class="nav-item">
                     <a class="nav-link active"><img alt="{{ request.user.username }}'s profile image"
                                                     class="rounded-circle"
-                                                    src="{{ MEDIA_URL }}{{ avatar.url }}"
+                                                    src="{{ MEDIA_URL }}{{ get_user_avatar_url }}"
                                                     width="60"></a>
                 </li>
             </ul>

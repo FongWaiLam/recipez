@@ -17,7 +17,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ('avatar',)
 
 class CommentForm(forms.ModelForm):
-    detail = forms.TextField()
+    detail = forms.CharField(widget=forms.Textarea)
     # Provide additional information
     class Meta:
         # Association between the ModelForm and a model
