@@ -1,5 +1,5 @@
 from django import forms
-from recipez.models import UserProfile
+from recipez.models import UserProfile, Comment
 from django.contrib.auth.models import User
 
 
@@ -15,3 +15,11 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avatar',)
+
+class CommentForm(forms.ModelForm):
+    detail = forms.TextField()
+    # Provide additional information
+    class Meta:
+        # Association between the ModelForm and a model
+        model = Comment
+        fields = ('detail',)
