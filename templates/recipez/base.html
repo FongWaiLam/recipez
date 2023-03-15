@@ -9,21 +9,49 @@
         {% endblock %}
     </title>
 </head>
+
 <body>
-<div class="container">
-{% block body_block %}
-{% endblock %}
-</div>
+    <div>
+        {% if user.is_authenticated %}
+            {{ user.username }} <br>
+            Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>
+        {% endif %}
+    </div>
+
+    <div>
+        <form method="post" action="{% url 'recipez:index' %}">
+            {% csrf_token %}
+            <select name="search_by">
+                <option value="name">Recipe name</option>
+                <option value="ingredient">Ingredient</option>
+                <option value="user">Author</option>
+            </select>
+            <input type="text" name="content"><br>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <div class="container">
+        {% block body_block %}
+        {% endblock %}
+    </div>
 
 </body>
+
 <footer>
-        <hr />
-<div class="container">
-<ul>
-{#    <li><a href="{% url 'recipez:home' %}">Home</a></li>#}
-{#    <li><a href="{% url 'recipez:my_profile' %}">My Profile</a></li>#}
-{#    <li><a href="{% url 'recipez:help' %}">Help</a></li>#}
-</ul>
+    <hr />
+    <div class="container">
+    <ul>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'recipez:logout' %}">Logout</a></li>
+{#            <li><a href="{% url 'recipez:my_profile' %}">My Profile</a></li>#}
+        {% else %}
+            <li><a href="{% url 'recipez:register' %}">Register</a></li>
+            <li><a href="{% url 'recipez:login' %}">Login</a></li>
+        {% endif %}
+        <li><a href="{% url 'recipez:index' %}">HomePage</a></li>
+{#        <li><a href="{% url 'recipez:help' %}">Help</a></li>#}
+    </ul>
     </div>
 </footer>
 </html>

@@ -1,18 +1,42 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from recipez.forms import UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from recipez.models import Recipe, UserProfile, Ingredient
+from django.contrib.auth.models import User
 
 
 # Home Page
 def index(request):
-    # recipe_list = Recipe.object.order_by('-creation_time')
-    # comment_list = Comment.object.order_by('-creation_time')
-    # context_dict = {}
-    # context_dict['recipe'] = recipe_list
-    # context_dict['comment'] = recipe_list
+    if request.method == 'POST':
+        search_by = request.POST.get('search_by')
+        content = request.POST.get('content')
+        recipe_list = Recipe.objects.none()
+        if search_by == 'user':
+            author_list = User.objects.filter(username__icontains=content)
+            for author in author_list:
+                recipe_list = recipe_list | author.user_profile.recipes.all()
 
-    return render(request, 'recipez/index.html',
-                  # context=context_dict
+        elif search_by == 'ingredient':
+            ingredient_list = Ingredient.objects.filter(name_and_amount__icontains=content)
+            for ingredient in ingredient_list:
+                recipe_list = recipe_list | ingredient.recipes.all()
+
+        elif search_by == 'name':
+            recipe_list = recipe_list | Recipe.objects.filter(name__icontains=content)
+
+        recipe_list = recipe_list.distinct().order_by('-creation_time')
+    else:
+        recipe_list = Recipe.objects.order_by('-creation_time')
+    context_dict = {
+        'recipes': recipe_list,
+    }
+
+    return render(request,
+                  'recipez/index.html',
+                  context=context_dict
                   )
 
 
@@ -87,10 +111,25 @@ def user_profile(request):
 
 
 # Login Page
-def login(request):
-    # to be completed
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-    return render(request, 'recipez/login.html')
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('recipez:index'))
+            else:
+                return HttpResponse("Your Recipez account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        return render(request, 'recipez/login.html')
 
 
 # User Registration Form
@@ -101,6 +140,9 @@ def register(request):
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
 
+        print(request.POST)
+        print(request.FILES)
+
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
@@ -108,8 +150,8 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            if 'avatar' in request.FILES:
+                profile.avatar = request.FILES['avatar']
 
             profile.save()
             registered = True
@@ -125,6 +167,12 @@ def register(request):
         'registered': registered
     }
     return render(request, 'recipez/register.html', context=context)
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('recipez:index'))
 
 
 # Help Page (About us and Contact us)
