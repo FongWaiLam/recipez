@@ -5,57 +5,63 @@
 {% endblock %}
 
 {% block body_block %}
-{#<link href='https://fonts.googleapis.com/css?family=Bona Nova' rel='stylesheet'>#}
-{#    <style>#}
-{#h4 {#}
-{#    font-family: 'Bona Nova';#}
-{#}#}
-{#</style>#}
-{#<div class="media-body">#}
-{#    <img src="{{ MEDIA_URL }}{{ selected_recipe.user.picture }}"#}
-{#         class="rounded-circle" width="60"#}
-{#        alt="{{ selected_recipe.creator.username }}'s profile image" />#}
-{#<h4><i>{{ selected_recipe.user }}</i><small>{{ selected_recipe.creation_time }} </small></h4>#}
-{#<h2>{{ selected_recipe.recipe_name }}</h2>#}
-{#    <img src="{{ MEDIA_URL }}{{ selected_recipe.photo_url }}"#}
-{#         width="400"#}
-{#        alt="{{ selected_recipe.recipe_name }}'s image" /><br>#}
-{#    <small>{{ selected_recipe.likes }}</small> <br>#}
-{#    <small>{{ selected_recipe.cooking_duration }}</small>#}
-{#    <small>{{ selected_recipe.difficulty }}</small>#}
-{#    <small>{{ selected_recipe.category }}</small>#}
-{#    <small>{{ selected_recipe.region }}</small><br>#}
-{#    <small>{{ selected_recipe.keywords }}</small>#}
-{#    <p>{{ selected_recipe.detail }}</p>#}
-{#</div>#}
-{#    <div class="container">#}
-{#        {% if comments %}#}
-{#                {%  for comment in selected_recipe.comments %}#}
-{#                    <div class="media-body">#}
-{#                    <a href="/recipez/profile/{{ comment.username }}">#}
-{#                        <img src="{{ MEDIA_URL }}{{ comment.username.picture }}"#}
-{#                         class="rounded-circle" width="60"#}
-{#                        alt="{{ comment.username }}'s profile image" />#}
-{#                    </a>#}
-{#                        <h4><i>{{ comment.username }}</i><small>{{ comment.creation_time }} </small></h4> <br>#}
-{#                    <p>{{ comment.detail }}</p>#}
-{#                    </div>#}
-{#                    <li></li>#}
-{#                {%  endfor %}#}
-{#        {%  else %}#}
-{#            <strong>There are no comments present.</strong><br>#}
-{#        {%  endif %}#}
-{#            <form id="comment_form" method="post" action="/recipez/add_comment/">#}
-{#            {% csrf_token %}#}
-{#            {% for hidden in form.hidden_fields %}#}
-{#                {{ hidden }}#}
-{#            {% endfor %}#}
-{#            {% for field in form.visible_fields %}#}
-{#                {{ field.errors }}#}
-{#                {{ field.help_text }}#}
-{#                {{ field }}#}
-{#            {%  endfor %}#}
-{#            <input type="submit" name="submit" value="Create comment" />#}
-{#        </form>#}
-{#            </div>#}
+<div>
+
+<link href='https://fonts.googleapis.com/css?family=Bona Nova' rel='stylesheet'>
+   <style> h4 {font-family:'Bona Nova'}</style>
+<div class="media-body">
+    <img src="{{ recipe.recipe_owner.avatar }}"
+         class="rounded-circle" width="60"
+        alt="{{ selected_recipe.creator.username }}'s profile image" />
+<h4><i>{{ selected_recipe.user }}</i><small>{{ selected_recipe.creation_time }} </small></h4>
+<h2>{{ selected_recipe.recipe_name }}</h2>
+    <img src="{{ MEDIA_URL }}{{ recipe.photo }}"
+        width="400"#}
+       alt="{{ selected_recipe.name }}'s image" /><br>
+    <small>{{ selected_recipe.likes }}</small> <br>
+    <small>{{ selected_recipe.cooking_duration }}</small>
+   <small>{{ selected_recipe.difficulty }}</small>
+    <small>{{ selected_recipe.category }}</small>
+    <small>{{ selected_recipe.region }}</small><br>
+    <p>{{ selected_recipe.detail }}</p>
+</div>
+    <div class="container-fluid">
+        {% if comments %}
+                {%  for comment in comments %}
+                    <div class="media-body">
+                    <a href="/recipez/profile/{{ comment.username }}">
+                    <!-- Get User's avatar-->
+                        {% if commented_users %}
+                            {%  for user in commented_users %}
+                            {% if user.username=comment.username %}
+                            <img src="{{ user.avatar.url }}"
+                                 class="rounded-circle" width="60"
+                                 alt="{{ comment.username }}'s profile image" />
+                        {% break %}}
+                        {%  endfor %}
+                    <!-- Get User's avatar-->
+
+                    </a>
+                        <h4><i>{{ comment.username }}</i><small>{{ comment.creation_time }} </small></h4> <br>
+                    <p>{{ comment.detail }}</p>
+                    </div>
+                    <li></li>
+                {%  endfor %}
+        {%  else %}
+            <strong>There are no comments present.</strong><br>
+        {%  endif %}#}
+            <form id="comment_form" method="post" action="/recipez/add_comment/">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {%  endfor %}
+            <input type="submit" name="submit" value="Create comment" />
+        </form>#}
+            </div>#}
+    </div>
 {% endblock %}
