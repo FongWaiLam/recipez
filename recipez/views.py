@@ -6,33 +6,18 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from recipez.models import Recipe, UserProfile, Ingredient, Comment
 from django.contrib.auth.models import User
+from recipez.functions import search_by
 
 
 # Home Page
 def index(request):
+
     if request.method == 'POST':
-        search_by = request.POST.get('search_by')
-        content = request.POST.get('content')
-        recipe_list = Recipe.objects.none()
-        if search_by == 'user':
-            author_list = User.objects.filter(username__icontains=content)
-            for author in author_list:
-                recipe_list = recipe_list | author.user_profile.recipes.all()
-
-        elif search_by == 'ingredient':
-            ingredient_list = Ingredient.objects.filter(name_and_amount__icontains=content)
-            for ingredient in ingredient_list:
-                recipe_list = recipe_list | ingredient.recipes.all()
-
-        elif search_by == 'name':
-            recipe_list = recipe_list | Recipe.objects.filter(name__icontains=content)
-
-        recipe_list = recipe_list.distinct().order_by('-creation_time')
+        search_content = request.POST.get('search_content')
+        context_dict = search_by(search_content)
     else:
         recipe_list = Recipe.objects.order_by('-creation_time')
-    context_dict = {
-        'recipes': recipe_list,
-    }
+        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': recipe_list}
 
     return render(request,
                   'recipez/index.html',

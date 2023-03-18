@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="95db00e9-49f0-4619-8ae5-c3d4f07e66ad" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/recipez.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recipez.iml" afterDir="false" />
+    <list default="true" id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recipez/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipez/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/recipez/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipez/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,10 +15,28 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="2N2f45sSAEK0hnNOjVzDMfWOglV" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="2MWpke5P1htF7bkzrW5mQaTaZ5l" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,14 +44,35 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tango_with_django_project" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
-    <configuration name="recipez" type="Python.DjangoServer" factoryName="Django server">
-      <module name="recipez" />
+  <component name="RunManager" selected="Python.populate_testdata">
+    <configuration name="populate_testdata" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="recipze" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/populate_testdata.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="recipze" type="Python.DjangoServer" factoryName="Django server">
+      <module name="recipze" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -56,17 +94,37 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.populate_testdata" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="95db00e9-49f0-4619-8ae5-c3d4f07e66ad" name="Changes" comment="" />
-      <created>1678866902411</created>
+      <changelist id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="" />
+      <created>1677893337433</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1678866902411</updated>
-      <workItem from="1678866904586" duration="615000" />
-      <workItem from="1678867545057" duration="641000" />
+      <updated>1677893337433</updated>
+      <workItem from="1677893339877" duration="2297000" />
+      <workItem from="1677926520943" duration="2811000" />
+      <workItem from="1677931806510" duration="203000" />
+      <workItem from="1678309504949" duration="5840000" />
+      <workItem from="1678641117561" duration="293000" />
+      <workItem from="1678718083195" duration="28106000" />
+      <workItem from="1678846427961" duration="964000" />
+      <workItem from="1678847583975" duration="12000" />
+      <workItem from="1678848232192" duration="865000" />
+      <workItem from="1678849921479" duration="864000" />
+      <workItem from="1678853311347" duration="12430000" />
+      <workItem from="1678866025459" duration="223000" />
+      <workItem from="1678866586905" duration="316000" />
+      <workItem from="1678868912422" duration="583000" />
+      <workItem from="1678869536127" duration="208000" />
+      <workItem from="1678914042104" duration="5115000" />
+      <workItem from="1679080627595" duration="3975000" />
     </task>
     <servers />
   </component>
@@ -83,5 +141,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/recipze$populate_testdata.coverage" NAME="populate_testdata Coverage Results" MODIFIED="1678753062666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
