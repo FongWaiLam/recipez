@@ -1,11 +1,6 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from recipez.forms import UserForm, UserProfileForm, CommentForm
-from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from recipez.models import Recipe, UserProfile, Ingredient, Comment
+from recipez.models import Recipe, UserProfile, Ingredient
 from django.contrib.auth.models import User
+import requests
 
 
 # search
@@ -26,3 +21,23 @@ def search_by(content):
         'recipe_list_by_Ingredient': recipe_list1.distinct().order_by('-creation_time'),
         'recipe_list_by_RecipeName': recipe_list2.order_by('-creation_time')
     }
+
+
+# get google profile avatar
+def update_user_avatar(strategy, *args, **kwargs):
+    response = kwargs['response']
+    backend = kwargs['backend']
+    user = kwargs['user']
+
+    if response['picture']:
+        url = response['picture']
+        avatar_name = user.username+'.png'
+        save_avatar(url, avatar_name)
+        new_user_profile = UserProfile.objects.get_or_create(user=user, avatar="/profile_images/"+avatar_name)[0]
+        new_user_profile.save()
+
+
+def save_avatar(image_url, avatar_name):
+    img_data = requests.get(image_url).content
+    with open('./media/profile_images/'+avatar_name, 'wb') as handler:
+        handler.write(img_data)
