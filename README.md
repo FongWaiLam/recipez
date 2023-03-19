@@ -15,6 +15,51 @@ The goal of this website is to provide inspiration and convenience to people who
 - clear instructions, attractive photos, and ingredient information
 - simple, intuitive, mobile friendly interface
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+The recipez application is deceptively simple to run, based on a standard Django project structure.
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+You will need Python3 and the Django framework installed on your machine.
+* python
+  ```sh
+  $ sudo apt-get install python3
+  $ sudo apt-get install python3-pip
+  ```
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/FongWaiLam/recipez.git
+   ```
+2. Install Python-pip packages
+   ```sh
+   $ pip install -r requirements.txt
+   ```
+3. Create the migration files
+   ```sh
+   $ python ./manage.py makemigrations recipez
+   $ python ./manage.py migrate
+   ```
+4. Populate the database with our test data
+    ```sh
+    $ python ./populate_testdata.py
+    ```
+5. Run the Django development server
+   ```sh
+   $ python ./manage.py runserver 5000
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+
 # System Architecture
 ![image](https://user-images.githubusercontent.com/119539611/222837322-89a38d68-39f8-4740-9a02-2e8a35cb7761.png)
 
