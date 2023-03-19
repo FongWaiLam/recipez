@@ -45,7 +45,7 @@
             <form role="search" method="post" action="{% url 'recipez:index' %}">
                 {% csrf_token %}
                 <input aria-label="Search" class="form-control me-2" placeholder="Search" type="text"
-                       name="content"><br>
+                       name="search_content"><br>
                 <button class="btn btn-outline-success" type="submit" value="Search">Search</button>
             </form>
         </div>
@@ -78,7 +78,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipez:logout' %}">Logout</a></li>
                         </ul>
                     </li>
                 {% else %}
@@ -101,14 +101,14 @@
 {#        Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>#}
 {#    {% endif %}#}
 {#</div>#}
-
-    <div>
-        <form method="post" action="{% url 'recipez:index' %}">
-            {% csrf_token %}
-            <input type="text" name="search_content"><br>
-            <input type="submit" value="Search">
-        </form>
-    </div>
+{##}
+{#    <div>#}
+{#        <form method="post" action="{% url 'recipez:index' %}">#}
+{#            {% csrf_token %}#}
+{#            <input type="text" name="search_content"><br>#}
+{#            <input type="submit" value="Search">#}
+{#        </form>#}
+{#    </div>#}
 {#todo#}
 
 {% block body_block %}
@@ -205,7 +205,7 @@
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
         © 2023 Copyright:
-        <a class="text-reset fw-bold" href="#">recipez.gla.uk</a>
+        <a class="text-reset fw-bold" href="{% url 'recipez:index' %}">recipez.gla.uk</a>
     </div>
     <!-- Copyright -->
 </footer>

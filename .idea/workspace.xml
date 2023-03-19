@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="327069af-b77a-4cb8-8c49-79958ecabe5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/profile_images/pasta-with-shrimps-tomatoes.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/recipze.iml" beforeDir="false" />
+    <list default="true" id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="base file avatar, search, login register links updated">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/recipez.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recipez.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/recipez/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipez/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +28,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -45,11 +51,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.populate_testdata">
     <configuration name="populate_testdata" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="recipze" />
@@ -99,6 +109,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.populate_testdata" />
+        <item itemvalue="Python.populate_testdata" />
+        <item itemvalue="Python.populate_testdata" />
+        <item itemvalue="Python.populate_testdata" />
+        <item itemvalue="Python.populate_testdata" />
       </list>
     </recent_temporary>
   </component>
@@ -127,6 +141,10 @@
       <workItem from="1678869536127" duration="208000" />
       <workItem from="1678914042104" duration="5115000" />
       <workItem from="1679080627595" duration="16165000" />
+      <workItem from="1679242952796" duration="1898000" />
+      <workItem from="1679245301408" duration="32000" />
+      <workItem from="1679245345793" duration="2000" />
+      <workItem from="1679246841847" duration="361000" />
     </task>
     <servers />
   </component>
