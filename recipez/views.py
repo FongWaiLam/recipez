@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
+from recipez import models
 from recipez.forms import UserForm, UserProfileForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -81,23 +83,43 @@ def show_recipe(request, recipe_name):
 
 
 # Post a new Recipe
-def add_recipe(request):
-    # form = RecipeForm()
-    #
-    # if request.method == 'POST':
-    #     form = RecipeForm(request.POST)
-    #
-    #     if form.is_valid():
-    #         # recipe - reference to an instance created
-    #         recipe = form.save(commit=True)
-    #         print(recipe, recipe.slug)
-    #         return redirect('/rango/')
-    #     else:
-    #         print(form.errors)
+from django import forms
+class RecipeModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Recipe
+        fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]
 
-    return render(request, 'recipez/add_recipe.html',
-                  # {'form': form}
-                  )
+
+class IngredientModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Ingredient
+        fields = ["name_and_amount"]
+
+class RecipeAndIngredientForm(forms.Form):
+    recipe_form = RecipeModelForm()
+    ingredient_form = IngredientModelForm()
+
+def add_recipe(request):
+
+    if request.method == 'POST':
+        recipe_form = RecipeModelForm(request.POST, request.FILES)
+        ingredient_form = IngredientModelForm(request.POST)
+        if recipe_form.is_valid() and ingredient_form.is_valid():
+            recipe = recipe_form.save(commit=False)
+            recipe.user = request.user.userprofile
+            recipe.save()
+            ingredient_name_and_amount = ingredient_form.cleaned_data.get('name_and_amount')
+            ingredient = Ingredient.objects.create(name_and_amount=ingredient_name_and_amount)
+            ingredient.recipes.add(recipe)
+            return redirect('recipe_detail', recipe_id=recipe.id)
+    else:
+        recipe_form = RecipeModelForm()
+        ingredient_form = IngredientModelForm()
+    context = {
+        'recipe_form': recipe_form,
+        'ingredient_form': ingredient_form,
+    }
+    return render(request, 'recipez/add_recipe.html',context)
 
 
 # User Profile Page

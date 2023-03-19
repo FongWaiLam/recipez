@@ -2,10 +2,32 @@
 {% load static %}
 
 {% block title_block %}
+    Add recipe
 {% endblock %}
 
 {% block body_block %}
-
-{#     to be done#}
-
+    <h1>Add recipe</h1>
+    <div class="panel-body">
+        <form class="row g-3" method="post" action="add_recipe.html">
+            {% csrf_token %}
+            {% for field in recipe_form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    <span style="color: red">{{ field.errors.0 }}</span>
+                </div>
+            {% endfor %}
+            {% for field in ingredient_form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    <span style="color: red">{{ field.errors.0 }}</span>
+                </div>
+            {% endfor %}
+            <div class="col-12">
+                <button type="submit">Submit</button>
+                <button type="cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

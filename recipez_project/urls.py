@@ -24,4 +24,5 @@ urlpatterns = [
                   path('', views.index, name='index'),
                   path('recipez/', include('recipez.urls')),
                   path("admin/", admin.site.urls),
+                  path("add_recipe/",views.add_recipe,name='add recipe'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
