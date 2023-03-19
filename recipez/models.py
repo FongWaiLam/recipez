@@ -57,11 +57,9 @@ class Recipe(models.Model):
     cooking_duration = models.CharField(max_length=MAX_LENGTH)
     is_vegan = models.BooleanField(default=False)
     ingredients = models.ManyToManyField(Ingredient)
-    # comments
 
     def __str__(self):
         return self.name
-
 
 class Comment(models.Model):
     recipe = models.ForeignKey(
