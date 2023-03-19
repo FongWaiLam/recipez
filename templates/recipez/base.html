@@ -90,12 +90,7 @@
     <div>
         <form method="post" action="{% url 'recipez:index' %}">
             {% csrf_token %}
-            <select name="search_by">
-                <option value="name">Recipe name</option>
-                <option value="ingredient">Ingredient</option>
-                <option value="user">Author</option>
-            </select>
-            <input type="text" name="content"><br>
+            <input type="text" name="search_content"><br>
             <input type="submit" value="Search">
         </form>
     </div>
@@ -145,6 +140,9 @@
                     </p>
                     <p>
                         <a class="text-reset" href="{% url 'recipez:login' %}">Login</a>
+                    </p>
+                    <p>
+                        <a class="text-reset" href="{% url 'recipez:logout' %}">Logout</a>
                     </p>
                     <p>
                         <a class="text-reset" href="/recipez/help/">Help</a>
