@@ -3,15 +3,22 @@ from django.contrib.auth.models import User
 
 MAX_LENGTH = 128
 
+
 class UserProfile(models.Model):
     # includes username, password, email
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User,
+        related_name='user_profile',
+        on_delete=models.CASCADE
+    )
 
-    bookmark = models.JSONField()
+    # List of recipe_id
+    bookmark = models.JSONField(null=True, blank=True)
+
     creation_time = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
-    is_deleted = models.BooleanField(default=False)
-    avatar = models.ImageField(upload_to='profile_images', blank=True)
+    is_active = models.BooleanField(default=True)
+    avatar = models.ImageField(upload_to='profile_images', null=True, blank=True)
     # recipes
 
     def __str__(self):
@@ -26,16 +33,23 @@ class Recipe(models.Model):
     )
 
     name = models.CharField(max_length=MAX_LENGTH)
-    category = models.CharField(max_length=MAX_LENGTH)
+
+    # Main dish, Starter, Drink, Dessert...etc
+    category = models.CharField(max_length=MAX_LENGTH, default='unknown')
+
+    # Chinese, Japanese, Korean, American, Indian...etc
+    region = models.CharField(max_length=MAX_LENGTH, default='unknown')
+
+    # Easy, Medium, Hard...etc
+    difficulty = models.CharField(max_length=MAX_LENGTH)
+
     detail = models.TextField()
-    region = models.CharField(max_length=MAX_LENGTH)
-    photo = models.ImageField(upload_to='recipe_images', blank=True)
+    photo = models.ImageField(upload_to='recipe_images', null=True, blank=True)
     creation_time = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
     average_rating = models.FloatField(default=0)
-    is_deleted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     cooking_duration = models.CharField(max_length=MAX_LENGTH)
-    difficulty = models.CharField(max_length=MAX_LENGTH)
     is_vegan = models.BooleanField(default=False)
     # ingredients
     # comments
@@ -50,10 +64,10 @@ class Ingredient(models.Model):
         related_name='ingredients'
     )
 
-    name = models.CharField(max_length=MAX_LENGTH)
+    name_and_amount = models.CharField(max_length=MAX_LENGTH, unique=True)
 
     def __str__(self):
-        return self.name
+        return self.name_and_amount
 
 
 class Comment(models.Model):
@@ -64,9 +78,12 @@ class Comment(models.Model):
     )
 
     username = models.CharField(max_length=MAX_LENGTH)
+
+    # 0.0 ~ 5.0
     rating = models.FloatField()
+
     creation_time = models.DateTimeField(auto_now_add=True)
-    is_deleted = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     detail = models.TextField()
 
     def __str__(self):
