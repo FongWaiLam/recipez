@@ -16,7 +16,7 @@
 <h4><i>{{ selected_recipe.user }}</i><small>{{ selected_recipe.creation_time }} </small></h4>
 <h2>{{ selected_recipe.recipe_name }}</h2>
     <img src="{{ MEDIA_URL }}{{ recipe.photo }}"
-        width="400"#}
+        width="400"
        alt="{{ selected_recipe.name }}'s image" /><br>
     <small>{{ selected_recipe.likes }}</small> <br>
     <small>{{ selected_recipe.cooking_duration }}</small>
@@ -37,7 +37,7 @@
                             <img src="{{ user.avatar.url }}"
                                  class="rounded-circle" width="60"
                                  alt="{{ comment.username }}'s profile image" />
-                        {% break %}}
+                        {% break %}
                         {%  endfor %}
                     <!-- Get User's avatar-->
 
@@ -49,7 +49,7 @@
                 {%  endfor %}
         {%  else %}
             <strong>There are no comments present.</strong><br>
-        {%  endif %}#}
+        {%  endif %}
             <form id="comment_form" method="post" action="/recipez/add_comment/">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
@@ -61,7 +61,7 @@
                 {{ field }}
             {%  endfor %}
             <input type="submit" name="submit" value="Create comment" />
-        </form>#}
-            </div>#}
-    </div>
+        </form>
+            </div>
+
 {% endblock %}
