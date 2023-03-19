@@ -19,9 +19,10 @@ from django.urls import include
 from recipez import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
                   path('', views.index, name='index'),
                   path('recipez/', include('recipez.urls')),
                   path("admin/", admin.site.urls),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
