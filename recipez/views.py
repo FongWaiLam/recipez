@@ -61,12 +61,12 @@ def index(
 
 # Recipe Detail Page
 def show_recipe(request, recipe_id):
-    # Data for recipe and existing comments display
     context_dict = {}
+    # Form for receiving new comments of current user (request.user.username)
+    form = CommentForm()
+    context_dict['form'] = form
+
     try:
-        # Can we find a recipe.id with the given recipe_id?
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        # The .get() method returns one model instance or raises an exception.
         recipe = Recipe.objects.get(id=recipe_id)  # recipe_id as a index to access to relevant data
         comments = Comment.objects.filter(recipe=recipe).order_by(
             '-creation_time')  # filter to get all data from the comments
@@ -78,23 +78,18 @@ def show_recipe(request, recipe_id):
 
     except Recipe.DoesNotExist:
         # We get here if we didn't find the specified recipe.
-        # Don't do anything -
-        # the template will display the "no recipe" message for us.
         context_dict['recipe'] = None
         context_dict['comments'] = None
         context_dict['all_users'] = None
 
-        # Form for receiving new comments of current user (request.user.username)
-        form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.recipe = recipe
+            comment.username = request.user.username
+            comment.save()
 
-        if request.method == 'POST':
-            form = CommentForm(request.POST)
-
-            if form.is_valid():
-                # comment - reference to an instance created
-                comment = form.save(commit=True)
-            else:
-                print(form.errors)
     return render(request, 'recipez/recipe.html', context=context_dict)
 
 
@@ -118,20 +113,20 @@ def add_recipe(request):
                   )
 
 
-# Post a new Comment
-def add_comment(request, recipe_id):
-    recipe = Recipe.objects.get(id=recipe_id)
-    form = CommentForm()
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.recipe = recipe
-            comment.username = request.user.username
-            comment.save()
-
-    return render(request, 'recipez/add_comment.html', {'form': form})
+# # Post a new Comment
+# def add_comment(request, recipe_id):
+#     recipe = Recipe.objects.get(id=recipe_id)
+#     form = CommentForm()
+#
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.recipe = recipe
+#             comment.username = request.user.username
+#             comment.save()
+#
+#     return render(request, 'recipez/add_comment.html', {'form': form})
 
 # User Profile Page
 def user_profile(request):
