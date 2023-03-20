@@ -1,8 +1,9 @@
+from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from recipez import models
-from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm, IngredientModelForm
+from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -86,29 +87,29 @@ def show_recipe(request, recipe_name):
 def add_recipe(request):
     if request.method == 'POST':
         recipe_form = RecipeModelForm(request.POST)
-        ingredient_forms = IngredientModelForm(request.POST)
-        # print("form build")
-        if recipe_form.is_valid() and ingredient_forms.is_valid():
-            # print("valid")
+        # ingredient_forms = IngredientModelForm(request.POST)
+        if recipe_form.is_valid():
             recipe = recipe_form.save(commit=False)
             recipe.user=request.user.user_profile
             if 'photo' in request.FILES:
                 recipe.photo = request.FILES['photo']
             recipe.save()
-            # print("recipe_save")
-            for ingredient_form in ingredient_forms:
-                ingredient_name_and_amout=ingredient_form.cleaned_data.get('name_and_amount')
-                print(ingredient_name_and_amout)
-                ingredient=Ingredient.objects.get_or_create(name_and_amout=ingredient_name_and_amout)
+            print("recipe saved")
+            sum_ingredients = int(request.POST.get('ingredient_set-TOTAL_FORMS'))
+            for i in range(0,sum_ingredients-1):
+                ingredient_name=request.POST.get('ingredient_set-'+str(i)+'-ingredient')
+                print(ingredient_name)
+                ingredient=Ingredient.objects.get_or_create(name_and_amount=ingredient_name)[0]
+                print(ingredient)
                 ingredient.recipes.add(recipe)
                 ingredient.save()
-                return redirect(reverse('recipez:index'), recipe_id = recipe.id)
+            print("ingredient saved")
+            return redirect(reverse('recipez:index'))
+
     else:
         recipe_form = RecipeModelForm()
-        ingredient_forms = IngredientModelForm(prefix='ingredient_form')
     context = {
         'recipe_form':recipe_form,
-        'ingredient_form':ingredient_forms,
     }
     return render(request, 'recipez/add_recipe.html', context)
 

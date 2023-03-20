@@ -30,8 +30,8 @@ class RecipeModelForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]
-class IngredientModelForm(forms.ModelForm):
-    class Meta:
-        model = Ingredient
-        fields = ["name_and_amount"]
+# class IngredientModelForm(forms.ModelForm):
+#     class Meta:
+#         model = Ingredient
+#         fields = ["name_and_amount"]
 
