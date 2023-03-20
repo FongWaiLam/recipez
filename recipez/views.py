@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from recipez import models
-from recipez.forms import UserForm, UserProfileForm, CommentForm
+from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm, IngredientModelForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -83,46 +83,34 @@ def show_recipe(request, recipe_name):
 
 
 # Post a new Recipe
-from django import forms
-class RecipeModelForm(forms.ModelForm):
-    class Meta:
-        model = models.Recipe
-        fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]
-class IngredientModelForm(forms.ModelForm):
-    class Meta:
-        model = models.Ingredient
-        fields = ["name_and_amount"]
-
-class RecipeAndIngredientForm(forms.Form):
-    recipe_form = RecipeModelForm()
-    ingredient_form = IngredientModelForm()
-
 def add_recipe(request):
     if request.method == 'POST':
         recipe_form = RecipeModelForm(request.POST)
-        ingredient_forms = IngredientModelForm(request.POST, prefix='ingredient_form')
-        print("form build")
+        ingredient_forms = IngredientModelForm(request.POST)
+        # print("form build")
         if recipe_form.is_valid() and ingredient_forms.is_valid():
-            print("valid")
-            recipe = recipe_form.save()
-            print("recipe_save")
+            # print("valid")
+            recipe = recipe_form.save(commit=False)
+            recipe.user=request.user.user_profile
+            if 'photo' in request.FILES:
+                recipe.photo = request.FILES['photo']
+            recipe.save()
+            # print("recipe_save")
             for ingredient_form in ingredient_forms:
-                if ingredient_form.is_valid():
-                    ingredient = ingredient_form.save(commit=False)
-                    ingredient.recipe = recipe
-                    ingredient.save()
-                    print("ingredient_save")
-            # Redirect to your desired page after saving data
-            # recipe = Recipe.objects.all()
-            # print(recipe)
-            return redirect('recipez:''')
-        print("non-valid")
+                ingredient_name_and_amout=ingredient_form.cleaned_data.get('name_and_amount')
+                print(ingredient_name_and_amout)
+                ingredient=Ingredient.objects.get_or_create(name_and_amout=ingredient_name_and_amout)
+                ingredient.recipes.add(recipe)
+                ingredient.save()
+                return redirect(reverse('recipez:index'), recipe_id = recipe.id)
     else:
         recipe_form = RecipeModelForm()
         ingredient_forms = IngredientModelForm(prefix='ingredient_form')
-        print("else")
-
-    return render(request, 'recipez/add_recipe.html', {'recipe_form': recipe_form, 'ingredient_forms': ingredient_forms})
+    context = {
+        'recipe_form':recipe_form,
+        'ingredient_form':ingredient_forms,
+    }
+    return render(request, 'recipez/add_recipe.html', context)
 
 # User Profile Page
 def user_profile(request):

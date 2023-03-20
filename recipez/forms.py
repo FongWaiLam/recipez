@@ -1,5 +1,5 @@
 from django import forms
-from recipez.models import UserProfile, Comment
+from recipez.models import UserProfile, Comment, Ingredient, Recipe
 from django.contrib.auth.models import User
 
 
@@ -23,3 +23,15 @@ class CommentForm(forms.ModelForm):
         # Association between the ModelForm and a model
         model = Comment
         fields = ('detail',)
+
+from django import forms
+class RecipeModelForm(forms.ModelForm):
+    detail = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Recipe
+        fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]
+class IngredientModelForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ["name_and_amount"]
+
