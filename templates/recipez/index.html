@@ -19,49 +19,28 @@
     {#            {% endif %}#}
     {#            <br />#}
     {#        </div>#}
-    <h2>Best of Today:</h2>
-    {% if best_of_today %}
-        <ul>
-            {% for recipe in best_of_today %}
-                <div class="container mt-5 pt-5">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <a href="{% url 'recipez:show_recipe' recipe.id %}"
-                                       class="mb-2">{{ recipe.name }}</a>
-                                    <div class="row">
-                                        <div class="col-md-3 d-flex align-items-center">
-                                            <img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30"
-                                                 alt="Avatar" class="rounded-circle me-2">
-                                            <span class="text-muted">{{ recipe.user.user.username }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" class="w-50 mt-2">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <p class="card-text mb-1">{{ recipe.category }}</p>
-                                            <p class="card-text mb-1">{{ recipe.region }}</p>
-                                            <p class="card-text mb-1">{{ recipe.difficulty }}</p>
-                                            <p class="card-text mb-1">{{ recipe.cooking_duration }}</p>
-                                            <p class="card-text mb-1">{{ recipe.likes }}</p>
-                                            <p class="card-text mb-1">{{ recipe.average_rating }}</p>
-                                            <p class="card-text mb-1">{{ recipe.is_vegan }}</p>
-                                            <p class="card-text mb-1">{{ recipe.creation_time }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>There are no recipes contain this name.</strong>
-    {% endif %}
+ <h2>Best of Today:</h2>
+        {% if best_of_today %}
+            <ul>
+                {% for recipe in best_of_today %}
+                    <li>
+                        <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                        Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                        Category: {{ recipe.category }} <br>
+                        Region: {{ recipe.region }} <br>
+                        Difficulty: {{ recipe.difficulty }} <br>
+                        CookingDuration: {{ recipe.cooking_duration }} <br>
+                        Likes: {{ recipe.likes }} <br>
+                        AverageRating: {{ recipe.average_rating }} <br>
+                        Vegan: {{ recipe.is_vegan }} <br>
+                        CreationTime: {{ recipe.creation_time }} <br>
+                        RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no recipes contain this name.</strong>
+        {% endif %}
     <br> <br> <br>
 
     <div>
@@ -86,8 +65,7 @@
                 {% for recipe in recipe_list_by_RecipeName %}
                     <li>
                         <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                        Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}"
-                                                                    width="30" height="30" alt="Avatar"> <br>
+                        Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
                         Category: {{ recipe.category }} <br>
                         Region: {{ recipe.region }} <br>
                         Difficulty: {{ recipe.difficulty }} <br>
