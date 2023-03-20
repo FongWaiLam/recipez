@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="Amended CommentForm and Avatar in recipe.html (comment form is now usable)">
+    <list default="true" id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="Add {% url 'recipez:logout' %} to logout dropdown">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_data.yml" beforeDir="false" afterPath="$PROJECT_DIR$/db_data.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipez/recipe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/recipe.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +59,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\85292\Workspace\recipze_project (18 Mar)\recipez\media\recipe_images" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.populate_testdata">
     <configuration name="populate_testdata" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="recipze" />
@@ -160,7 +164,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679348853967</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="revised typo of avatar (recipe.user.avatar)">
+      <created>1679349135164</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679349135164</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add {% url 'recipez:logout' %} to logout dropdown">
+      <created>1679349474455</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679349474455</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,7 +199,9 @@
     <MESSAGE value="base updated, created commentForm, added boostrap to recipe.html (Comment form is not able to be shown, not sure how to fix this.), Added django-crispy-forms, but not sure if it works, as the form is not shown." />
     <MESSAGE value="Created content in help.html for About Us adn Contact Us" />
     <MESSAGE value="Amended CommentForm and Avatar in recipe.html (comment form is now usable)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Amended CommentForm and Avatar in recipe.html (comment form is now usable)" />
+    <MESSAGE value="revised typo of avatar (recipe.user.avatar)" />
+    <MESSAGE value="Add {% url 'recipez:logout' %} to logout dropdown" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add {% url 'recipez:logout' %} to logout dropdown" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/recipze$populate_testdata.coverage" NAME="populate_testdata Coverage Results" MODIFIED="1678753062666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
