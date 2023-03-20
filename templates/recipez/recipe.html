@@ -47,12 +47,13 @@
                                     <p class="mb-0">Like</p>
                                 </a>
                                 <a href="#!" class="d-flex align-items-center me-3">
-                                    <p class="mb-0">Share</p>
+                                    <p class="mb-0">Share</p><br><br>
                                 </a>
                             </div>
                         </div>
 
-                        <div class="container-fluid">
+                        <div class="card-footer py-3 border-0" style="background-color: #f0f2f5;">
+                        <br>
                             {% if comments %}
                                 {% for comment in comments %}
                                     <div class="media-body">
@@ -69,11 +70,14 @@
                                                 {% endfor %}
                                             {% endif %}
                                         </a>
-                                        <h4><i>{{ comment.username }}</i><small>{{ comment.creation_time }} </small>
-                                        </h4> <br>
-                                        <p>{{ comment.detail }}</p>
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <p><b>{{ comment.username }}</b>&nbsp&nbsp{{ comment.creation_time }}
+                                                </p> <br>
+                                                <p>{{ comment.detail }}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <li></li>
                                 {% endfor %}
                             {% else %}
                                 {# <strong>There are no comments present.</strong><br>#}
@@ -82,41 +86,47 @@
 
                             <!-- Comments-->
                             {% if user.is_authenticated %}
-                                <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
-                                    <div class="d-flex flex-start w-100">
-                                        <img class="rounded-circle shadow-1-strong me-3"
-                                             src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
-                                             alt="{{ user.username }}'s profile image"
-                                             width="40"
-                                             height="40"/>
-                                        <div class="form-outline w-100">
-                                            <form id="comment_form" method="post"
-                                                  action="{% url 'recipez:add_comment' %}">
-                                                {% csrf_token %}
-                                                {% for hidden in form.hidden_fields %}
-                                                    {{ hidden }}
-                                                {% endfor %}
-                                                {% for field in form.visible_fields %}
-                                                    {{ field.errors }}
-                                                    {{ field.help_text }}
-                                                    {{ field | crispy}}
-                                                {% endfor %}
-                                                <div class="float-end mt-2 pt-1">
-                                                    <button type="submit" class="btn btn-primary btn-sm" name="submit"
-                                                            value="Create comment">Post comment
-                                                    </button>
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-start w-100">
+                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
+                                                     alt="{{ user.username }}'s profile image"
+                                                     width="40"
+                                                     height="40"/>
+                                                <div class="form-outline w-100">
+                                                    <form id="comment_form" method="post"
+                                                          action="{% url 'recipez:show_recipe' recipe.id %}">
+                                                        {% csrf_token %}
+                                                        {% for hidden in form.hidden_fields %}
+                                                            {{ hidden }}
+                                                        {% endfor %}
+                                                        {% for field in form.visible_fields %}
+                                                            {{ field.errors }}
+                                                            {{ field.help_text }}
+                                                            {% if field.name == 'rating' %}
+                                                                <p>Rating:&nbsp</p>{{ field }}
+                                                            {% elif field.name == 'detail' %}
+                                                                <p>Comment:&nbsp</p>{{ field }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <div class="float-end mt-2 pt-1">
+                                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                                    name="submit"
+                                                                    value="Create comment">Post comment
+                                                            </button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+
                             {% endif %}
                             <!-- Comments-->
-
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 {% endblock %}
