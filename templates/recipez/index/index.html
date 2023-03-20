@@ -6,8 +6,8 @@
 
 {% block body_block %}
     <div class="container py-4">
-        <div class="p-5 mb-4 bg-light rounded-3">
-            <h1 class="display-1 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recipez!</h1> <hr>
+        <div class="p-1 mb-2 bg-light rounded-3">
+            <h2 class="display-2 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recipez!</h2> <hr>
             <small class="d-flex text-muted justify-content-center">An application that will help you to search look for the best recipes and post your own creations!</small>
         </div>
 
@@ -24,7 +24,7 @@
                     {% endif %}
                 </div>
             
-                {% if best_of_today %}
+                {% if best_of_today and user.is_authenticated %}
                     <div class="p-4 mb-2 container-fluid py-5 col-sm-4">
                     <h3 class="display-3">Best of Today:</h3>
                         <ul class="list-group best-of">
@@ -45,7 +45,7 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <strong>There are no recipes contain this name.</strong>
+                        <strong class="text-center">You are not authenticated as a user, so no best of today for you!</strong>
                     </div>
                     {% endif %}
                 <br> <br> <br>
