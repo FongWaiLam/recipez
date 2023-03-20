@@ -19,19 +19,18 @@ Add recipe
         </div>
         {% endfor %}
         <div id="ingredient-form">
-            {% for ingredient_form in ingredient_forms %}
-            <div class="form-group">
-                <label>{{ 'ingredient ' }}{{ forloop.counter }}</label>
-                {{ ingredient_form.ingredient }}
-                <span style="color: red">{{ ingredient_form.errors.0 }}</span>
-            </div>
-            {% endfor %}
+<!--            {% for ingredient_form in ingredient_forms %}-->
+<!--            <div class="form-group">-->
+<!--&lt;!&ndash;                <label>{{ 'ingredient ' }}{{ forloop.counter }}</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                {{ ingredient_form.ingredient }}&ndash;&gt;-->
+<!--                <span style="color: red">{{ ingredient_form.errors.0 }}</span>-->
+<!--            </div>-->
+<!--            {% endfor %}-->
             <button type="button" onClick="addNewIngredient()">add a new ingredient</
             button>
             <script>
                 var ingredientCounter = {{ingredient_forms | length}}
                 ;
-
                 function addNewIngredient() {
                     var ingredientForm = document.getElementById("ingredient-form");
                     var newIngredientGroup = document.createElement("div");
