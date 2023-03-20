@@ -19,6 +19,8 @@ def index(request):
         context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None,
                         'recipe_list_by_RecipeName': recipe_list}
 
+    page_list = Recipe.objects.order_by('-likes')[:3]
+    context_dict['best_of_today'] = page_list
     return render(request,
                   'recipez/index.html',
                   context=context_dict
