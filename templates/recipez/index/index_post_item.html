@@ -1,0 +1,22 @@
+<li class="list-group-item col-lg-8 mb-4">
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5> <br>
+            <p class="card-text">
+                Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                Category: {{ recipe.category }} <br>
+                Region: {{ recipe.region }} <br>
+                Difficulty: {{ recipe.difficulty }} <br>
+                CookingDuration: {{ recipe.cooking_duration }} <br>
+                Likes: {{ recipe.likes }} <br>
+                AverageRating: {{ recipe.average_rating }} <br>
+                Vegan: {{ recipe.is_vegan }} <br>
+                CreationTime: {{ recipe.creation_time }} <br>
+                RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-primary">Read More</a>
+            </p>
+        </div>
+    </div>
+</li>
+
+

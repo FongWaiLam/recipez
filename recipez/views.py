@@ -1,30 +1,63 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.http import HttpResponse, JsonResponse
 from recipez.forms import UserForm, UserProfileForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
+from django.core import paginator
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from recipez.models import Recipe, UserProfile, Ingredient, Comment
 from django.contrib.auth.models import User
 from recipez.functions import search_by
 
-
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    
 # Home Page
-def index(request):
+def index(
+    request, template='recipez/index.html', extra_context=None):
+
     if request.method == 'POST':
         search_content = request.POST.get('search_content')
         context_dict = search_by(search_content)
-    else:
-        recipe_list = Recipe.objects.order_by('-creation_time')[:3]
-        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': recipe_list}
+    
+    RECIPE_PER_PAGE = 3
+    page = int(request.GET.get('page', 1))
 
-    page_list = Recipe.objects.order_by('-likes')[:3]
-    context_dict['best_of_today'] = page_list
-    return render(request,
-                  'recipez/index.html',
-                  context=context_dict
-                  )
+    # Enable Pagination for the recipe list
+    recipe_list = Recipe.objects.all().order_by('-creation_time')
+    p = paginator.Paginator(recipe_list, RECIPE_PER_PAGE)
+    try:
+        post_page = p.page(page)
+    except paginator.EmptyPage:
+        post_page = paginator.Page([], page, p)
 
+    if not is_ajax(request):
+        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': post_page}
+        best_pages = Recipe.objects.order_by('-likes')[:3]
+        context_dict['best_of_today'] = best_pages
+        return render(request,
+                    'recipez/index/index.html',
+                    context=context_dict
+                    )
+
+    elif is_ajax(request):
+        content = ''
+        page = int(request.GET.get('page'))
+        try:
+            post_page = p.page(page)
+        except paginator.EmptyPage:
+            post_page = paginator.Page([], page, p)
+
+        for post in post_page:
+            content += render_to_string('recipez/index/index_post_item.html',
+                                        {'recipe': post},
+                                        request=request)
+        return JsonResponse({
+            "content": content,
+            "end_pagination": True if page >= p.num_pages else False,
+        })
+            
 
 # Recipe Detail Page
 def show_recipe(request, recipe_id):
