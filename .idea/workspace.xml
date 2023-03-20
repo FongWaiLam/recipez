@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="Created content in help.html for About Us adn Contact Us">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipez/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipez/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipez/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipez/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipez/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipez/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recipez/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/recipez/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recipez/recipe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/recipe.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipez/help.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/help.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipez/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recipez/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="FWL" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -111,6 +109,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.populate_testdata" />
         <item itemvalue="Python.populate_testdata" />
       </list>
     </recent_temporary>
