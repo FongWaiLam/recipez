@@ -88,8 +88,6 @@ class RecipeModelForm(forms.ModelForm):
     class Meta:
         model = models.Recipe
         fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]
-
-
 class IngredientModelForm(forms.ModelForm):
     class Meta:
         model = models.Ingredient
@@ -100,7 +98,6 @@ class RecipeAndIngredientForm(forms.Form):
     ingredient_form = IngredientModelForm()
 
 def add_recipe(request):
-
     if request.method == 'POST':
         recipe_form = RecipeModelForm(request.POST, request.FILES)
         ingredient_form = IngredientModelForm(request.POST)
@@ -108,10 +105,26 @@ def add_recipe(request):
             recipe = recipe_form.save(commit=False)
             recipe.user = request.user.userprofile
             recipe.save()
-            ingredient_name_and_amount = ingredient_form.cleaned_data.get('name_and_amount')
-            ingredient = Ingredient.objects.create(name_and_amount=ingredient_name_and_amount)
-            ingredient.recipes.add(recipe)
-            return redirect('recipe_detail', recipe_id=recipe.id)
+
+            # for form in ingredient_form:
+            #     if form.cleaned_data:
+            #         ingredient = form.save(commit=False)
+            #         ingredient.recipe = recipe
+            #         ingredient.save()
+            for i in range(1, len(request.POST)):
+                if f'ingredient_{i}' in request.POST:
+                    ingredient_form = IngredientModelForm({
+                        'recipe_id': recipe.id,
+                        'name_and_amount': request.POST[f'ingredient_{i}']
+                    })
+                    if ingredient_form.is_valid():
+                        ingredient_form.save()
+            return redirect('recipez/', recipe_id=recipe.id)
+
+            # a = Ingredient.objects.get(name_and_amount='')
+            # b = Ingredient.objects.get(name_and_amount='')
+            # d = Recipe.objects.get(name='')
+            # d = ingredients.add(a,b)
     else:
         recipe_form = RecipeModelForm()
         ingredient_form = IngredientModelForm()
@@ -119,7 +132,7 @@ def add_recipe(request):
         'recipe_form': recipe_form,
         'ingredient_form': ingredient_form,
     }
-    return render(request, 'recipez/add_recipe.html',context)
+    return render(request, 'recipez/add_recipe.html', context)
 
 
 # User Profile Page
