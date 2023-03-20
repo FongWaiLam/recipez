@@ -96,7 +96,7 @@ def add_recipe(request):
             recipe.save()
             print("recipe saved")
             sum_ingredients = int(request.POST.get('ingredient_set-TOTAL_FORMS'))
-            for i in range(0,sum_ingredients-1):
+            for i in range(0,sum_ingredients):
                 ingredient_name=request.POST.get('ingredient_set-'+str(i)+'-ingredient')
                 print(ingredient_name)
                 ingredient=Ingredient.objects.get_or_create(name_and_amount=ingredient_name)[0]
