@@ -6,89 +6,94 @@
 {% endblock %}
 
 {% block body_block %}
+
+
+
     <h1>Index Page</h1>
 
-        <div>
-            {% if user.is_authenticated %}
-                Hello {{ user.username }}!
-            {% else %}
-                Please log in!
-            {% endif %}
-            <br />
-        </div>
+    {#        <div>#}
+    {#            {% if user.is_authenticated %}#}
+    {#                Hello {{ user.username }}!#}
+    {#            {% else %}#}
+    {#                Please log in!#}
+    {#            {% endif %}#}
+    {#            <br />#}
+    {#        </div>#}
 
-        <br> <br> <br> <br>
+    <br> <br> <br>
 
-        <div>
+    <div>
         <h2>Users contain this name:</h2>
         {% if author_list %}
             <ul>
-            {% for author in author_list %}
-                {{ author.username }}
-                Avatar:<img src="{{ MEDIA_URL }}{{ author.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br>
-            {% endfor %}
+                {% for author in author_list %}
+                    {{ author.username }}
+                    Avatar:
+                    <img src="{{ MEDIA_URL }}{{ author.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br>
+                {% endfor %}
             </ul>>
         {% else %}
             <strong>There are no users contain this name.</strong>
         {% endif %}
 
-        <br> <br> <br> <br>
+        <br> <br> <br>
 
         <h2>Recipes contain this name:</h2>
         {% if recipe_list_by_RecipeName %}
             <ul>
-            {% for recipe in recipe_list_by_RecipeName %}
-                <li>
-                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
-                    Category: {{ recipe.category }} <br>
-                    Region: {{ recipe.region }} <br>
-                    Difficulty: {{ recipe.difficulty }} <br>
-                    CookingDuration: {{ recipe.cooking_duration }} <br>
-                    Likes: {{ recipe.likes }} <br>
-                    AverageRating: {{ recipe.average_rating }} <br>
-                    Vegan: {{ recipe.is_vegan }} <br>
-                    CreationTime: {{ recipe.creation_time }} <br>
-                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
-                </li>
-            {% endfor %}
+                {% for recipe in recipe_list_by_RecipeName %}
+                    <li>
+                        <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                        Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                        Category: {{ recipe.category }} <br>
+                        Region: {{ recipe.region }} <br>
+                        Difficulty: {{ recipe.difficulty }} <br>
+                        CookingDuration: {{ recipe.cooking_duration }} <br>
+                        Likes: {{ recipe.likes }} <br>
+                        AverageRating: {{ recipe.average_rating }} <br>
+                        Vegan: {{ recipe.is_vegan }} <br>
+                        CreationTime: {{ recipe.creation_time }} <br>
+                        RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                    </li>
+                {% endfor %}
             </ul>
         {% else %}
             <strong>There are no recipes contain this name.</strong>
         {% endif %}
 
-        <br> <br> <br> <br>
+        <br> <br> <br>
 
         <h2>Recipes contain this ingredient:</h2>
         {% if recipe_list_by_Ingredient %}
             <ul>
-            {% for recipe in recipe_list_by_Ingredient %}
-                <li>
-                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
-                    Category: {{ recipe.category }} <br>
-                    Region: {{ recipe.region }} <br>
-                    Difficulty: {{ recipe.difficulty }} <br>
-                    CookingDuration: {{ recipe.cooking_duration }} <br>
-                    Likes: {{ recipe.likes }} <br>
-                    AverageRating: {{ recipe.average_rating }} <br>
-                    Vegan: {{ recipe.is_vegan }} <br>
-                    CreationTime: {{ recipe.creation_time }} <br>
-                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
-                </li>
-            {% endfor %}
+                {% for recipe in recipe_list_by_Ingredient %}
+                    <li>
+                        <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                        Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}"
+                                                                    width="30" height="30" alt="Avatar"> <br>
+                        Category: {{ recipe.category }} <br>
+                        Region: {{ recipe.region }} <br>
+                        Difficulty: {{ recipe.difficulty }} <br>
+                        CookingDuration: {{ recipe.cooking_duration }} <br>
+                        Likes: {{ recipe.likes }} <br>
+                        AverageRating: {{ recipe.average_rating }} <br>
+                        Vegan: {{ recipe.is_vegan }} <br>
+                        CreationTime: {{ recipe.creation_time }} <br>
+                        RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                    </li>
+                {% endfor %}
             </ul>>
         {% else %}
             <strong>There are no recipes contain this ingredient.</strong>
         {% endif %}
 
-        </div>
+    </div>
 
-        <br> <br> <br> <br>
+    <br> <br> <br>
 
-        <div>
+    <div>
         <h2>Best of Today</h2>
         {# todo #}
-        </div>
+    </div>
 {% endblock %}
 
