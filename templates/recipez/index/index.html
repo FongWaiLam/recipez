@@ -1,0 +1,92 @@
+{% extends 'recipez/base.html' %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+    <div class="container py-4">
+        <div class="p-1 mb-2 bg-light rounded-3">
+            <h2 class="display-2 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recipez!</h2> <hr>
+            <small class="d-flex text-muted justify-content-center">An application that will help you to search look for the best recipes and post your own creations!</small>
+        </div>
+
+            <div class="row">
+                <div class="container-fluid py-5 col-sm-8">
+                    {% if recipe_list_by_RecipeName %}
+                        <ul class="list-group recipe-list">
+                        {% for recipe in recipe_list_by_RecipeName %}
+                            {% include 'recipez/index/index_post_item.html' %}
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <strong>Your database is empty!</strong>
+                    {% endif %}
+                </div>
+            
+                {% if best_of_today and user.is_authenticated %}
+                    <div class="p-4 mb-2 container-fluid py-5 col-sm-4">
+                    <h3 class="display-3">Best of Today:</h3>
+                        <ul class="list-group best-of">
+                            {% for recipe in best_of_today %}
+                                <li class="list-group-item border-info">
+                                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                                    Category: {{ recipe.category }} <br>
+                                    Region: {{ recipe.region }} <br>
+                                    Difficulty: {{ recipe.difficulty }} <br>
+                                    CookingDuration: {{ recipe.cooking_duration }} <br>
+                                    Likes: {{ recipe.likes }} <br>
+                                    AverageRating: {{ recipe.average_rating }} <br>
+                                    Vegan: {{ recipe.is_vegan }} <br>
+                                    CreationTime: {{ recipe.creation_time }} <br>
+                                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <strong class="text-center">You are not authenticated as a user, so no best of today for you!</strong>
+                    </div>
+                    {% endif %}
+                <br> <br> <br>
+            </div>
+        </div>
+     </div>
+
+     <script>
+
+        $(document).ready(function () {
+            window.recipe_index = "{% url 'recipez:index' %}";
+
+            var page = 1;
+            var block_request = false;
+            var end_pagination = false;
+
+            $(window).scroll(function () {
+                var margin = $(document).height() - $(window).height() - 200;
+
+                if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+                    block_request = true;
+                    page += 1;
+
+                    $.ajax({
+                        type: 'GET',
+                        url: window.recipe_index,
+                        data: {
+                            "page": page
+                        },
+                        success: function (data) {
+                            if (data.end_pagination === true) {
+                                end_pagination = true;
+                            } else {
+                                block_request = false;
+                            }
+                            $('.recipe-list').append(data.content);
+                        }
+                    })
+                }
+            });
+        })
+    </script>
+{% endblock %}
+

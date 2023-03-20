@@ -24,6 +24,11 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Ingredient(models.Model):
+    name_and_amount = models.CharField(max_length=MAX_LENGTH, unique=True)
+
+    def __str__(self):
+        return self.name_and_amount
 
 class Recipe(models.Model):
     user = models.ForeignKey(
@@ -51,24 +56,10 @@ class Recipe(models.Model):
     is_active = models.BooleanField(default=True)
     cooking_duration = models.CharField(max_length=MAX_LENGTH)
     is_vegan = models.BooleanField(default=False)
-    # ingredients
-    # comments
+    ingredients = models.ManyToManyField(Ingredient)
 
     def __str__(self):
         return self.name
-
-
-class Ingredient(models.Model):
-    recipes = models.ManyToManyField(
-        Recipe,
-        related_name='ingredients'
-    )
-
-    name_and_amount = models.CharField(max_length=MAX_LENGTH, unique=True)
-
-    def __str__(self):
-        return self.name_and_amount
-
 
 class Comment(models.Model):
     recipe = models.ForeignKey(
