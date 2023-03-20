@@ -46,9 +46,6 @@ class CustomCommentWidget(forms.Textarea):
 
 
 class CommentForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.HiddenInput())
-    is_active = forms.BooleanField(widget=forms.HiddenInput())
-
     detail = forms.CharField(widget=CustomCommentWidget())
     rating = forms.FloatField(widget=CustomFloatInput)
 
@@ -56,4 +53,4 @@ class CommentForm(forms.ModelForm):
     class Meta:
         # Association between the ModelForm and a model
         model = Comment
-        exclude = ('recipe', 'creation_time')
+        fields = ('rating', 'detail')

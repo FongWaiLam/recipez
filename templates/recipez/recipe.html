@@ -16,7 +16,7 @@
                                 <!-- Recipe Creator -->
                                 <img alt="{{ recipe.user.username }}'s profile image"
                                      class="rounded-circle shadow-1-strong me-3"
-                                     src="{{ MEDIA_URL }}{{ recipe.user.user_profile.avatar }}"
+                                     src="{{ MEDIA_URL }}{{ recipe.user.user.user_profile.avatar }}"
                                      width="50"/>
                                 <div>
                                     <h6 class="fw-bold text-primary mb-1">{{ recipe.user }}</h6>
@@ -28,8 +28,8 @@
                             </div>
 
                             <!-- Recipe Content -->
-                            <p class="mt-3 mb-4 pb-2">
-                            <h2>{{ recipe.recipe_name }}</h2>
+                            <p class="mt-3 mb-4">
+                            <h2>{{ recipe.name }}</h2>
                             <img src="{{ MEDIA_URL }}{{ recipe.photo }}"
                                  width="400"
                                  alt="{{ recipe.name }}'s image"/><br><br>
@@ -53,25 +53,23 @@
                         </div>
 
                         <div class="card-footer py-3 border-0" style="background-color: #f0f2f5;">
-                        <br>
+                            <br>
                             {% if comments %}
                                 {% for comment in comments %}
-                                    <div class="media-body">
-                                        <a href="/recipez/profile/{{ comment.username }}">
-                                            {% if all_users %}
-                                                {% for user in all_users %}
-                                                    {% if user.username == comment.username %}
-                                                        <!-- Get User's avatar-->
-                                                        <img alt="{{ user.username }}'s profile image"
-                                                             class="rounded-circle"
-                                                             src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
-                                                             width="30">
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        </a>
+                                    <div>
                                         <div class="card mb-4">
                                             <div class="card-body">
+                                                {% if all_users %}
+                                                    {% for user in all_users %}
+                                                        {% if user.user.username == comment.username %}
+                                                            <!-- Get User's avatar-->
+                                                            <img alt="{{ user.user.username }}'s profile image"
+                                                                 class="rounded-circle"
+                                                                 src="{{ MEDIA_URL }}{{ user.user.user_profile.avatar }}"
+                                                                 width="30">
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
                                                 <p><b>{{ comment.username }}</b>&nbsp&nbsp{{ comment.creation_time }}
                                                 </p> <br>
                                                 <p>{{ comment.detail }}</p>
@@ -86,42 +84,41 @@
 
                             <!-- Comments-->
                             {% if user.is_authenticated %}
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <div class="d-flex flex-start w-100">
-                                                <img class="rounded-circle shadow-1-strong me-3"
-                                                     src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
-                                                     alt="{{ user.username }}'s profile image"
-                                                     width="40"
-                                                     height="40"/>
-                                                <div class="form-outline w-100">
-                                                    <form id="comment_form" method="post"
-                                                          action="{% url 'recipez:show_recipe' recipe.id %}">
-                                                        {% csrf_token %}
-                                                        {% for hidden in form.hidden_fields %}
-                                                            {{ hidden }}
-                                                        {% endfor %}
-                                                        {% for field in form.visible_fields %}
-                                                            {{ field.errors }}
-                                                            {{ field.help_text }}
-                                                            {% if field.name == 'rating' %}
-                                                                <p>Rating:&nbsp</p>{{ field }}
-                                                            {% elif field.name == 'detail' %}
-                                                                <p>Comment:&nbsp</p>{{ field }}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        <div class="float-end mt-2 pt-1">
-                                                            <button type="submit" class="btn btn-primary btn-sm"
-                                                                    name="submit"
-                                                                    value="Create comment">Post comment
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-start w-100">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                 src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
+                                                 alt="{{ user.username }}'s profile image"
+                                                 width="40"
+                                                 height="40"/>
+                                            <div class="form-outline w-100">
+                                                <form id="comment_form" method="post"
+                                                      action="{% url 'recipez:show_recipe' recipe.id %}">
+                                                    {% csrf_token %}
+                                                    {% for hidden in form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
+                                                    {% for field in form.visible_fields %}
+                                                        {{ field.errors }}
+                                                        {{ field.help_text }}
+                                                        {% if field.name == 'rating' %}
+                                                            <p>Rating:&nbsp</p>{{ field }}
+                                                        {% elif field.name == 'detail' %}
+                                                            <p>Comment:&nbsp</p>{{ field }}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <div class="float-end mt-2 pt-1">
+                                                        <button type="submit" class="btn btn-primary btn-sm"
+                                                                name="submit"
+                                                                value="Create comment">Post comment
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
                             {% endif %}
                             <!-- Comments-->
                         </div>

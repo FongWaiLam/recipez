@@ -76,19 +76,21 @@ def show_recipe(request, recipe_id):
         context_dict['comments'] = comments
         context_dict['all_users'] = all_users
 
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.recipe = recipe
+                comment.username = request.user.username
+                comment.save()
+
     except Recipe.DoesNotExist:
         # We get here if we didn't find the specified recipe.
         context_dict['recipe'] = None
         context_dict['comments'] = None
         context_dict['all_users'] = None
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.recipe = recipe
-            comment.username = request.user.username
-            comment.save()
+
 
     return render(request, 'recipez/recipe.html', context=context_dict)
 
