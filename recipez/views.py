@@ -11,7 +11,6 @@ from recipez.functions import search_by
 
 # Home Page
 def index(request):
-
     if request.method == 'POST':
         search_content = request.POST.get('search_content')
         context_dict = search_by(search_content)
@@ -19,6 +18,8 @@ def index(request):
         recipe_list = Recipe.objects.order_by('-creation_time')[:3]
         context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': recipe_list}
 
+    page_list = Recipe.objects.order_by('-likes')[:3]
+    context_dict['best_of_today'] = page_list
     return render(request,
                   'recipez/index.html',
                   context=context_dict
@@ -26,22 +27,21 @@ def index(request):
 
 
 # Recipe Detail Page
-def show_recipe(request, recipe_name):
+def show_recipe(request, recipe_id):
     # Data for recipe and existing comments display
     context_dict = {}
     try:
-        # Can we find a recipe name slug with the given name?
+        # Can we find a recipe.id with the given recipe_id?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # The .get() method returns one model instance or raises an exception.
-        recipe = Recipe.objects.get(name=recipe_name)  # slug as a index to access to relevant data
-        recipe_owner = UserProfile.get(user=recipe.user)
-        comments = Comment.objects.filter(recipe=recipe)  # filter to get all data from the comments
-        commented_users = UserProfile.objects.filter(username=recipe.user.username)
+        recipe = Recipe.objects.get(id=recipe_id)  # recipe_id as a index to access to relevant data
+        comments = Comment.objects.filter(recipe=recipe).order_by(
+            '-creation_time')  # filter to get all data from the comments
+        all_users = UserProfile.objects.all()
 
         context_dict['recipe'] = recipe
-        context_dict['recipe_owner'] = recipe_owner
         context_dict['comments'] = comments
-        context_dict['commented_users'] = commented_users
+        context_dict['all_users'] = all_users
 
     except Recipe.DoesNotExist:
         # We get here if we didn't find the specified recipe.
@@ -49,9 +49,9 @@ def show_recipe(request, recipe_name):
         # the template will display the "no recipe" message for us.
         context_dict['recipe'] = None
         context_dict['comments'] = None
-        context_dict['commented_users'] = None
+        context_dict['all_users'] = None
 
-     # Form for receiving new comments of current user (request.user.username)
+        # Form for receiving new comments of current user (request.user.username)
         form = CommentForm()
 
         if request.method == 'POST':
@@ -62,7 +62,7 @@ def show_recipe(request, recipe_name):
                 comment = form.save(commit=True)
             else:
                 print(form.errors)
-    return render(request, 'recipez/recipe.html',context=context_dict)
+    return render(request, 'recipez/recipe.html', context=context_dict)
 
 
 # Post a new Recipe
@@ -84,6 +84,21 @@ def add_recipe(request):
                   # {'form': form}
                   )
 
+
+# Post a new Comment
+def add_comment(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    form = CommentForm()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.recipe = recipe
+            comment.username = request.user.username
+            comment.save()
+
+    return render(request, 'recipez/add_comment.html', {'form': form})
 
 # User Profile Page
 def user_profile(request):

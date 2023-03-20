@@ -16,10 +16,13 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('avatar',)
 
+
 class CommentForm(forms.ModelForm):
     detail = forms.CharField(widget=forms.Textarea)
+    rating = forms.FloatField(widget=forms.FloatField)
+
     # Provide additional information
     class Meta:
         # Association between the ModelForm and a model
         model = Comment
-        fields = ('detail',)
+        fields = ('detail','rating')

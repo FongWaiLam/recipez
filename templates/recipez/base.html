@@ -52,41 +52,46 @@
             <button class="btn btn-outline-success" type="submit" value="search">Search</button>
         </form>
 
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+     <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
             <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">My Profile</a>
+                    <a aria-current="page" class="nav-link active" href="{% url 'recipez:index' %}">Home</a>
                 </li>
-                {% endif %}
-                <li class="nav-item dropdown">
-                    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                       role="button">
-                        More
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% if user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'recipez:add_recipe' %}">Write a Recipe</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                        {% endif %}     
-                        <li><a class="dropdown-item" href="{% url 'recipez:help' %}">Help</a></li>
-                    </ul>
-                </li>
-                {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link active"><img alt="{{ request.user.username }}'s profile image"
-                                                    class="rounded-circle"
-                                                    src="{{ MEDIA_URL }}{{ get_user_avatar_url }}"
-                                                    width="60"></a>
+                    <a aria-current="page" class="nav-link active" href="{% url 'recipez:help' %}">Help</a>
                 </li>
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link active" href="{% url 'recipez:add_recipe' %}">Write a
+                            Recipe</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                           role="button">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                     src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
+                                     alt="{{ user.username }}'s profile image"
+                                     width="40"
+                                     height="40"/>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'recipez:user_profile' %}">My Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link active" href="/recipez/login/">Login</a>
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link active" href="{% url 'recipez:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link active" href="{% url 'recipez:register' %}">Register</a>
+                    </li>
                 {% endif %}
-                
             </ul>
         </div>
     </div>
@@ -141,40 +146,45 @@
                     <p>
                         <a class="text-reset" href="{% url 'recipez:index' %}">Home</a>
                     </p>
+                  {% if user.is_authenticated %}
+                        <p>
+                            <a class="text-reset" href="{% url 'recipez:logout' %}">Logout</a>
+                        </p>
+                    {% else %}
+                        <p>
+                            <a class="text-reset" href="{% url 'recipez:register' %}">Register</a>
+                        </p>
+                        <p>
+                            <a class="text-reset" href="{% url 'recipez:login' %}">Login</a>
+                        </p>
+                    {% endif %}
+
                     <p>
-                        <a class="text-reset" href="/recipez/">Search</a>
-                    </p>
-                    <p>
-                        <a class="text-reset" href="{% url 'recipez:register' %}">Register</a>
-                    </p>
-                    <p>
-                        <a class="text-reset" href="{% url 'recipez:login' %}">Login</a>
-                    </p>
-                    <p>
-                        <a class="text-reset" href="{% url 'recipez:logout' %}">Logout</a>
-                    </p>
-                    <p>
-                        <a class="text-reset" href="/recipez/help/">Help</a>
+                        <a class="text-reset" href="{% url 'recipez:help' %}">Help</a>
                     </p>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        My Profile
-                    </h6>
-                    <p>
-                        <a class="text-reset" href="/recipez/user_profile/">My post</a>
-                    </p>
-                    <p>
-                        <a class="text-reset" href="/recipez/user_profile/">My bookmark</a>
-                    </p>
-                    <p>
-                        <a class="text-reset" href="/recipez/add_recipe/">Write a recipe</a>
-                    </p>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            My Profile
+                        </h6>
+                        <p>
+                            <a class="text-reset" href="{% url 'recipez:user_profile' %}">My post</a>
+                        </p>
+                        <p>
+                            <a class="text-reset" href="{% url 'recipez:user_profile' %}">My bookmark</a>
+                        </p>
+                        <p>
+                            <a class="text-reset" href="{% url 'recipez:add_recipe' %}">Write a recipe</a>
+                        </p>
+
+                    </div>
+                {% endif %}
                 <!-- Grid column -->
 
                 <!-- Grid column -->
@@ -196,7 +206,7 @@
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
         © 2023 Copyright:
-        <a class="text-reset fw-bold" href="#">recipez.gla.uk</a>
+        <a class="text-reset fw-bold" href="{% url 'recipez:index' %}">recipez.gla.uk</a>
     </div>
     <!-- Copyright -->
 </footer>
