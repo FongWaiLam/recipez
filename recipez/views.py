@@ -16,7 +16,7 @@ def index(request):
         search_content = request.POST.get('search_content')
         context_dict = search_by(search_content)
     else:
-        recipe_list = Recipe.objects.order_by('-creation_time')
+        recipe_list = Recipe.objects.order_by('-creation_time')[:3]
         context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': recipe_list}
 
     return render(request,
