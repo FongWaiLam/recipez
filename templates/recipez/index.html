@@ -40,8 +40,29 @@
         
 
                 <div class="container-fluid py-4">
-                    <h2>Best of Today</h2>
-                    {# todo #}
+                    <h2>Best of Today:</h2>
+                        {% if best_of_today %}
+                            <ul>
+                                {% for recipe in best_of_today %}
+                                    <li>
+                                        <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                                        Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                                        Category: {{ recipe.category }} <br>
+                                        Region: {{ recipe.region }} <br>
+                                        Difficulty: {{ recipe.difficulty }} <br>
+                                        CookingDuration: {{ recipe.cooking_duration }} <br>
+                                        Likes: {{ recipe.likes }} <br>
+                                        AverageRating: {{ recipe.average_rating }} <br>
+                                        Vegan: {{ recipe.is_vegan }} <br>
+                                        CreationTime: {{ recipe.creation_time }} <br>
+                                        RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <strong>There are no recipes contain this name.</strong>
+                        {% endif %}
+                    <br> <br> <br>
                 </div>
             </div>
         </div>
