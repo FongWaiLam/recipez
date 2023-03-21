@@ -6,10 +6,20 @@
 
 {% block body_block %}
     <div class="container py-4">
+        {#todo#}
+            <div>
+                {% if user.is_authenticated %}
+                    {{ user.username }} <br>
+                    Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>
+                {% endif %}
+            </div>
+        {#todo#}
+        {% if not user.is_authenticated %}
         <div class="p-1 mb-2 bg-light rounded-3">
-            <h2 class="display-2 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recipez!</h2> <hr>
+            <h2 class="display-2 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recip(EZ)</h2> <hr>
             <small class="d-flex text-muted justify-content-center">An application that will help you to search look for the best recipes and post your own creations!</small>
         </div>
+        {% endif %}
 
             <div class="row">
                 <div class="container-fluid py-5 col-sm-8">
