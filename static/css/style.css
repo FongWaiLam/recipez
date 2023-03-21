@@ -16,3 +16,9 @@
 #btn-back-to-top .hidden {
     opacity: 0%;
 }
+
+.alert.collapsing {
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+}

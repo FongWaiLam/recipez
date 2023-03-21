@@ -1,4 +1,4 @@
-{% extends 'recipez/base.html' %}
+{% extends 'recipez/includes/base.html' %}
 
 {% block title_block %}
     Home
@@ -73,7 +73,7 @@
             var end_pagination = false;
 
             $(window).scroll(function () {
-                var margin = $(document).height() - $(window).height() - 200;
+                var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
 
                 if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
                     block_request = true;

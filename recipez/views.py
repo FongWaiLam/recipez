@@ -5,6 +5,7 @@ from recipez import models
 from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm
 from django.template.loader import render_to_string
 from django.http import HttpResponse, JsonResponse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core import paginator
 from django.urls import reverse
@@ -121,6 +122,7 @@ def add_recipe(request):
                 ingredient.recipes.add(recipe)
                 ingredient.save()
             print("ingredient saved")
+            messages.success(request, "You have successfully added a new recipe!" )
             return redirect(reverse('recipez:index'))
 
     else:
@@ -151,12 +153,14 @@ def user_login(request):
                 login(request, user)
                 if not remember_me:
                     request.session.set_expiry(0) # set session expire time to 0
+                messages.success(request, "You have been successfully logged in!" )    
                 return redirect(reverse('recipez:index'))
             else:
                 return HttpResponse("Your Recipez account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            # print(f"Invalid login details: {username}, {password}") # Not required, only for debugging
+            messages.error(request, f"Your login details are incorrect, {username}" )    
+            return redirect(reverse('recipez:login'))
 
     else:
         return render(request, 'recipez/authentication/login.html')
@@ -187,6 +191,13 @@ def register(request):
             registered = True
         else:
             print(user_form.errors, profile_form.errors)
+        
+        if registered:
+            messages.success(request, "You have been successfully registered! Please log in." )    
+            return redirect(reverse('recipez:login'))
+        else:
+            messages.error(request, "Please check your registration details." )    
+            return redirect(reverse('recipez:register'))
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -202,6 +213,7 @@ def register(request):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, "Successfully logged out!" )    
     return redirect(reverse('recipez:index'))
 
 
