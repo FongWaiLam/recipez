@@ -126,21 +126,6 @@ def add_recipe(request):
     }
     return render(request, 'recipez/add_recipe.html', context)
 
-# # Post a new Comment
-# def add_comment(request, recipe_id):
-#     recipe = Recipe.objects.get(id=recipe_id)
-#     form = CommentForm()
-#
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.recipe = recipe
-#             comment.username = request.user.username
-#             comment.save()
-#
-#     return render(request, 'recipez/add_comment.html', {'form': form})
-
 # User Profile Page
 def user_profile(request):
     # to be completed
