@@ -29,9 +29,9 @@ def populate():
     db_data = load_db_data(yaml_path=db_yaml_path)
 
     print(db_data)
-    
+
+    counter = 0
     for i in db_data['users']:
-        counter = 0
         print(f"Adding user: {i['username']}")
         a = add_user(i['username'], i['password'], i['mail'])
         add_user_profile(a, avatar_name_list[counter])
