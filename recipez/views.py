@@ -145,8 +145,21 @@ def add_recipe(request):
 # User Profile Page
 def user_profile(request):
     # to be completed
+    if request.user.is_authenticated:
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        user_recipes = Recipe.objects.filter(user=request.user)
+        # saved_recipes = SavedRecipe.objects.filter(user=request.user)
+        saved_recipes = Recipe.objects.filter(user=request.user)
+        
+        context_dict = {
+            'user_recipes': user_recipes,
+            'saved_recipes': saved_recipes,
+                   }
+        return render(request, 'recipez/userProfile.html', context_dict)
+    else:
+        return redirect(reverse('recipez:login'))
 
-    return render(request, 'recipez/userProfile.html')
 
 
 # Login Page

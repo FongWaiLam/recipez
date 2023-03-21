@@ -2,10 +2,48 @@
 {% load static %}
 
 {% block title_block %}
+    User Profile
 {% endblock %}
 
 {% block body_block %}
+    <div>
+        <h1>Hi, { request.user.username }</h1>
+        <img src="{{ request.user.userprofile.avatar.url }}" alt="User Headshot" class="user-avatar" />
+    </div>
 
-{#     to be done#}
+    <div>
+        <h2>My Posts</h2>
+        <div class="recipe-gallery" style="display: flex; overflow-x: scroll;">
+            {% for recipe in user_recipes %}
+                <div class="recipe-card">
+                    <h3>{{ recipe.title }}</h3>
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="width: 100px; height: 100px;">
+                </div>
+            {% empty %}
+                <p>You haven't posted anything.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h2>Saved Recipes</h2>
+        <div class="saved-recipe-gallery" style="display: flex; overflow-x: scroll;">
+            {% for recipe in saved_recipes %}
+                <div class="saved-recipe-card">
+                    <h3>{{ recipe.title }}</h3>
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="width: 100px; height: 100px;">
+                </div>
+            {% empty %}
+                <p>Your favorites are empty.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <a href="{% url 'recipez:add_recipe' %}" class="btn btn-primary">Post New Recipe</a>
+    </div>
+
+
     
 {% endblock %}
+
