@@ -1,28 +1,40 @@
-{% extends 'recipez/base.html' %}
+{% extends 'recipez/includes/base.html' %}
 
 {% block title_block %}
     Home
 {% endblock %}
 
 {% block body_block %}
-    <div class="container py-4">
-        {#todo#}
-            <div>
-                {% if user.is_authenticated %}
-                    {{ user.username }} <br>
-                    Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>
-                {% endif %}
+    <div class="container py-2">
+        <div class="container-fluid py-2 col-sm-12">
+            {% if user.is_authenticated %}
+            <div class="card w-65 bg-dark text-light">
+                <div class="card-header ps-4"> <p class="lead">Hi {{ user.username }}!</p>  </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="d-flex col-sm-2">
+                            <a class="navbar-brand" href="{% url 'recipez:user_profile' %}">
+                                <img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="80" height="60" alt="Avatar" style="border-radius: 80%;">
+                            </a>
+                        </div>
+                        <div class="d-flex col-lg-8"> <button href class="btn btn-outline-warning" style="width: 80%; height: 80%; align-items: center;"> 
+                            <a href="{% url 'recipez:add_recipe' %}" class="nav-link active"> Create Something Amazing</a> </button> 
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
-        {#todo#}
+            {% endif %}
+        </div>
         {% if not user.is_authenticated %}
-        <div class="p-1 mb-2 bg-light rounded-3">
-            <h2 class="display-2 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recip(EZ)</h2> <hr>
+        <div class="p-2 mb-2 py-2 bg-light rounded-2">
+            <h4 class="display-4 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recip(EZ)</h4> <hr>
             <small class="d-flex text-muted justify-content-center">An application that will help you to search look for the best recipes and post your own creations!</small>
         </div>
         {% endif %}
 
             <div class="row">
-                <div class="container-fluid py-5 col-sm-8">
+                <div class="container-fluid py-2 col-sm-8">
                     {% if recipe_list_by_RecipeName %}
                         <ul class="list-group recipe-list">
                         {% for recipe in recipe_list_by_RecipeName %}
@@ -35,28 +47,9 @@
                 </div>
             
                 {% if best_of_today and user.is_authenticated %}
-                    <div class="p-4 mb-2 container-fluid py-5 col-sm-4">
-                    <h3 class="display-3">Best of Today:</h3>
-                        <ul class="list-group best-of">
-                            {% for recipe in best_of_today %}
-                                <li class="list-group-item border-info">
-                                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
-                                    Category: {{ recipe.category }} <br>
-                                    Region: {{ recipe.region }} <br>
-                                    Difficulty: {{ recipe.difficulty }} <br>
-                                    CookingDuration: {{ recipe.cooking_duration }} <br>
-                                    Likes: {{ recipe.likes }} <br>
-                                    AverageRating: {{ recipe.average_rating }} <br>
-                                    Vegan: {{ recipe.is_vegan }} <br>
-                                    CreationTime: {{ recipe.creation_time }} <br>
-                                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                    {% include 'recipez/index/index_best_item.html' %}
                     {% else %}
                         <strong class="text-center">You are not authenticated as a user, so no best of today for you!</strong>
-                    </div>
                     {% endif %}
                 <br> <br> <br>
             </div>
@@ -68,34 +61,37 @@
         $(document).ready(function () {
             window.recipe_index = "{% url 'recipez:index' %}";
 
-            var page = 1;
-            var block_request = false;
-            var end_pagination = false;
+            function paginate(window) {
+                var page = 1;
+                var block_request = false;
+                var end_pagination = false;
 
-            $(window).scroll(function () {
-                var margin = $(document).height() - $(window).height() - 200;
+                $(window).scroll(function () {
+                    var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
 
-                if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
-                    block_request = true;
-                    page += 1;
+                    if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+                        block_request = true;
+                        page += 1;
 
-                    $.ajax({
-                        type: 'GET',
-                        url: window.recipe_index,
-                        data: {
-                            "page": page
-                        },
-                        success: function (data) {
-                            if (data.end_pagination === true) {
-                                end_pagination = true;
-                            } else {
-                                block_request = false;
+                        $.ajax({
+                            type: 'GET',
+                            url: window.recipe_index,
+                            data: {
+                                "page": page
+                            },
+                            success: function (data) {
+                                if (data.end_pagination === true) {
+                                    end_pagination = true;
+                                } else {
+                                    block_request = false;
+                                }
+                                $('.recipe-list').append(data.content);
                             }
-                            $('.recipe-list').append(data.content);
-                        }
-                    })
-                }
-            });
+                        })
+                    }
+                });
+            }
+            paginate(window);
         })
     </script>
 {% endblock %}

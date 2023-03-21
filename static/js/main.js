@@ -52,5 +52,13 @@ $(document).ready(function() {
       document.documentElement.scrollTop = 0;
       document.body.scrollIntoView({ behavior: "smooth" });
     }
+
+    const getAlert = document.getElementById("alert");
+    console.log(getAlert);
+
+    $("#closeAlert").click(function() {
+      $("#alert").hide();
+    });
+
   })
   
