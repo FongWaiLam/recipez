@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="container py-4">
+    <div class="container py-2">
         <div class="container-fluid py-2 col-sm-12">
             {% if user.is_authenticated %}
             <div class="card w-65 bg-dark text-light">
@@ -34,7 +34,7 @@
         {% endif %}
 
             <div class="row">
-                <div class="container-fluid py-5 col-sm-8">
+                <div class="container-fluid py-2 col-sm-8">
                     {% if recipe_list_by_RecipeName %}
                         <ul class="list-group recipe-list">
                         {% for recipe in recipe_list_by_RecipeName %}
@@ -47,28 +47,9 @@
                 </div>
             
                 {% if best_of_today and user.is_authenticated %}
-                    <div class="p-4 mb-2 container-fluid py-5 col-sm-4">
-                    <h3 class="display-3">Best of Today:</h3>
-                        <ul class="list-group best-of">
-                            {% for recipe in best_of_today %}
-                                <li class="list-group-item border-info">
-                                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
-                                    Category: {{ recipe.category }} <br>
-                                    Region: {{ recipe.region }} <br>
-                                    Difficulty: {{ recipe.difficulty }} <br>
-                                    CookingDuration: {{ recipe.cooking_duration }} <br>
-                                    Likes: {{ recipe.likes }} <br>
-                                    AverageRating: {{ recipe.average_rating }} <br>
-                                    Vegan: {{ recipe.is_vegan }} <br>
-                                    CreationTime: {{ recipe.creation_time }} <br>
-                                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                    {% include 'recipez/index/index_best_item.html' %}
                     {% else %}
                         <strong class="text-center">You are not authenticated as a user, so no best of today for you!</strong>
-                    </div>
                     {% endif %}
                 <br> <br> <br>
             </div>
@@ -80,34 +61,37 @@
         $(document).ready(function () {
             window.recipe_index = "{% url 'recipez:index' %}";
 
-            var page = 1;
-            var block_request = false;
-            var end_pagination = false;
+            function paginate(window) {
+                var page = 1;
+                var block_request = false;
+                var end_pagination = false;
 
-            $(window).scroll(function () {
-                var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
+                $(window).scroll(function () {
+                    var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
 
-                if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
-                    block_request = true;
-                    page += 1;
+                    if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+                        block_request = true;
+                        page += 1;
 
-                    $.ajax({
-                        type: 'GET',
-                        url: window.recipe_index,
-                        data: {
-                            "page": page
-                        },
-                        success: function (data) {
-                            if (data.end_pagination === true) {
-                                end_pagination = true;
-                            } else {
-                                block_request = false;
+                        $.ajax({
+                            type: 'GET',
+                            url: window.recipe_index,
+                            data: {
+                                "page": page
+                            },
+                            success: function (data) {
+                                if (data.end_pagination === true) {
+                                    end_pagination = true;
+                                } else {
+                                    block_request = false;
+                                }
+                                $('.recipe-list').append(data.content);
                             }
-                            $('.recipe-list').append(data.content);
-                        }
-                    })
-                }
-            });
+                        })
+                    }
+                });
+            }
+            paginate(window);
         })
     </script>
 {% endblock %}

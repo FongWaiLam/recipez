@@ -1,0 +1,25 @@
+<div class="container-fluid p-4 mb-2 py-5 col-sm-4">
+    <h4 class="display-4 text-center">Best of Today</h4>
+        <ul class="list-group best-of">
+            {% for recipe in best_of_today %}
+            <li class="list-group-item py-2 mb-2" style="border-radius: 10px;">
+                <div class="card border-primary w-60">
+                    <h2 class="card-header bg-dark text-white" style="width: 100%;"><a href="{% url 'recipez:show_recipe' recipe.id %}" class="nav-link active">{{ recipe.name }}</a></h2> <br>
+                    <img class="card-image-top" src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Image of {{recipe.id}}" >
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item border-secondary">Category: {{ recipe.category }}</li>
+                            <li class="list-group-item border-secondary">Difficulty: {{ recipe.difficulty }}</li>
+                            <li class="list-group-item border-secondary">CookingDuration: {{ recipe.cooking_duration }}</li>
+                            <li class="list-group-item border-secondary">AverageRating: {{ recipe.average_rating }}</li>
+                            <li class="list-group-item border-secondary">Created: {{ recipe.creation_time}}</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        Author: {{ recipe.user.user.username }}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>

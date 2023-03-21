@@ -59,5 +59,6 @@ $(document).ready(function() {
     $("#closeAlert").click(function() {
       $("#alert").hide();
     });
+
   })
   
