@@ -12,11 +12,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from recipez.models import Recipe, UserProfile, Ingredient, Comment
 from django.contrib.auth.models import User
-from recipez.functions import search_by
-
-# Helper function to check if the request is an ajax request
-def is_ajax(request):
-    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+from recipez.functions import search_by, is_ajax
 
 # Create your views here.
 

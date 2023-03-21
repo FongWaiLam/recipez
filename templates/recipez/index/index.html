@@ -6,14 +6,26 @@
 
 {% block body_block %}
     <div class="container py-4">
-        {#todo#}
-            <div>
-                {% if user.is_authenticated %}
-                    {{ user.username }} <br>
-                    Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>
-                {% endif %}
+        <div class="container-fluid py-2 col-sm-12">
+            {% if user.is_authenticated %}
+            <div class="card w-65 bg-dark text-light">
+                <div class="card-header ps-4"> <p class="lead">Hi {{ user.username }}!</p>  </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="d-flex col-sm-2">
+                            <a class="navbar-brand" href="{% url 'recipez:user_profile' %}">
+                                <img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="80" height="60" alt="Avatar" style="border-radius: 80%;">
+                            </a>
+                        </div>
+                        <div class="d-flex col-lg-8"> <button href class="btn btn-outline-warning" style="width: 80%; height: 80%; align-items: center;"> 
+                            <a href="{% url 'recipez:add_recipe' %}" class="nav-link active"> Create Something Amazing</a> </button> 
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
-        {#todo#}
+            {% endif %}
+        </div>
         {% if not user.is_authenticated %}
         <div class="p-1 mb-2 bg-light rounded-3">
             <h2 class="display-2 d-flex justify-content-center text-dark text-decoration-none">Welcome to Recip(EZ)</h2> <hr>
