@@ -25,5 +25,32 @@ $(document).ready(function() {
       })
       
     })
+
+    var scrollButton = document.getElementById("btn-back-to-top");
+    var topScrollPx = 50;
+
+    window.onscroll = function () {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (
+        document.body.scrollTop > topScrollPx ||
+        document.documentElement.scrollTop > topScrollPx
+      ) {
+        scrollButton.style.display = "block";
+      } else {
+        scrollButton.style.display = "none";
+      }
+    }
+    
+    // Function for user click to scroll to the top of the page
+    scrollButton.addEventListener("click", backToTop);
+
+    function backToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollIntoView({ behavior: "smooth" });
+    }
   })
   
