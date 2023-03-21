@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 
 
 class UserForm(forms.ModelForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     password = forms.CharField(widget=forms.PasswordInput())
+    remember_me = forms.BooleanField(required=False)
 
     class Meta:
         model = User

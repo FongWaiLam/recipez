@@ -1,0 +1,102 @@
+{% extends 'recipez/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    <h1>Register for Recipez</h1>
+    {% if registered %}
+        <strong>Thank you for registering!</strong>
+        <a href="{% url 'recipez:index' %}">Return to the homepage.</a><br />
+    {% else %}
+        <strong>Register here!</strong><br />
+        <form id="user_form" method="post" action="{% url 'recipez:register' %}" enctype="multipart/form-data"></form>
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <input type="submit" value="Register" />
+        </form>
+    {% endif %}
+    <br>
+    <p><strong>-- OR --</strong></p>
+    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+
+<!--Work in Progress-->
+
+<!-- Path: templates\recipez\authentication\register.html -->
+<!-- Section: Design Block -->
+<section class="">
+    <!-- Jumbotron -->
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: #f1deda">
+      <div class="container">
+        <div class="row gx-lg-5 align-items-center">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 display-3 fw-bold ls-tight">
+              The Platform for Foodies <br />
+              <span class="text-primary">Recip(ez)</span>
+            </h1>
+            <p style="color: hsl(217, 10%, 50.8%)">
+              The easiest way to find new recipes and share your own. <br>
+              Find a community of cooks who share your passion for food. <br>
+              Enjoy the best recipes from around the world. <br>
+            </p>
+          </div>
+  
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card bg-dark text-white">
+              <div class="card-body py-5 px-md-5">
+                <form id="user_form" method="post" action="{% url 'recipez:register' %}" enctype="multipart/form-data">
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="form3Example2" class="form-control" />
+                        <label class="form-label" for="form3Example2">Username</label>
+                    </div>
+  
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="email" id="form3Example3" class="form-control" />
+                        <label class="form-label" for="form3Example3">Email address</label>
+                    </div>
+  
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" id="form3Example4" class="form-control" />
+                        <label class="form-label" for="form3Example4">Password</label>
+                    </div>
+  
+                    <!-- Checkbox -->
+                    <div class="form-check d-flex justify-content-center mb-4">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+                        <label class="form-check-label" for="form2Example33">
+                        Subscribe to our newsletter
+                        </label>
+                    </div>
+  
+                    <!-- Submit button -->
+                    <div class="form-check d-flex justify-content-center mb-4">
+                        <button type="submit" class="btn btn-primary btn-block mb-4">
+                            Sign up
+                        </button>
+                    </div>
+
+                  <!-- Register buttons -->
+                  <div class="text-center">
+                    <p>or sign up with:</p>
+  
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                      <i class="fab fa-google"></i>
+                    </button>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Jumbotron -->
+  </section>
+  <!-- Section: Design Block -->
+{% endblock %}

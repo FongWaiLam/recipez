@@ -145,14 +145,15 @@ def add_recipe(request):
 def user_profile(request):
     # to be completed
 
-    return render(request, 'recipez/userProfile.html')
+    return render(request, 'recipez/user_profile.html')
 
 
 # Login Page
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('usernameInput')
+        password = request.POST.get('passwordInput')
+        remember_me = request.POST.get('rememberMe')
 
         user = authenticate(username=username, password=password)
 
@@ -167,7 +168,7 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
 
     else:
-        return render(request, 'recipez/login.html')
+        return render(request, 'recipez/authentication/login.html')
 
 
 # User Registration Form
@@ -204,7 +205,7 @@ def register(request):
         'profile_form': profile_form,
         'registered': registered
     }
-    return render(request, 'recipez/register.html', context=context)
+    return render(request, 'recipez/authentication/register.html', context=context)
 
 
 @login_required
