@@ -6,22 +6,6 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Register for Recipez</h1>
-    {% if registered %}
-        <strong>Thank you for registering!</strong>
-        <a href="{% url 'recipez:index' %}">Return to the homepage.</a><br />
-    {% else %}
-        <strong>Register here!</strong><br />
-        <form id="user_form" method="post" action="{% url 'recipez:register' %}" enctype="multipart/form-data"></form>
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type="submit" value="Register" />
-        </form>
-    {% endif %}
-    <br>
-    <p><strong>-- OR --</strong></p>
-    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
 
 <!--Work in Progress-->
 
@@ -48,28 +32,33 @@
             <div class="card bg-dark text-white">
               <div class="card-body py-5 px-md-5">
                 <form id="user_form" method="post" action="{% url 'recipez:register' %}" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+                    <!--Username Input-->
                     <div class="form-outline form-white mb-4">
-                        <input type="text" id="form3Example2" class="form-control" />
-                        <label class="form-label" for="form3Example2">Username</label>
+                        {{ user_form.username }}
+                        <label class="form-label" for="usernameClass">Username</label>
                     </div>
-  
+                    
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <input type="email" id="form3Example3" class="form-control" />
-                        <label class="form-label" for="form3Example3">Email address</label>
+                        {{ user_form.email }}
+                        <label class="form-label" for="mailClass">Email address</label>
                     </div>
   
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <input type="password" id="form3Example4" class="form-control" />
-                        <label class="form-label" for="form3Example4">Password</label>
+                        {{ user_form.password }}
+                        <label class="form-label" for="passwordClass">Password</label>
                     </div>
+                    
+                    {{ profile_form.as_p }}
   
                     <!-- Checkbox -->
-                    <div class="form-check d-flex justify-content-center mb-4">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                        <label class="form-check-label" for="form2Example33">
-                        Subscribe to our newsletter
+                    <div class="form-check mb-4">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="checkInputClass" checked />
+                        <label class="form-check-label" for="checkInputClass">
+                        Remember Me
                         </label>
                     </div>
   
@@ -84,9 +73,11 @@
                   <div class="text-center">
                     <p>or sign up with:</p>
   
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                      <i class="fab fa-google"></i>
-                    </button>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-link btn-floating mx-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"></path>
+                            </svg>
+                    </a>
 
                   </div>
                 </form>

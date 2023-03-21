@@ -160,6 +160,8 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
+                if not remember_me:
+                    request.session.set_expiry(0) # set session expire time to 0
                 return redirect(reverse('recipez:index'))
             else:
                 return HttpResponse("Your Recipez account is disabled.")

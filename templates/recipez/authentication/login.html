@@ -17,6 +17,7 @@
               <!-- Section: Form Data -->
               <div class="mb-md-2 mt-md-2 pb-3">
                 <form id="login_form" method="post" action="{% url 'recipez:login' %}">
+                    {% csrf_token %}
                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                     <p class="text-white-50 mb-5">Please enter your username and password!</p>
 
