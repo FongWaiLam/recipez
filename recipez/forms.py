@@ -1,7 +1,6 @@
 from django import forms
+from recipez.models import UserProfile, Comment, Ingredient, Recipe
 from django.core.exceptions import ValidationError
-
-from recipez.models import UserProfile, Comment
 from django.contrib.auth.models import User
 
 
@@ -54,3 +53,10 @@ class CommentForm(forms.ModelForm):
         # Association between the ModelForm and a model
         model = Comment
         fields = ('rating', 'detail')
+
+from django import forms
+class RecipeModelForm(forms.ModelForm):
+    detail = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Recipe
+        fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]

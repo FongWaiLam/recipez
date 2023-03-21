@@ -1,7 +1,9 @@
+from django.forms import formset_factory
 from django.shortcuts import render, redirect
+from recipez import models
+from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm
 from django.template.loader import render_to_string
 from django.http import HttpResponse, JsonResponse
-from recipez.forms import UserForm, UserProfileForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.core import paginator
 from django.urls import reverse
@@ -97,23 +99,33 @@ def show_recipe(request, recipe_id):
 
 # Post a new Recipe
 def add_recipe(request):
-    # form = RecipeForm()
-    #
-    # if request.method == 'POST':
-    #     form = RecipeForm(request.POST)
-    #
-    #     if form.is_valid():
-    #         # recipe - reference to an instance created
-    #         recipe = form.save(commit=True)
-    #         print(recipe, recipe.slug)
-    #         return redirect('/rango/')
-    #     else:
-    #         print(form.errors)
+    if request.method == 'POST':
+        recipe_form = RecipeModelForm(request.POST)
+        # ingredient_forms = IngredientModelForm(request.POST)
+        if recipe_form.is_valid():
+            recipe = recipe_form.save(commit=False)
+            recipe.user=request.user.user_profile
+            if 'photo' in request.FILES:
+                recipe.photo = request.FILES['photo']
+            recipe.save()
+            print("recipe saved")
+            sum_ingredients = int(request.POST.get('ingredient_set-TOTAL_FORMS'))
+            for i in range(0,sum_ingredients):
+                ingredient_name=request.POST.get('ingredient_set-'+str(i)+'-ingredient')
+                print(ingredient_name)
+                ingredient=Ingredient.objects.get_or_create(name_and_amount=ingredient_name)[0]
+                print(ingredient)
+                ingredient.recipes.add(recipe)
+                ingredient.save()
+            print("ingredient saved")
+            return redirect(reverse('recipez:index'))
 
-    return render(request, 'recipez/add_recipe.html',
-                  # {'form': form}
-                  )
-
+    else:
+        recipe_form = RecipeModelForm()
+    context = {
+        'recipe_form':recipe_form,
+    }
+    return render(request, 'recipez/add_recipe.html', context)
 
 # # Post a new Comment
 # def add_comment(request, recipe_id):
