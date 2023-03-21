@@ -101,7 +101,6 @@ def show_recipe(request, recipe_id):
 def add_recipe(request):
     if request.method == 'POST':
         recipe_form = RecipeModelForm(request.POST)
-        # ingredient_forms = IngredientModelForm(request.POST)
         if recipe_form.is_valid():
             recipe = recipe_form.save(commit=False)
             recipe.user=request.user.user_profile
