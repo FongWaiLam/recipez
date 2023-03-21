@@ -98,16 +98,6 @@
 </nav>
 <!-- End of Navbar -->
 
-
-{#todo#}
-    <div>
-        {% if user.is_authenticated %}
-            {{ user.username }} <br>
-            Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>
-        {% endif %}
-    </div>
-{#todo#}
-
 {% block body_block %}
 {% endblock %}
 </body>
