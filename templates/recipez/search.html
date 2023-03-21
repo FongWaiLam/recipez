@@ -1,0 +1,81 @@
+{% extends 'recipez/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+    <h1>Search Result</h1>
+        <h2>Users containing this name:</h2>
+        {% if author_list %}
+            <ul>
+            {% for author in author_list %}
+                {{ author.username }}
+                Avatar:<img src="{{ MEDIA_URL }}{{ author.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br>
+            {% endfor %}
+            </ul>>
+        {% else %}
+            <strong>There are no users containing this name.</strong>
+        {% endif %}
+
+        <br> <br> <br> <br>
+
+        <h2>Recipes containing this name:</h2>
+        {% if recipe_list_by_RecipeName %}
+            <ul>
+            {% for recipe in recipe_list_by_RecipeName %}
+                <li>
+                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                    Category: {{ recipe.category }} <br>
+                    Region: {{ recipe.region }} <br>
+                    Difficulty: {{ recipe.difficulty }} <br>
+                    CookingDuration: {{ recipe.cooking_duration }} <br>
+                    Likes: {{ recipe.likes }} <br>
+                    AverageRating: {{ recipe.average_rating }} <br>
+                    Vegan: {{ recipe.is_vegan }} <br>
+                    CreationTime: {{ recipe.creation_time }} <br>
+                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no recipes containing this name.</strong>
+        {% endif %}
+
+        <br> <br> <br> <br>
+
+        <h2>Recipes containing this ingredient:</h2>
+        {% if recipe_list_by_Ingredient %}
+            <ul>
+            {% for recipe in recipe_list_by_Ingredient %}
+                <li>
+                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
+                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
+                    Category: {{ recipe.category }} <br>
+                    Region: {{ recipe.region }} <br>
+                    Difficulty: {{ recipe.difficulty }} <br>
+                    CookingDuration: {{ recipe.cooking_duration }} <br>
+                    Likes: {{ recipe.likes }} <br>
+                    AverageRating: {{ recipe.average_rating }} <br>
+                    Vegan: {{ recipe.is_vegan }} <br>
+                    CreationTime: {{ recipe.creation_time }} <br>
+                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
+                </li>
+            {% endfor %}
+            </ul>>
+        {% else %}
+            <strong>There are no recipes containing this ingredient.</strong>
+        {% endif %}
+
+        </div>
+
+        <br> <br> <br> <br>
+
+        <div>
+        <h2>Best of Today</h2>
+        {# todo #}
+        </div>
+{% endblock %}
+
