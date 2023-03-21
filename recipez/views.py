@@ -1,3 +1,4 @@
+# Import modules and functions
 from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from recipez import models
@@ -12,9 +13,12 @@ from recipez.models import Recipe, UserProfile, Ingredient, Comment
 from django.contrib.auth.models import User
 from recipez.functions import search_by
 
+# Helper function to check if the request is an ajax request
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-    
+
+# Create your views here.
+
 # Home Page
 def index(
     request, template='recipez/index.html', extra_context=None):
@@ -30,12 +34,12 @@ def index(
     recipe_list = Recipe.objects.all().order_by('-creation_time')
     p = paginator.Paginator(recipe_list, RECIPE_PER_PAGE)
     try:
-        post_page = p.page(page)
+        recipe_page = p.page(page)
     except paginator.EmptyPage:
-        post_page = paginator.Page([], page, p)
+        recipe_page = paginator.Page([], page, p)
 
     if not is_ajax(request):
-        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': post_page}
+        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': recipe_page}
         best_pages = Recipe.objects.order_by('-likes')[:3]
         context_dict['best_of_today'] = best_pages
         return render(request,
@@ -47,11 +51,11 @@ def index(
         content = ''
         page = int(request.GET.get('page'))
         try:
-            post_page = p.page(page)
+            recipe_page = p.page(page)
         except paginator.EmptyPage:
-            post_page = paginator.Page([], page, p)
+            recipe_page = paginator.Page([], page, p)
 
-        for post in post_page:
+        for post in recipe_page:
             content += render_to_string('recipez/index/index_post_item.html',
                                         {'recipe': post},
                                         request=request)
@@ -126,39 +130,27 @@ def add_recipe(request):
     }
     return render(request, 'recipez/add_recipe.html', context)
 
-# # Post a new Comment
-# def add_comment(request, recipe_id):
-#     recipe = Recipe.objects.get(id=recipe_id)
-#     form = CommentForm()
-#
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.recipe = recipe
-#             comment.username = request.user.username
-#             comment.save()
-#
-#     return render(request, 'recipez/add_comment.html', {'form': form})
-
 # User Profile Page
 def user_profile(request):
     # to be completed
 
-    return render(request, 'recipez/userProfile.html')
+    return render(request, 'recipez/user_profile.html')
 
 
 # Login Page
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('usernameInput')
+        password = request.POST.get('passwordInput')
+        remember_me = request.POST.get('rememberMe')
 
         user = authenticate(username=username, password=password)
 
         if user:
             if user.is_active:
                 login(request, user)
+                if not remember_me:
+                    request.session.set_expiry(0) # set session expire time to 0
                 return redirect(reverse('recipez:index'))
             else:
                 return HttpResponse("Your Recipez account is disabled.")
@@ -167,7 +159,7 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
 
     else:
-        return render(request, 'recipez/login.html')
+        return render(request, 'recipez/authentication/login.html')
 
 
 # User Registration Form
@@ -204,7 +196,7 @@ def register(request):
         'profile_form': profile_form,
         'registered': registered
     }
-    return render(request, 'recipez/register.html', context=context)
+    return render(request, 'recipez/authentication/register.html', context=context)
 
 
 @login_required

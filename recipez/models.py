@@ -23,7 +23,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
 class Ingredient(models.Model):
     name_and_amount = models.CharField(max_length=MAX_LENGTH, unique=True)
 
