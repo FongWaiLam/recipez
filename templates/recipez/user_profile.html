@@ -8,7 +8,7 @@
 {% block body_block %}
     <div>
         <h1>Hi, {{ user_name }}</h1>
-        <img src="{{user_avatar}}" alt="User Avatar" class="user-avatar" />
+        <img src="{{ MEDIA_URL }}{{user_avatar}}" width="50" height="50" alt="User Avatar" class="user-avatar" />
         </br>
     </div>
 

@@ -77,7 +77,7 @@
                                      height="40"/>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'recipez:user_profile' %}">My Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'recipez:user_profile' user.username %}">My Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -174,10 +174,10 @@
                             My Profile
                         </h6>
                         <p>
-                            <a class="text-reset" href="{% url 'recipez:user_profile' %}">My post</a>
+                            <a class="text-reset" href="{% url 'recipez:user_profile' user.username %}">My post</a>
                         </p>
                         <p>
-                            <a class="text-reset" href="{% url 'recipez:user_profile' %}">My bookmark</a>
+                            <a class="text-reset" href="{% url 'recipez:user_profile' user.username %}">My bookmark</a>
                         </p>
                         <p>
                             <a class="text-reset" href="{% url 'recipez:add_recipe' %}">Write a recipe</a>
