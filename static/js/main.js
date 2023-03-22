@@ -9,6 +9,16 @@ $(document).ready(function() {
     if (current_url[1] == 'recipez' && current_url[2] == 'user_profile') {
         tabCardActivate();
     }
+
+    if (current_url[1] == 'recipez' && current_url[2] == 'add_recipe') {
+      var ingredientCounter = 0;
+        $('#add-ingredient').click(function () {
+            addNewIngredient(ingredientCounter);
+        });
+        $('#submit-ingredient').click(function () {
+            submitIngredient(ingredientCounter);
+        });
+    }
     
   
     var scrollLink = $('.scroll');
@@ -132,5 +142,30 @@ $(document).ready(function() {
         $('#'+id+'-saved').addClass('active');
         $('#'+id+'-saved').addClass('show');
     });
+  }
+
+  function addNewIngredient(ingredientCounter) {
+    var ingredientForm = document.getElementById("ingredient-form");
+    var newIngredientGroup = document.createElement("div");
+    newIngredientGroup.setAttribute("class", "form-group");
+    var newIngredientLabel = document.createElement("label");
+    newIngredientLabel.innerHTML = "ingredient " + (++ingredientCounter);
+    console.log(ingredientCounter);
+    newIngredientGroup.appendChild(newIngredientLabel);
+    var newIngredientInput = document.createElement("input");
+    newIngredientInput.setAttribute("type", "text");
+    newIngredientInput.setAttribute("name", "ingredient_set-" +
+        (ingredientCounter - 1) + "-ingredient");
+    newIngredientInput.setAttribute("class", "form-control");
+    newIngredientGroup.appendChild(newIngredientInput);
+    var newIngredientError = document.createElement("span");
+    newIngredientError.setAttribute("style", "color: red");
+    newIngredientGroup.appendChild(newIngredientError);
+    ingredientForm.insertBefore(newIngredientGroup,
+        ingredientForm.lastChild);
+}
+
+  function submitIngredient(ingredientCounter) {
+      $('#id_ingredient_set-TOTAL_FORMS').attr("value", ingredientCounter.toString())
   }
   
