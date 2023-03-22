@@ -90,8 +90,9 @@ def show_recipe(request, recipe_id):
             if request.user.user_profile.bookmark is None:
                 u_profile.bookmark = []
                 u_profile.save()
-            if recipe_id in request.user.user_profile.bookmark:
-                context_dict['is_bookmark'] = 'Already in bookmark'
+            else:
+                if int(recipe_id) in request.user.user_profile.bookmark:
+                    context_dict['is_bookmark'] = 'Already in bookmark'
 
         if request.method == 'POST':
             form = CommentForm(request.POST)
@@ -264,10 +265,10 @@ def like_recipe(request, recipe_id):
 def add_bookmark(request, recipe_id):
     u_profile = request.user.user_profile
 
-    if recipe_id in u_profile.bookmark:
-        u_profile.bookmark.remove(recipe_id)
+    if int(recipe_id) in u_profile.bookmark:
+        u_profile.bookmark.remove(int(recipe_id))
     else:
-        u_profile.bookmark.append(recipe_id)
+        u_profile.bookmark.append(int(recipe_id))
 
     u_profile.save()
 
