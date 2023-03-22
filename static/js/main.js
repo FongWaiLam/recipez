@@ -144,7 +144,8 @@ $(document).ready(function() {
     });
   }
 
-  function addNewIngredient(ingredientCounter) {
+  var ingredientCounter = 0;
+function addNewIngredient() {
     var ingredientForm = document.getElementById("ingredient-form");
     var newIngredientGroup = document.createElement("div");
     newIngredientGroup.setAttribute("class", "form-group");
@@ -163,9 +164,10 @@ $(document).ready(function() {
     newIngredientGroup.appendChild(newIngredientError);
     ingredientForm.insertBefore(newIngredientGroup,
         ingredientForm.lastChild);
+    submitIngredient(ingredientCounter);
 }
 
-  function submitIngredient(ingredientCounter) {
-      $('#id_ingredient_set-TOTAL_FORMS').attr("value", ingredientCounter.toString())
-  }
+function submitIngredient(ingredientCounter) {
+    $('#id_ingredient_set-TOTAL_FORMS').attr("value", ingredientCounter.toString())
+}
   
