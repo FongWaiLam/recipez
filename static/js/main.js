@@ -64,6 +64,7 @@ $(document).ready(function() {
       document.body.scrollIntoView({ behavior: "smooth" });
     }
 
+    // Function for user click to close the alert
     $("#closeAlert").click(function() {
       $("#alert").hide();
     });
@@ -102,6 +103,7 @@ $(document).ready(function() {
       });
   }
 
+  // Function of Tab Card for User Profile
   function tabCardActivate() {
     var nav_items1 = $('.nav-link.1');
     var tab_items1 = $('.tab-pane.1');
