@@ -6,47 +6,120 @@
 {% endblock %}
 
 {% block body_block %}
-    <div>
-        <h1>Hi, {{ user_name }}</h1>
-        <img src="{{ MEDIA_URL }}{{user_avatar}}" width="50" height="50" alt="User Avatar" class="user-avatar" />
-        </br>
-    </div>
+    <div class="container py-2 mb-4 p-2">
+        <div class="row d-flex justify-content-between">
 
-    <div>
-        <h2>My Posts</h2>
-        <div class="recipe-gallery" style="display: flex; overflow-x: scroll;">
-            {% for recipe in post_recipes %}
-                <div class="recipe-card">
-                    <h3>{{ recipe.name }}</h3>
-                    <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" style="width: 100px; height: 100px;">
-                    </br>
-                </div>
-            {% empty %}
-                <p>You haven't posted anything.</p>
-            {% endfor %}
+            <div class="col-sm-8">
+            <h1 class="display-1 text-end">Hi, {{ user_name }}</h1>
+            <h4 class="display-4 text-end">Welcome to your profile!</h4>
+            </div>
+            <div class="col-sm-2 mt-4 ml-6">
+            <img src="{{ MEDIA_URL }}{{user_avatar}}" width="100" height="100" alt="User Avatar" class="user-avatar d-flex justify-content-between" style="border-radius: 50%;" /> </div>
         </div>
     </div>
 
-    <div>
-        <h2>Saved Recipes</h2>
-        <div class="saved-recipe-gallery" style="display: flex; overflow-x: scroll;">
-            {% for recipe in saved_recipes %}
-                <div class="saved-recipe-card">
-                    <h3>{{ recipe.name }}</h3>
-                    <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" style="width: 100px; height: 100px;">
-                    </br>
+    <div class="container text-center mb-4 p-2">
+        <span><a href="{% url 'recipez:add_recipe' %}" class="btn btn-primary btn-lg">Post Something New</a></span>
+    </div>
+
+    <div class="container py-2 mb-4 p-2">
+        <h4 class="display-4 text-center">My Posts</h4>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    {% for recipe in post_recipes %}
+                    <li class="nav-item">
+                        <button class="nav-link 1" id="{{recipe.id}}" role="tab">{{recipe.name}}</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-content">
+                    {% for recipe in post_recipes %}
+                    <div class="tab-pane 1" id="{{recipe.id}}-post" role="tabpanel">
+                        <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" class="card-img-top" style="width: 100px; height: 100px;">
+                        <h5 class="card-title">{{recipe.name}}</h5>
+                        <p class="card-text">{{recipe.detail}}</p>
+                        <div class="card-footer">
+                            <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-outline-success">Read More</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p class="lead">You have not posted anything</p>
+                    {% endfor %}
                 </div>
-            {% empty %}
-                <p>Your favorites are empty.</p>
-            {% endfor %}
+            </div>
         </div>
     </div>
 
-    <div>
-        <a href="{% url 'recipez:add_recipe' %}" class="btn btn-primary">What's cooking ...</a>
+    <div class="container py-2 mb-4 p-2">
+        <h4 class="display-4 text-center">Saved Recipes</h4>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    {% for recipe in saved_recipes %}
+                    <li class="nav-item">
+                        <button class="nav-link active 2" id="{{recipe.id}}" data-toggle="tab" role="tab" aria-controls="{{recipe.id}}">{{recipe.name}}</button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-body">
+                {% for recipe in saved_recipes %}
+                <div class="tab-content">
+                    <div class="tab-pane 2" id="{{recipe.id}}-saved" role="tabpanel" aria-labelledby="{{recipe.id}}">
+                        <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" class="card-img-top" style="width: 100px; height: 100px;">
+                        <h5 class="card-title">{{recipe.name}}</h5>
+                        <p class="card-text">{{recipe.detail}}</p>
+                        <div class="card-footer">
+                            <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-outline-secondary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p class="lead">Your favorites are empty.</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
 
+
+
+<script>
+    $(document).ready(function(){
+        
+        var nav_items1 = $('.nav-link.1');
+        var tab_items1 = $('.tab-pane.1');
+
+        $(nav_items1).click(function(){
+            var id = $(this).attr('id');
+            console.log(id);
+            $(nav_items1).removeClass('active');
+            $(this).addClass('active');
+            $(tab_items1).removeClass('active');
+            $(tab_items1).removeClass('show').addClass('fade');
+            $('#'+id+'-post').addClass('active');
+            $('#'+id+'-post').addClass('show');
+        });
+        
+        var nav_items2 = $('.nav-link.2');
+        var tab_items2 = $('.tab-pane.2');
+
+        $(nav_items2).click(function(){
+            var id = $(this).attr('id');
+            console.log(id);
+            $(nav_items2).removeClass('active');
+            $(this).addClass('active');
+            $(tab_items2).removeClass('active');
+            $(tab_items2).removeClass('show');
+            $('#'+id+'-saved').addClass('active');
+            $('#'+id+'-saved').addClass('show');
+        });
+
+    });
+</script>
     
 {% endblock %}
 
