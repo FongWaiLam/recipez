@@ -49,8 +49,13 @@
                                 <a href="#!" class="d-flex align-items-center me-3">
                                     <p class="mb-0">Like</p>
                                 </a>
-                                <a href="#!" class="d-flex align-items-center me-3">
-                                    <p class="mb-0">Share</p><br><br>
+                                <button onclick="copyUrl()">Share</button>
+                                <script>
+                                    function copyUrl() {
+                                        navigator.clipboard.writeText(this.location.href);
+                                        alert("Copied to clipboard!");
+                                    }
+                                </script>
                                 </a>
                             </div>
                         </div>
