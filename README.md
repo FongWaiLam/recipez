@@ -1,6 +1,6 @@
 
 ![cover](https://user-images.githubusercontent.com/26685910/222871259-dee07924-a8b9-4c33-b8c1-20b2b7f6cb25.png)
-
+![Github Actions](https://github.com/FongWaiLam/recipez/actions/workflows/django.yml/badge.svg)
 # Coursework
 Recip(EZ) is a assessed coursework for Internet Technology (M). This web application is developed using Python, Django, HTML, CSS and associated technologies including Javascript, JQuery or AJAX. The CSS framework Bootstrap is used to support the responsive web design.
 

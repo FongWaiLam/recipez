@@ -18,11 +18,11 @@ from recipez.models import Recipe, UserProfile, Ingredient, Comment
 
 # Home Page
 def index(
-        request, template='recipez/index.html', extra_context=None):
+    request, template='recipez/index/index.html', extra_context=None):
     if request.method == 'POST':
         search_content = request.POST.get('search_content')
         context_dict = search_by(search_content)
-
+        return render(request, 'recipez/search.html', context=context_dict)
     RECIPE_PER_PAGE = 3
     page = int(request.GET.get('page', 1))
 
@@ -140,8 +140,8 @@ def user_profile(request, user_name):
     saved_recipes = []
     if saved_recipes_id:
         for item_id in saved_recipes_id:
-            saved_recipes.append(Recipe.objects.get(id=item_id))
-
+            saved_recipes.append(Recipe.objects.get(id = item_id))
+    
     context_dict = {
         'user_name': user_name,
         'user_avatar': avatar,
@@ -228,7 +228,6 @@ def user_logout(request):
     logout(request)
     messages.success(request, "Successfully logged out!")
     return redirect(reverse('recipez:index'))
-
 
 # Help Page (About us and Contact us)
 def help(request):
