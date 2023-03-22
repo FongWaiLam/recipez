@@ -129,10 +129,27 @@ def add_recipe(request):
     return render(request, 'recipez/add_recipe.html', context)
 
 # User Profile Page
-def user_profile(request):
-    # to be completed
-
-    return render(request, 'recipez/user_profile.html')
+def user_profile(request, user_name):
+    user = User.objects.get(username=user_name)
+    # userProfile = user.user_profile
+    
+    avatar = user.user_profile.avatar # Get the user's avatar
+    
+    post_recipes = user.user_profile.recipes.all() # Get the user's all posted recipes
+    saved_recipes_id = user.user_profile.bookmark # Get the user's saved recipes (list of recipe_id)
+    
+    saved_recipes = []
+    for item_id in saved_recipes_id:
+        saved_recipes.append(Recipe.objects.get(id = item_id))
+    
+    context_dict = {
+        'user_name': user_name,
+        'user_avatar': avatar,
+        'post_recipes': post_recipes,
+        'saved_recipes': saved_recipes
+                    }
+    
+    return render(request, 'recipez/user_profile.html', context=context_dict)
 
 
 # Login Page

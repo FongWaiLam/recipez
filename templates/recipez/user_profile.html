@@ -2,10 +2,51 @@
 {% load static %}
 
 {% block title_block %}
+    User Profile
 {% endblock %}
 
 {% block body_block %}
+    <div>
+        <h1>Hi, {{ user_name }}</h1>
+        <img src="{{ MEDIA_URL }}{{user_avatar}}" width="50" height="50" alt="User Avatar" class="user-avatar" />
+        </br>
+    </div>
 
-{#     to be done#}
+    <div>
+        <h2>My Posts</h2>
+        <div class="recipe-gallery" style="display: flex; overflow-x: scroll;">
+            {% for recipe in post_recipes %}
+                <div class="recipe-card">
+                    <h3>{{ recipe.name }}</h3>
+                    <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" style="width: 100px; height: 100px;">
+                    </br>
+                </div>
+            {% empty %}
+                <p>You haven't posted anything.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h2>Saved Recipes</h2>
+        <div class="saved-recipe-gallery" style="display: flex; overflow-x: scroll;">
+            {% for recipe in saved_recipes %}
+                <div class="saved-recipe-card">
+                    <h3>{{ recipe.name }}</h3>
+                    <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" style="width: 100px; height: 100px;">
+                    </br>
+                </div>
+            {% empty %}
+                <p>Your favorites are empty.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <a href="{% url 'recipez:add_recipe' %}" class="btn btn-primary">What's cooking ...</a>
+    </div>
+
+
     
 {% endblock %}
+
