@@ -6,24 +6,37 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="container py-2 mb-4 p-2">
+    <div class="container py-2 mb-4 p-4">
         <div class="row d-flex justify-content-between">
+            {% if user.is_authenticated and user_name == request.user.username %}
+                <div class="col-sm-8">
+                <h1 class="display-1 text-end">Hi, {{ user_name }}</h1>
+                <h4 class="display-4 text-end">Welcome to your profile!</h4>
+                </div>
+            {% else %}
+                <div class="col-sm-8">
+                <h4 class="display-4 text-end">Welcome to {{ user_name }}'s profile!</h4>
+                </div>
+            {% endif %}
 
-            <div class="col-sm-8">
-            <h1 class="display-1 text-end">Hi, {{ user_name }}</h1>
-            <h4 class="display-4 text-end">Welcome to your profile!</h4>
-            </div>
-            <div class="col-sm-2 mt-4 ml-6">
+            <div class="col-sm-2">
             <img src="{{ MEDIA_URL }}{{user_avatar}}" width="100" height="100" alt="User Avatar" class="user-avatar d-flex justify-content-between" style="border-radius: 50%;" /> </div>
         </div>
     </div>
 
-    <div class="container text-center mb-4 p-2">
+    {% if user.is_authenticated and user_name == request.user.username %}
+    <div class="container text-center mb-4">
         <span><a href="{% url 'recipez:add_recipe' %}" class="btn btn-primary btn-lg">Post Something New</a></span>
     </div>
+    {% endif %}
 
     <div class="container py-2 mb-4 p-2">
+        {% if user.is_authenticated and user_name == request.user.username %}
         <h4 class="display-4 text-center">My Posts</h4>
+        {% else %}
+        <h4 class="display-4 text-center">{{ user_name }}'s Posts</h4>
+        {% endif %}
+
         <div class="card text-center">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -53,6 +66,7 @@
         </div>
     </div>
 
+    {% if user.is_authenticated and user_name == request.user.username %}
     <div class="container py-2 mb-4 p-2">
         <h4 class="display-4 text-center">Saved Recipes</h4>
         <div class="card text-center">
@@ -85,6 +99,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     
 {% endblock %}
 

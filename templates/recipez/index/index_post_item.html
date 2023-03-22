@@ -8,7 +8,7 @@
                      src="{{ MEDIA_URL }}{{ recipe.user.avatar }}"
                      width="50"/>
                 <div>
-                    <h6 class="fw-bold text-primary mb-1">{{ recipe.user }}</h6>
+                    <a href="{% url 'recipez:user_profile' recipe.user %}" class="btn nav-link btn-outline-info"><h4 class="fw-bold mb-1 text-dark">{{ recipe.user|capfirst }}</h4></a>
                     <!-- Recipe Creator -->
                     <p class="text-muted small mb-0">
                         {{ recipe.creation_time }}

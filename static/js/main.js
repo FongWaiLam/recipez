@@ -107,6 +107,8 @@ $(document).ready(function() {
   function tabCardActivate() {
     var nav_items1 = $('.nav-link.1');
     var tab_items1 = $('.tab-pane.1');
+    $(nav_items1[0]).addClass('active');
+    $(tab_items1[0]).addClass('active');
 
     $(nav_items1).click(function(){
         var id = $(this).attr('id');
@@ -121,6 +123,8 @@ $(document).ready(function() {
     
     var nav_items2 = $('.nav-link.2');
     var tab_items2 = $('.tab-pane.2');
+    $(nav_items2[0]).addClass('active');
+    $(tab_items2[0]).addClass('active');
 
     $(nav_items2).click(function(){
         var id = $(this).attr('id');
