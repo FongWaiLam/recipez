@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="d-flex col-sm-2">
-                            <a class="navbar-brand" href="{% url 'recipez:user_profile' %}">
+                            <a class="navbar-brand" href="{% url 'recipez:user_profile' user.username%}">
                                 <img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="80" height="60" alt="Avatar" style="border-radius: 80%;">
                             </a>
                         </div>
