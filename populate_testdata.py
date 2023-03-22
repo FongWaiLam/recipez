@@ -29,9 +29,9 @@ def populate():
     db_data = load_db_data(yaml_path=db_yaml_path)
 
     print(db_data)
-    
+
+    counter = 0
     for i in db_data['users']:
-        counter = 0
         print(f"Adding user: {i['username']}")
         a = add_user(i['username'], i['password'], i['mail'])
         add_user_profile(a, avatar_name_list[counter])
@@ -62,12 +62,11 @@ def populate():
     for recipe in recipe_list:
         print(f"Adding bookmark to recipe: {recipe.name}")
 
-        recipe_id = random.randint(0, 7)
+        recipe_id = random.randint(0, 14)
         tester_id = random.randint(1, 9)
-        tester = "tester"+str(tester_id)
 
         recipe_id_list.append(recipe.id)
-        add_bookmark(User.objects.get(username=tester), recipe_id_list)
+        add_bookmark(User.objects.get(id=tester_id), recipe_id_list)
 
 
 def add_user(username, password, email):

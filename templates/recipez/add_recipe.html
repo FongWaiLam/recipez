@@ -1,4 +1,4 @@
-{% extends 'recipez/base.html' %}
+{% extends 'recipez/includes/base.html' %}
 {% load static %}
 
 {% block title_block %}
@@ -21,8 +21,7 @@ Add recipe
         <div id="ingredient-form">
             <button type="button" onClick="addNewIngredient()">add a new ingredient</button>
             <script>
-                // var ingredientCounter = {{ingredient_forms | length}}
-                var ingredientCounter = {{ ingredient_count }}
+                var ingredientCounter = 0
                 ;
                 function addNewIngredient() {
                     var ingredientForm = document.getElementById("ingredient-form");
@@ -50,9 +49,6 @@ Add recipe
         </div>
         <input type="hidden" name="ingredient_set-TOTAL_FORMS"
                id="id_ingredient_set-TOTAL_FORMS" value="{{ ingredient_forms|length }}">
-<!--        <script>-->
-<!--            document.getElementById("id_ingredient_set-TOTAL_FORMS").setAttribute("value",document.forms.length)-->
-<!--        </script>-->
         <div class="col-12">
             <button type="submit" onclick="submitIngredient()">Submit</button>
             <button type="reset">Cancel</button>

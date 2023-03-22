@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom css -->
-    <link rel="stylesheet" href="{%  static 'css/nav_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav_styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- Insert Javascript files here -->
@@ -52,11 +52,8 @@
             <button class="btn btn-outline-success" type="submit" value="search">Search</button>
         </form>
 
-     <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+     <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-                <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" href="{% url 'recipez:index' %}">Home</a>
-                </li>
                 <li class="nav-item">
                     <a aria-current="page" class="nav-link active" href="{% url 'recipez:help' %}">Help</a>
                 </li>
@@ -70,11 +67,13 @@
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                            role="button">
+                                
                                 <img class="rounded-circle shadow-1-strong me-3"
                                      src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}"
                                      alt="{{ user.username }}'s profile image"
                                      width="40"
                                      height="40"/>
+                                <span class="lead">{{ user.username }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'recipez:user_profile' user.username %}">My Profile</a></li>
@@ -97,19 +96,22 @@
     </div>
 </nav>
 <!-- End of Navbar -->
-
-
-{#todo#}
-    <div>
-        {% if user.is_authenticated %}
-            {{ user.username }} <br>
-            Avatar:<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br> <br>
-        {% endif %}
-    </div>
-{#todo#}
-
+{% include 'recipez/includes/messages.html' %}
 {% block body_block %}
 {% endblock %}
+
+<button
+        type="button"
+        class="btn btn-primary btn-floating btn-lg"
+        id="btn-back-to-top"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-double-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708l6-6z"/>
+            <path fill-rule="evenodd" d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+          </svg>
+</button>
+        
+
 </body>
 
 
