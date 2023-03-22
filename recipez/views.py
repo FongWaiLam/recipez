@@ -18,12 +18,11 @@ from recipez.functions import search_by, is_ajax
 
 # Home Page
 def index(
-    request, template='recipez/index.html', extra_context=None):
-
+    request, template='recipez/index/index.html', extra_context=None):
     if request.method == 'POST':
         search_content = request.POST.get('search_content')
         context_dict = search_by(search_content)
-    
+        return render(request, 'recipez/search.html', context=context_dict)
     RECIPE_PER_PAGE = 3
     page = int(request.GET.get('page', 1))
 
@@ -229,7 +228,6 @@ def user_logout(request):
     logout(request)
     messages.success(request, "Successfully logged out!" )    
     return redirect(reverse('recipez:index'))
-
 
 # Help Page (About us and Contact us)
 def help(request):

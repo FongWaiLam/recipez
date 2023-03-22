@@ -1,4 +1,15 @@
 $(document).ready(function() {
+
+    //Enable Pagination
+    window.recipe_index = $('.navbar-brand').attr('href');
+    paginate(window);
+
+    //Enable Tab Card for User Profile
+    var current_url = window.location.pathname.split('/');
+    if (current_url[1] == 'recipez' && current_url[2] == 'user_profile') {
+        tabCardActivate();
+    }
+    
   
     var scrollLink = $('.scroll');
     
@@ -53,12 +64,71 @@ $(document).ready(function() {
       document.body.scrollIntoView({ behavior: "smooth" });
     }
 
-    const getAlert = document.getElementById("alert");
-    console.log(getAlert);
-
     $("#closeAlert").click(function() {
       $("#alert").hide();
     });
 
   })
+
+  // Function of AJAX Pagination for Recipe Index
+  function paginate(window) {
+      var page = 1;
+      var block_request = false;
+      var end_pagination = false;
+
+      $(window).scroll(function () {
+          var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
+
+          if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+              block_request = true;
+              page += 1;
+
+              $.ajax({
+                  type: 'GET',
+                  url: window.recipe_index,
+                  data: {
+                      "page": page
+                  },
+                  success: function (data) {
+                      if (data.end_pagination === true) {
+                          end_pagination = true;
+                      } else {
+                          block_request = false;
+                      }
+                      $('.recipe-list').append(data.content);
+                  }
+              })
+          }
+      });
+  }
+
+  function tabCardActivate() {
+    var nav_items1 = $('.nav-link.1');
+    var tab_items1 = $('.tab-pane.1');
+
+    $(nav_items1).click(function(){
+        var id = $(this).attr('id');
+        console.log(id);
+        $(nav_items1).removeClass('active');
+        $(this).addClass('active');
+        $(tab_items1).removeClass('active');
+        $(tab_items1).removeClass('show').addClass('fade');
+        $('#'+id+'-post').addClass('active');
+        $('#'+id+'-post').addClass('show');
+    });
+    
+    var nav_items2 = $('.nav-link.2');
+    var tab_items2 = $('.tab-pane.2');
+
+    $(nav_items2).click(function(){
+        var id = $(this).attr('id');
+        console.log(id);
+        $(nav_items2).removeClass('active');
+        $(this).addClass('active');
+        $(tab_items2).removeClass('active');
+        $(tab_items2).removeClass('show');
+        $('#'+id+'-saved').addClass('active');
+        $('#'+id+'-saved').addClass('show');
+    });
+  }
   
