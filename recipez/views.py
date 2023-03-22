@@ -139,8 +139,9 @@ def user_profile(request, user_name):
     saved_recipes_id = user.user_profile.bookmark # Get the user's saved recipes (list of recipe_id)
     
     saved_recipes = []
-    for item_id in saved_recipes_id:
-        saved_recipes.append(Recipe.objects.get(id = item_id))
+    if saved_recipes_id:
+        for item_id in saved_recipes_id:
+            saved_recipes.append(Recipe.objects.get(id = item_id))
     
     context_dict = {
         'user_name': user_name,
