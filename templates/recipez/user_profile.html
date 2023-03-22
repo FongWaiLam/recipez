@@ -66,8 +66,9 @@
                 </ul>
             </div>
             <div class="card-body">
+                <div class="row gx-lg-5 align-items-center">
                 {% for recipe in saved_recipes %}
-                <div class="tab-content">
+                <div class="tab-content col-lg-6 mb-5 mb-lg-0">
                     <div class="tab-pane 2" id="{{recipe.id}}-saved" role="tabpanel" aria-labelledby="{{recipe.id}}">
                         <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" class="card-img-top" style="width: 100px; height: 100px;">
                         <h5 class="card-title">{{recipe.name}}</h5>
@@ -78,6 +79,7 @@
                     </div>
                 </div>
                 {% empty %}
+                </div>
                     <p class="lead">Your favorites are empty.</p>
                 {% endfor %}
             </div>

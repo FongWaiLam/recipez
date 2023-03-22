@@ -12,12 +12,20 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
 
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('avatar',)
+        widgets = {
+            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
+        }
 
 
 class CustomFloatInput(forms.widgets.TextInput):
@@ -56,9 +64,18 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('rating', 'detail')
 
-from django import forms
 class RecipeModelForm(forms.ModelForm):
-    detail = forms.CharField(widget=forms.Textarea)
+    detail = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
     class Meta:
         model = Recipe
-        fields = ["name","category","region","difficulty","cooking_duration","is_vegan","photo","detail"]
+        fields = ['name', 'category', 'region', 'difficulty', 'cooking_duration', 'is_vegan', 'photo', 'detail']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': forms.TextInput(attrs={'class': 'form-control text-muted', 'placeholder': 'Category'}),
+            'region': forms.TextInput(attrs={'class': 'form-control text-muted', 'placeholder': 'Region'}),
+            'difficulty': forms.TextInput(attrs={'class': 'form-control text-muted'}),
+            'cooking_duration': forms.TextInput(attrs={'class': 'form-control'}),
+            'is_vegan': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control'}),
+            'detail': forms.Textarea(attrs={'class': 'form-control'}),
+        }
