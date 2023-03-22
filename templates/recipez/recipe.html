@@ -45,18 +45,23 @@
                             </p>
                             <!-- Recipe Content -->
                             <div class="small d-flex justify-content-start">
-                                <small>{{ recipe.likes }} </small> <br>
-                                <a href="#!" class="d-flex align-items-center me-3">
-                                    <p class="mb-0">Like</p>
-                                </a>
-                                <button onclick="copyUrl()">Share</button>
+
+                                <!-- Add likes -->
+                                {{ recipe.likes }}
+                                <a href="{% url 'recipez:like_recipe' recipe.id %}">{{ is_liked }}</a>&nbsp;&nbsp;&nbsp;
+
+                                <!-- Share recipe -->
+                                <button onclick="copyUrl()">Share</button>&nbsp;&nbsp;&nbsp;
                                 <script>
                                     function copyUrl() {
                                         navigator.clipboard.writeText(this.location.href);
                                         alert("Copied to clipboard!");
                                     }
                                 </script>
-                                </a>
+
+                                <!-- Add to bookmark -->
+                                <a href="{% url 'recipez:add_bookmark' recipe.id %}">{{ is_bookmark }}</a>
+
                             </div>
                         </div>
 

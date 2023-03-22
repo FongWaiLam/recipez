@@ -59,7 +59,16 @@ class Recipe(models.Model):
     is_active = models.BooleanField(default=True)
     cooking_duration = models.CharField(max_length=MAX_LENGTH)
     is_vegan = models.BooleanField(default=False)
-    ingredients = models.ManyToManyField(Ingredient, related_name='recipes')
+
+    ingredients = models.ManyToManyField(
+        Ingredient,
+        related_name='recipes',
+    )
+
+    liked_users = models.ManyToManyField(
+        UserProfile,
+        related_name='liked_recipes',
+    )
 
     def __str__(self):
         return self.name
