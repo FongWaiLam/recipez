@@ -17,51 +17,45 @@
     opacity: 0%;
 }
 
-.card {
-border-radius: 0.25rem;
+/* CSS for the card image */
+.card img {
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+  object-fit: cover;
+  height: 100%;
+  filter: brightness(65%);
 }
 
-.card-body {
-border-top-right-radius: 0.25rem;
-border-bottom-right-radius: 0.25rem;
+/* CSS for the "Write a New Recipe" title */
+.card .position-absolute {
+  z-index: 1;
 }
 
-.card-img-top {
-border-top-left-radius: 0.25rem;
-border-top-right-radius: 0.25rem;
-}
-
-.card-img-bottom {
-border-bottom-left-radius: 0.25rem;
-border-bottom-right-radius: 0.25rem;
+/* CSS for the form inputs and labels */
+.form-group {
+  margin-bottom: 1rem;
 }
 
 .form-group label {
-font-weight: bold;
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-weight: 600;
 }
 
-.form-group input[type="text"], .form-group select {
-width: 100%;
+.form-group input,
+.form-group select {
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  padding: .375rem .75rem;
+  line-height: 1.5;
 }
 
-.form-group span {
-font-size: 0.8rem;
+/* CSS for the "New Ingredient" button */
+#ingredient-form button {
+  margin-bottom: 1rem;
 }
 
-.btn {
-text-transform: uppercase;
-font-weight: bold;
-letter-spacing: 0.1rem;
-font-size: 0.9rem;
-padding: 0.5rem 1rem;
-}
-
-.btn-outline-success {
-color: #28a745;
-border-color: #28a745;
-}
-
-.btn-outline-danger {
-color: #dc3545;
-border-color: #dc3545;
+/* CSS for the "Submit" and "Cancel" buttons */
+.col-12 button {
+  margin-top: 1rem;
 }

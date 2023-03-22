@@ -5,38 +5,116 @@
     Add recipe
 {% endblock %}
 
+<head>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
 {% block body_block %}
-    <section class="h-100">
-    <div class="container py-5">
-    <div class="row d-flex justify-content-center align-items-center">
-    <div class="col">
-    <div class="card my-4">
-    <div class="row g-0">
-    <div class="col-lg-4 col-xl-6 d-none d-xl-block position-relative">
-        <h2 class="m-5 position-absolute w-100 bg-dark text-white p-3" style="z-index: 1;">Write a New
-            Recipe</h2>
-        <img src="https://cdn.pixabay.com/photo/2015/08/25/03/50/background-906135_960_720.jpg"
-             alt="Image by kerdkanno on Freepik" class="img-fluid"
-             style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; object-fit: cover; height: 100%; filter: brightness(65%);"/>
-    </div>
-    <div class="col-lg-4 col-xl-6">
-    <div class="card-body p-md-5 bg-dark text-white">
-    <div class="panel-body">
-    <div class="form-outline w-100">
-    <form class="row g-3" method="post" action="{% url 'recipez:add_recipe' %}"
-          enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in recipe_form %}
-        <div class="form-group">
+{#    <section class="h-100">#}
+{#        <div class="container py-5">#}
+{#            <div class="row d-flex justify-content-center align-items-center">#}
+{#                <div class="col">#}
+{#                    <div class="card my-4">#}
+{#                        <div class="row g-0">#}
+{#                            <div class="col-lg-4 col-xl-6 d-none d-xl-block position-relative">#}
+{#                                <h2 class="m-5 position-absolute w-100 bg-dark text-white p-3" style="z-index: 1;">Write a New#}
+{#                                    Recipe</h2>#}
+{#                                <img src="https://cdn.pixabay.com/photo/2015/08/25/03/50/background-906135_960_720.jpg"#}
+{#                                     alt="Image by kerdkanno on Freepik" class="img-fluid"#}
+{#                                     style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; object-fit: cover; height: 100%; filter: brightness(65%);"/>#}
+{#                            </div>#}
+{#                            <div class="col-lg-4 col-xl-6">#}
+{#                                <div class="card-body p-md-5 bg-dark text-white">#}
+{#                                    <div class="panel-body">#}
+{#                                    <div class="form-outline w-100">#}
+{#                                        <form class="row g-3" method="post" action="{% url 'recipez:add_recipe' %}"#}
+{#                                              enctype="multipart/form-data">#}
+{#                                            {% csrf_token %}#}
+{#                                            {% for field in recipe_form %}#}
+{#                                                <div class="form-group">#}
+{##}
+{#                                                    <label>{{ field.label }}</label><br>{{ field }}#}
+{##}
+{#                                                    <span style="color: red">{{ field.errors.0 }}</span>#}
+{#                                                </div>#}
+{#                                            {% endfor %}#}
+{#                                            <div id="ingredient-form">#}
+{#                                                <button type="button" class="btn btn-block btn-outline-success" onClick="addNewIngredient()">New Ingredient#}
+{#                                                </button>#}
+{#                                                <script>#}
+{#                                                </script>#}
+{#                                            </div>#}
+{#                                            <input type="hidden" name="ingredient_set-TOTAL_FORMS"#}
+{#                                                   id="id_ingredient_set-TOTAL_FORMS"#}
+{#                                                   value="{{ ingredient_forms|length }}">#}
+{#                                            <div class="col-12">#}
+{#                                                <button type="submit" onclick="submitIngredient()" class="col-md-8">Submit</button>#}
+{#                                                <button type="reset" class="btn btn-outline-danger">Cancel</button>#}
+{#                                            </div>#}
+{#                                        </form>#}
+{#                                    </div>#}
+{##}
+{#                                </div>#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+        <section class="h-100">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <div class="card my-4">
+                        <div class="row g-0">
+                            <div class="col-lg-4 col-xl-6 d-none d-xl-block position-relative">
+                                <h2 class="m-5 position-absolute w-100 bg-dark text-white p-3">Write a New Recipe</h2>
+                                <img src="https://cdn.pixabay.com/photo/2015/08/25/03/50/background-906135_960_720.jpg"#}
+                                     alt="Image by kerdkanno on Freepik" class="img-fluid"
+{#                                   style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; object-fit: cover; height: 100%; filter: brightness(65%);"/>
+                            </div>
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="card-body p-md-5 bg-dark text-white">
+                                    <div class="panel-body">
+                                    <div class="form-outline w-100">
+                                        <form class="row g-3" method="post" action="{% url 'recipez:add_recipe' %}"
+                                              enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {% for field in recipe_form %}
+                                                <div class="form-group">
 
-            <label>{{ field.label }}</label><br>{{ field }}
+                                                    <label>{{ field.label }}</label><br>{{ field }}
 
-            <span style="color: red">{{ field.errors.0 }}</span>
+                                                    <span style="color: red">{{ field.errors.0 }}</span>
+                                                </div>
+                                            {% endfor %}
+                                            <div id="ingredient-form">
+                                                <button type="button" class="btn btn-block btn-outline-success" onClick="addNewIngredient()">New Ingredient
+                                                </button>
+                                                <script>
+                                                </script>
+                                            </div>
+                                            <input type="hidden" name="ingredient_set-TOTAL_FORMS"
+                                                   id="id_ingredient_set-TOTAL_FORMS"
+                                                   value="{{ ingredient_forms|length }}">
+                                            <div class="col-12">
+                                                <button type="submit" onclick="submitIngredient()" class="col-md-8">Submit</button>
+                                                <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-    <div id="ingredient-form">
-    <button type="button" class="btn btn-block btn-outline-success" onClick="addNewIngredient()">New Ingredient
-    </
+    </section>
 {% endblock %}
 
 
