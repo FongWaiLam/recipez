@@ -2,6 +2,9 @@ from recipez.models import Recipe, UserProfile, Ingredient
 from django.contrib.auth.models import User
 import requests
 
+# Helper function to check if the request is an ajax request
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 # search
 def search_by(content):

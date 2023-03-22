@@ -1,26 +1,13 @@
-{% extends 'recipez/base.html' %}
+{% extends 'recipez/includes/base.html' %}
 {% load static %}
 
 {% block title_block %}
-    Homepage
+    Home
 {% endblock %}
 
 {% block body_block %}
-    <h1>Index Page</h1>
-
-        <div>
-            {% if user.is_authenticated %}
-                Hello {{ user.username }}!
-            {% else %}
-                Please log in!
-            {% endif %}
-            <br />
-        </div>
-
-        <br> <br> <br> <br>
-
-        <div>
-        <h2>Users contain this name:</h2>
+    <h1>Search Result</h1>
+        <h2>Users containing this name:</h2>
         {% if author_list %}
             <ul>
             {% for author in author_list %}
@@ -29,12 +16,12 @@
             {% endfor %}
             </ul>>
         {% else %}
-            <strong>There are no users contain this name.</strong>
+            <strong>There are no users containing this name.</strong>
         {% endif %}
 
         <br> <br> <br> <br>
 
-        <h2>Recipes contain this name:</h2>
+        <h2>Recipes containing this name:</h2>
         {% if recipe_list_by_RecipeName %}
             <ul>
             {% for recipe in recipe_list_by_RecipeName %}
@@ -54,12 +41,12 @@
             {% endfor %}
             </ul>
         {% else %}
-            <strong>There are no recipes contain this name.</strong>
+            <strong>There are no recipes containing this name.</strong>
         {% endif %}
 
         <br> <br> <br> <br>
 
-        <h2>Recipes contain this ingredient:</h2>
+        <h2>Recipes containing this ingredient:</h2>
         {% if recipe_list_by_Ingredient %}
             <ul>
             {% for recipe in recipe_list_by_Ingredient %}
@@ -79,16 +66,13 @@
             {% endfor %}
             </ul>>
         {% else %}
-            <strong>There are no recipes contain this ingredient.</strong>
+            <strong>There are no recipes containing this ingredient.</strong>
         {% endif %}
 
         </div>
 
-        <br> <br> <br> <br>
-
-        <div>
-        <h2>Best of Today</h2>
-        {# todo #}
+        <div class="container text-center mb-4 p-2">
+            <span><a href="{% url 'recipez:index' %}" class="btn btn-secondary btn-lg">Go Back</a></span>
         </div>
 {% endblock %}
 

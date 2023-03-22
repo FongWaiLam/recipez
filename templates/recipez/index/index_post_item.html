@@ -1,0 +1,24 @@
+<li class="list-group-item py-3 mb-4">
+    <div class="card border-primary w-60">
+        <h2 class="card-header">{{ recipe.name }}</h2> <br>
+        <img class="card-image-top" src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Image of {{recipe.id}}" >
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item" style="border-radius: 10px;">Category: {{ recipe.category }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">Region: {{ recipe.region }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">Difficulty: {{ recipe.difficulty }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">CookingDuration: {{ recipe.cooking_duration }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">Likes: {{ recipe.likes }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">AverageRating: {{ recipe.average_rating }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">Vegan: {{ recipe.is_vegan }}</li>
+                <li class="list-group-item" style="border-radius: 10px;">CreationTime: {{ recipe.creation_time }}</li>
+            </ul>
+            <p class="card-text">
+                <footer class="blockquote-footer">Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"></footer>
+            </p>
+            <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-success">Read More</a>
+        </div>
+    </div>
+</li>
+
+

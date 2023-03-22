@@ -21,6 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from recipez_project.settings import MEDIA_URL, MEDIA_ROOT
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('recipez/', include('recipez.urls')),

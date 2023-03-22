@@ -1,11 +1,11 @@
-name: Django CI
+name: Django CI for Recipez
 
 on:
   push:
     branches: [ "dev_satan" ]
   pull_request:
-    branches: [ "dev_satan" ]
-
+    branches: [ "main" ]
+    
 jobs:
   build:
 
@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [ 3.9 ]
+        python-version: [ '3.10' ]
 
     steps:
     - uses: actions/checkout@v3
