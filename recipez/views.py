@@ -102,6 +102,13 @@ def show_recipe(request, recipe_id):
                 comment.username = request.user.username
                 comment.save()
 
+                # update average_rating
+                sum_ = 0
+                for c in recipe.comments.all():
+                    sum_ += c.rating
+                recipe.average_rating = sum_ / recipe.comments.count()
+                recipe.save()
+
     except Recipe.DoesNotExist:
         # We get here if we didn't find the specified recipe.
         context_dict['recipe'] = None
