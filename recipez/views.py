@@ -81,13 +81,15 @@ def show_recipe(request, recipe_id):
         context_dict['ingredients'] = recipe.ingredients.all()
 
         # check likes and bookmarks
-        context_dict['is_liked'] = 'Like'
+        context_dict['is_liked'] = True
         context_dict['is_bookmark'] = 'Add to bookmark'
         if request.user.is_authenticated:
             u_profile = request.user.user_profile
             is_liked = u_profile.liked_recipes.filter(id=recipe_id)
             if is_liked.exists():
-                context_dict['is_liked'] = 'Liked'
+                context_dict['is_liked'] = True
+            elif not is_liked.exists(): # if not liked
+                context_dict['is_liked'] = False
             if request.user.user_profile.bookmark is None:
                 u_profile.bookmark = []
                 u_profile.save()
@@ -252,22 +254,25 @@ def user_logout(request):
 
 @login_required
 def like_recipe(request, recipe_id):
-    u_profile = request.user.user_profile
-    target_recipe = Recipe.objects.get(id=recipe_id)
-    is_liked = request.user.user_profile.liked_recipes.filter(id=recipe_id)
+    if request.method == 'POST' and is_ajax(request):
+        user_profile = request.POST.get('user')
+        recipe = request.POST.get('recipe')
+        print(user_profile, recipe)
 
-    if is_liked.exists():
-        u_profile.liked_recipes.remove(target_recipe)
-        target_recipe.likes -= 1
-    else:
-        u_profile.liked_recipes.add(target_recipe)
-        target_recipe.likes += 1
+        u_profile = request.user.user_profile
+        target_recipe = Recipe.objects.get(id=recipe)
+        is_liked = request.user.user_profile.liked_recipes.filter(id=recipe_id)
 
-    u_profile.save()
-    target_recipe.save()
+        if is_liked.exists():
+            u_profile.liked_recipes.remove(target_recipe)
+            target_recipe.likes -= 1
+        else:
+            u_profile.liked_recipes.add(target_recipe)
+            target_recipe.likes += 1
 
-    return redirect(reverse('recipez:show_recipe', kwargs={'recipe_id': recipe_id}))
-
+        u_profile.save()
+        target_recipe.save()
+        return JsonResponse({'likes': target_recipe.likes, 'is_liked': is_liked.exists()})
 
 @login_required
 def add_bookmark(request, recipe_id):
