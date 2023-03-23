@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70172957-c7d5-4222-a5b7-1169b0f411c0" name="Changes" comment="help opacity increased">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/recipez.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recipez.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/recipez/recipe.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/recipez/recipe.html" afterDir="false" />
     </list>
@@ -54,6 +51,7 @@
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tango_with_django_project" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -149,6 +147,9 @@
       <workItem from="1679431496651" duration="3375000" />
       <workItem from="1679434934032" duration="5482000" />
       <workItem from="1679493622591" duration="1232000" />
+      <workItem from="1679517698637" duration="843000" />
+      <workItem from="1679518972561" duration="8139000" />
+      <workItem from="1679556740893" duration="1885000" />
     </task>
     <task id="LOCAL-00001" summary="base updated, created commentForm, added boostrap to recipe.html (Comment form is not able to be shown, not sure how to fix this.), Added django-crispy-forms, but not sure if it works, as the form is not shown.">
       <created>1679271194312</created>
