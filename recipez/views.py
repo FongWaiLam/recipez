@@ -275,6 +275,6 @@ def add_bookmark(request, recipe_id):
     return redirect(reverse('recipez:show_recipe', kwargs={'recipe_id': recipe_id}))
 
 
-# Help Page (About us and Contact us)
-def help(request):
-    return render(request, 'recipez/help.html')
+# About Page (About us and Contact us)
+def about(request):
+    return render(request, 'recipez/about.html')

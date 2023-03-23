@@ -55,7 +55,7 @@
      <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
                 <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" href="{% url 'recipez:help' %}">Help</a>
+                    <a aria-current="page" class="nav-link active" href="{% url 'recipez:about' %}">About</a>
                 </li>
 
                 {% if user.is_authenticated %}
@@ -162,7 +162,7 @@
                     {% endif %}
 
                     <p>
-                        <a class="text-reset" href="{% url 'recipez:help' %}">Help</a>
+                        <a class="text-reset" href="{% url 'recipez:about' %}">Help</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -202,8 +202,7 @@
             </div>
             <!-- Grid row -->
         </div>
-    </section>
-    <!-- Section: Links  -->
+            <!-- Section: Links  -->
 
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
@@ -211,6 +210,8 @@
         <a class="text-reset fw-bold" href="{% url 'recipez:index' %}">recipez.gla.uk</a>
     </div>
     <!-- Copyright -->
+    </section>
+
 </footer>
 <!-- Footer -->
 
