@@ -24,7 +24,7 @@
                                      src="{{ MEDIA_URL }}{{ recipe.user.avatar }}"
                                      width="50"/>
                                 <div>
-                                    <h6 class="fw-bold text-primary mb-1">{{ recipe.user }}</h6>
+                                    <a class="navbar-brand" href="{% url 'recipez:user_profile' recipe.user %}"><h6 class="fw-bold text-primary mb-1">{{ recipe.user }}</h6></a>
                                     <!-- Recipe Creator -->
                                     <p class="text-muted small mb-0">
                                         {{ recipe.creation_time }}
