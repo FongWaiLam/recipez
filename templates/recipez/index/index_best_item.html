@@ -16,7 +16,8 @@
                         </ul>
                     </div>
                     <div class="card-footer">
-                        Author: {{ recipe.user.user.username }}
+                        <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn nav-link btn-success btn-lg mb-2 text-light">Read More</a>
+                        <a href="{% url 'recipez:user_profile' recipe.user.user.username %}" class="btn nav-link btn-outline-warning">Author: {{ recipe.user.user.username }}</a>
                     </div>
                 </div>
             </li>

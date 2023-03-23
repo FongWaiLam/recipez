@@ -5,25 +5,73 @@
     User Profile
 {% endblock %}
 
-{% block body_block %}
-    <div class="container py-2 mb-4 p-2">
-        <div class="row d-flex justify-content-between">
+{% block head_block %}
+<script type="text/javascript" src="{% static 'js/user.js' %}"></script>
+{% endblock %}
 
-            <div class="col-sm-8">
-            <h1 class="display-1 text-end">Hi, {{ user_name }}</h1>
-            <h4 class="display-4 text-end">Welcome to your profile!</h4>
+{% block body_block %}
+    <div class="container py-2 mb-4 p-4">
+        <div class="row d-flex justify-content-between">
+            <div class="container py-2">
+                <div class="row d-flex justify-content-center align-items-center">
+                <div class="col col-md-9 col-lg-7 col-xl-5">
+                    <div class="card bg-dark text-white" style="border-radius: 15px;">
+                    <div class="card-body p-4">
+                        <div class="d-flex text-black">
+                        <div class="flex-shrink-0">
+                        <img src="{{ MEDIA_URL }}{{user_avatar}}" width="100" height="100" alt="User Avatar" class="img-fluid" style="border-radius: 10px; width: 180px;" />
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h3 class="mb-1" style="color: #cfcfcf;">{{user_name|capfirst}}</h3>
+                            <p class="mb-2 pb-1 small" style="color: #cfcfcf;">
+                                {% if is_active %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                  </svg>
+                                  active
+                                {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg>
+                                inactive
+                                {% endif %}
+                            </p>
+                            <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                            style="background-color: #efefef;">
+                            <div>
+                                <p class="small text-muted mb-1">Posts</p>
+                                <p class="mb-0">{{post_recipes | length}}</p>
+                            </div>
+                            <div class="px-3">
+                                <p class="small text-muted mb-1">Saved Recipes</p>
+                                <p class="mb-0">{{saved_recipes | length}}</p>
+                            </div>
+                            </div>
+                            {% if user.is_authenticated and user_name == request.user.username %}
+                            <div class="container text-center mb-4">
+                                <span><a href="{% url 'recipez:add_recipe' %}" class="btn btn-outline-warning btn-md">Post Something New</a></span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
             </div>
-            <div class="col-sm-2 mt-4 ml-6">
-            <img src="{{ MEDIA_URL }}{{user_avatar}}" width="100" height="100" alt="User Avatar" class="user-avatar d-flex justify-content-between" style="border-radius: 50%;" /> </div>
         </div>
     </div>
 
-    <div class="container text-center mb-4 p-2">
-        <span><a href="{% url 'recipez:add_recipe' %}" class="btn btn-primary btn-lg">Post Something New</a></span>
-    </div>
 
-    <div class="container py-2 mb-4 p-2">
+    <div class="container py-2 mb-4">
+        {% if user.is_authenticated and user_name == request.user.username %}
         <h4 class="display-4 text-center">My Posts</h4>
+        {% else %}
+        <h4 class="display-4 text-center">{{ user_name }}'s Posts</h4>
+        {% endif %}
+
         <div class="card text-center">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -42,7 +90,7 @@
                         <h5 class="card-title">{{recipe.name}}</h5>
                         <p class="card-text">{{recipe.detail}}</p>
                         <div class="card-footer">
-                            <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-outline-success">Read More</a>
+                            <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-success">Read More</a>
                         </div>
                     </div>
                     {% empty %}
@@ -53,38 +101,42 @@
         </div>
     </div>
 
-    <div class="container py-2 mb-4 p-2">
-        <h4 class="display-4 text-center">Saved Recipes</h4>
-        <div class="card text-center">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
+    {% if user.is_authenticated and user_name == request.user.username %}
+        {% if saved_recipes %}
+        <div class="container py-2 mb-4 p-2">
+            <h4 class="display-4 text-center">Saved Recipes</h4>
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        {% for recipe in saved_recipes %}
+                        <li class="nav-item">
+                            <button class="nav-link active 2" id="{{recipe.id}}" data-toggle="tab" role="tab" aria-controls="{{recipe.id}}">{{recipe.name}}</button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-lg-5 align-items-center">
                     {% for recipe in saved_recipes %}
-                    <li class="nav-item">
-                        <button class="nav-link active 2" id="{{recipe.id}}" data-toggle="tab" role="tab" aria-controls="{{recipe.id}}">{{recipe.name}}</button>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="row gx-lg-5 align-items-center">
-                {% for recipe in saved_recipes %}
-                <div class="tab-content col-lg-6 mb-5 mb-lg-0">
-                    <div class="tab-pane 2" id="{{recipe.id}}-saved" role="tabpanel" aria-labelledby="{{recipe.id}}">
-                        <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" class="card-img-top" style="width: 100px; height: 100px;">
-                        <h5 class="card-title">{{recipe.name}}</h5>
-                        <p class="card-text">{{recipe.detail}}</p>
-                        <div class="card-footer">
-                            <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-outline-secondary">Read More</a>
+                    <div class="tab-content col-lg-6 mb-5 mb-lg-0">
+                        <div class="tab-pane 2" id="{{recipe.id}}-saved" role="tabpanel" aria-labelledby="{{recipe.id}}">
+                            <img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo" class="card-img-top" style="width: 100px; height: 100px;">
+                            <h5 class="card-title">{{recipe.name}}</h5>
+                            <p class="card-text">{{recipe.detail}}</p>
+                            <div class="card-footer">
+                                <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-outline-secondary">Read More</a>
+                            </div>
                         </div>
                     </div>
+                    {% empty %}
+                    </div>
+                        <p class="lead">Your favorites are empty.</p>
+                    {% endfor %}
                 </div>
-                {% empty %}
-                </div>
-                    <p class="lead">Your favorites are empty.</p>
-                {% endfor %}
             </div>
         </div>
-    </div>
+        {% endif %}
+    {% endif %}
     
 {% endblock %}
 
