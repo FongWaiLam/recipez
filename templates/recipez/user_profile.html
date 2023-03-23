@@ -48,6 +48,10 @@
                                 <p class="small text-muted mb-1">Saved Recipes</p>
                                 <p class="mb-0">{{saved_recipes | length}}</p>
                             </div>
+                            <div>
+                                <p class="small text-muted mb-1">Liked Recipes</p>
+                                <p class="mb-0">{{liked_recipes | length}}</p>
+                            </div>
                             </div>
                             {% if user.is_authenticated and user_name == request.user.username %}
                             <div class="container text-center mb-4">

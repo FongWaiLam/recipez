@@ -167,11 +167,14 @@ def user_profile(request, user_name):
         for item_id in saved_recipes_id:
             saved_recipes.append(Recipe.objects.get(id = item_id))
     
+    liked_recipes = user.user_profile.liked_recipes.all()
+    
     context_dict = {
         'user_name': user_name,
         'user_avatar': avatar,
         'post_recipes': post_recipes,
-        'saved_recipes': saved_recipes
+        'saved_recipes': saved_recipes,
+        'liked_recipes': liked_recipes,
     }
 
     return render(request, 'recipez/user_profile.html', context=context_dict)

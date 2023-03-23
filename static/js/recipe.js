@@ -10,6 +10,7 @@ $(document).ready(function() {
     console.log(ifLiked)
     checkUpdateLike();
 
+    // Like button click ajax function for uptading the like counter
     var likeClick = function() {
         var ifLiked = $("#likeButton").attr('if-liked');
         if (ifLiked == "False") {
@@ -58,7 +59,12 @@ $(document).ready(function() {
             });
         }  
     }
-    $("#likeButton").on("click", likeClick);
+
+    // Like button Click
+    if (user){
+        $("#likeButton").on("click", likeClick);
+    }
+    
 
 });
 
