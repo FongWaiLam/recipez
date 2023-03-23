@@ -80,10 +80,10 @@ def show_recipe(request, recipe_id):
         context_dict['all_users'] = all_users
 
         # check likes and bookmarks
-        u_profile = request.user.user_profile
         context_dict['is_liked'] = 'Like'
         context_dict['is_bookmark'] = 'Add to bookmark'
         if request.user.is_authenticated:
+            u_profile = request.user.user_profile
             is_liked = u_profile.liked_recipes.filter(id=recipe_id)
             if is_liked.exists():
                 context_dict['is_liked'] = 'Liked'
