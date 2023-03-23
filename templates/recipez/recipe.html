@@ -50,7 +50,7 @@
                             <b>Ingredients:</b>&nbsp<br><br>
                                 {% if ingredients %}
                                     {% for ingredient in ingredients %}
-                                        {{ ingredient.name_and_amount }}
+                                        <li>{{ ingredient.name_and_amount }}</li>
                                     {% endfor %}
                                 {% else %}
                                     No Ingredients.
