@@ -4,6 +4,8 @@
 # Coursework
 Recip(EZ) is a assessed coursework for Internet Technology (M). This web application is developed using Python, Django, HTML, CSS and associated technologies including Javascript, JQuery or AJAX. The CSS framework Bootstrap is used to support the responsive web design.
 
+This web development is now deployed to :- https://recipez.pythonanywhere.com/
+
 # Overview
 Recip(EZ) is a website that provides a welcoming and engaging community for home cooks, which allows users to share and view recipes from other creators/community
 members
