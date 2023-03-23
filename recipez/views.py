@@ -229,6 +229,6 @@ def user_logout(request):
     messages.success(request, "Successfully logged out!")
     return redirect(reverse('recipez:index'))
 
-# Help Page (About us and Contact us)
-def help(request):
-    return render(request, 'recipez/help.html')
+# About Page (About us and Contact us)
+def about(request):
+    return render(request, 'recipez/about.html')
