@@ -43,10 +43,10 @@ class Recipe(models.Model):
     name = models.CharField(max_length=MAX_LENGTH)
 
     # Main dish, Starter, Drink, Dessert...etc
-    category = models.CharField(max_length=MAX_LENGTH, default='unknown')
+    category = models.CharField(max_length=MAX_LENGTH, default='None')
 
     # Chinese, Japanese, Korean, American, Indian...etc
-    region = models.CharField(max_length=MAX_LENGTH, default='unknown')
+    region = models.CharField(max_length=MAX_LENGTH, default='None')
 
     # Easy, Medium, Hard...etc
     difficulty = models.CharField(max_length=MAX_LENGTH)
@@ -59,7 +59,16 @@ class Recipe(models.Model):
     is_active = models.BooleanField(default=True)
     cooking_duration = models.CharField(max_length=MAX_LENGTH)
     is_vegan = models.BooleanField(default=False)
-    ingredients = models.ManyToManyField(Ingredient, related_name='recipes')
+
+    ingredients = models.ManyToManyField(
+        Ingredient,
+        related_name='recipes',
+    )
+
+    liked_users = models.ManyToManyField(
+        UserProfile,
+        related_name='liked_recipes',
+    )
 
     def __str__(self):
         return self.name
