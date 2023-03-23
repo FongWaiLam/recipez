@@ -57,6 +57,7 @@
 
                                 <!-- Share recipe -->
                                 <button onclick="copyUrl()">Share</button>&nbsp;&nbsp;&nbsp;
+
                                 <script>
                                     function copyUrl() {
                                         navigator.clipboard.writeText(this.location.href);
@@ -66,6 +67,7 @@
 
                                 <!-- Add to bookmark -->
                                 <a href="{% url 'recipez:add_bookmark' recipe.id %}">{{ is_bookmark }}</a>
+
                             </div>
                         </div>
 
