@@ -78,6 +78,7 @@ def show_recipe(request, recipe_id):
         context_dict['recipe'] = recipe
         context_dict['comments'] = comments
         context_dict['all_users'] = all_users
+        context_dict['ingredients'] = recipe.ingredients.all()
 
         # check likes and bookmarks
         context_dict['is_liked'] = 'Like'
