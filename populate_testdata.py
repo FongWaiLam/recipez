@@ -28,7 +28,8 @@ def populate():
     db_yaml_path = os.path.join(path, 'db_data.yml') # Path to yaml file
     db_data = load_db_data(yaml_path=db_yaml_path)
 
-    print(db_data)
+
+    # print(db_data) # Prints the db_data.yml file
 
     counter = 0
     for i in db_data['users']:
