@@ -16,7 +16,7 @@
                     {% for author in author_list %}
                         <div class="card bg-dark text-white border-light"> 
                             <img class="card-img-top" src="{{ MEDIA_URL }}{{ author.user_profile.avatar }}" width="50" height="150" alt="Avatar">
-                            <div class="card-body"> <h5 class="card-title">{{ author.username }}</h5> </div>
+                            <div class="card-body"> <a href="{% url 'recipez:user_profile' author.username %}" class="nav-link"> <h5 class="card-title">{{ author.username | capfirst }}</h5> </a></div>
                             <div class="card-footer">
                                 {% if author.is_active %}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
