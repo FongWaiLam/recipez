@@ -43,7 +43,7 @@ def populate():
         if recipes is not None:
             for recipe in recipes:
                 print(f"Adding recipe: {recipe['name']}")
-                ingredients = add_ingredients(ingredients=recipe['ingredients']) # Takes the ingredients object from the db and passes to recipes below
+                ingredients = add_ingredients(ingredients=recipe['ingredients']) # Takes the ingredients object list from the db and passes to recipes below
                 add_recipe(User.objects.get(username=i['username']).user_profile, recipe['name'], recipe['category'],
                            recipe['detail'], recipe['region'], ingredients, recipe['photo_name'], recipe['cooking_duration'],
                            recipe['difficulty'], recipe['vegan'], recipe['likes'])
@@ -85,16 +85,20 @@ def add_user_profile(user, avatar_name):
 
 
 def add_ingredients(ingredients):
-    c = Ingredient.objects.get_or_create(name_and_amount=ingredients)[0]
-    c.save()
-    return c # Returns the ingredient object from the database that's been created
+    i_list = []
+    for i in ingredients:
+        c = Ingredient.objects.get_or_create(name_and_amount=i)[0]
+        c.save()
+        i_list.append(c)
+    return i_list # Returns the ingredient object list from the database that's been created
 
 
 def add_recipe(user_profile, name, category, detail, region, ingredients, photo_name, cooking_duration, difficulty, vegan, likes):
     d = Recipe.objects.get_or_create(user=user_profile, name=name, category=category, detail=detail, region=region,
                                      photo="/recipe_images/" + photo_name, cooking_duration=cooking_duration,
                                      difficulty=difficulty, is_vegan=vegan, likes=likes)[0]
-    d.ingredients.add(ingredients) # Builds relation between recipe and ingredients
+    for i in ingredients:
+        d.ingredients.add(i) # Builds relation between recipe and ingredients
 
     sum_, size = 0, 0
     for k in d.comments.all():
