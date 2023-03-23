@@ -22,7 +22,7 @@
                         <img src="{{ MEDIA_URL }}{{user_avatar}}" width="100" height="100" alt="User Avatar" class="img-fluid" style="border-radius: 10px; width: 180px;" />
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <h3 class="mb-1" style="color: #cfcfcf;">{{user_name}}</h3>
+                            <h3 class="mb-1" style="color: #cfcfcf;">{{user_name|capfirst}}</h3>
                             <p class="mb-2 pb-1 small" style="color: #cfcfcf;">
                                 {% if is_active %}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
