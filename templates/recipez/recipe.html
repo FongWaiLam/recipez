@@ -12,6 +12,7 @@
                 <div class="col-md-12 col-lg-10 col-xl-8">
                     <div class="card text-center">
                         <div class="card-header">
+                            {% if recipe %}
                             <div class="d-flex flex-start align-items-center">
                                 <!-- Recipe Creator -->
                                 <img alt="{{ recipe.user.username }}'s profile image"
@@ -26,11 +27,15 @@
                                     </p>
                                 </div>
                             </div>
+                            {% else %}
+                                No author details.
+                            {% endif %}
                         </div>
                         <div class="card-body">
 
 
                             <!-- Recipe Content -->
+                        {% if recipe %}
                             <p class="mt-3 mb-4">
                             <h2>{{ recipe.name }}</h2>
                             <img src="{{ MEDIA_URL }}{{ recipe.photo }}"
@@ -61,7 +66,6 @@
 
                                 <!-- Add to bookmark -->
                                 <a href="{% url 'recipez:add_bookmark' recipe.id %}">{{ is_bookmark }}</a>
-
                             </div>
                         </div>
 
@@ -135,6 +139,10 @@
                             {% endif %}
                             <!-- Comments-->
                         </div>
+                        {% else %}
+                            No recipe details.
+                        {% endif %}
+
                     </div>
                 </div>
             </div>
