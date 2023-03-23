@@ -5,9 +5,10 @@
     Add recipe
 {% endblock %}
 
-<head>
-  <link rel="stylesheet" href="static/css/style.css">
-</head>
+{% block head_block %}
+<script type="text/javascript" src="{% static 'js/recipe.js' %}"></script>
+{% endblock %}
+
 
 {% block body_block %}
 {#    <section class="h-100">#}
@@ -101,7 +102,7 @@
                                                    value="{{ ingredient_forms|length }}">
                                             <div class="col-12">
                                                 <button type="submit" onclick="submitIngredient()" class="col-md-8">Submit</button>
-                                                <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                                                <a href="{{request.get_full_path}}" class="btn btn-outline-danger">Cancel</a>
                                             </div>
                                         </form>
                                     </div>

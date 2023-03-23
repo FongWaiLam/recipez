@@ -3,24 +3,7 @@ $(document).ready(function() {
     //Enable Pagination
     window.recipe_index = $('.navbar-brand').attr('href');
     paginate(window);
-
-    //Enable Tab Card for User Profile
-    var current_url = window.location.pathname.split('/');
-    if (current_url[1] == 'recipez' && current_url[2] == 'user_profile') {
-        tabCardActivate();
-    }
-
-    if (current_url[1] == 'recipez' && current_url[2] == 'add_recipe') {
-      var ingredientCounter = 0;
-        $('#add-ingredient').click(function () {
-            addNewIngredient(ingredientCounter);
-        });
-        $('#submit-ingredient').click(function () {
-            submitIngredient(ingredientCounter);
-        });
-    }
     
-  
     var scrollLink = $('.scroll');
     
     // Smooth scrolling
@@ -112,62 +95,4 @@ $(document).ready(function() {
           }
       });
   }
-
-  // Function of Tab Card for User Profile
-  function tabCardActivate() {
-    var nav_items1 = $('.nav-link.1');
-    var tab_items1 = $('.tab-pane.1');
-
-    $(nav_items1).click(function(){
-        var id = $(this).attr('id');
-        console.log(id);
-        $(nav_items1).removeClass('active');
-        $(this).addClass('active');
-        $(tab_items1).removeClass('active');
-        $(tab_items1).removeClass('show').addClass('fade');
-        $('#'+id+'-post').addClass('active');
-        $('#'+id+'-post').addClass('show');
-    });
-    
-    var nav_items2 = $('.nav-link.2');
-    var tab_items2 = $('.tab-pane.2');
-
-    $(nav_items2).click(function(){
-        var id = $(this).attr('id');
-        console.log(id);
-        $(nav_items2).removeClass('active');
-        $(this).addClass('active');
-        $(tab_items2).removeClass('active');
-        $(tab_items2).removeClass('show');
-        $('#'+id+'-saved').addClass('active');
-        $('#'+id+'-saved').addClass('show');
-    });
-  }
-
-  var ingredientCounter = 0;
-function addNewIngredient() {
-    var ingredientForm = document.getElementById("ingredient-form");
-    var newIngredientGroup = document.createElement("div");
-    newIngredientGroup.setAttribute("class", "form-group");
-    var newIngredientLabel = document.createElement("label");
-    newIngredientLabel.innerHTML = "ingredient " + (++ingredientCounter);
-    console.log(ingredientCounter);
-    newIngredientGroup.appendChild(newIngredientLabel);
-    var newIngredientInput = document.createElement("input");
-    newIngredientInput.setAttribute("type", "text");
-    newIngredientInput.setAttribute("name", "ingredient_set-" +
-        (ingredientCounter - 1) + "-ingredient");
-    newIngredientInput.setAttribute("class", "form-control");
-    newIngredientGroup.appendChild(newIngredientInput);
-    var newIngredientError = document.createElement("span");
-    newIngredientError.setAttribute("style", "color: red");
-    newIngredientGroup.appendChild(newIngredientError);
-    ingredientForm.insertBefore(newIngredientGroup,
-        ingredientForm.lastChild);
-    submitIngredient(ingredientCounter);
-}
-
-function submitIngredient(ingredientCounter) {
-    $('#id_ingredient_set-TOTAL_FORMS').attr("value", ingredientCounter.toString())
-}
   
