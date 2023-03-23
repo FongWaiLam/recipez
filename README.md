@@ -6,6 +6,8 @@ Recip(EZ) is a assessed coursework for Internet Technology (M). This web applica
 
 This web development is now deployed to :- https://recipez.pythonanywhere.com/
 
+Youtube demo is presented by Qi Li: https://youtu.be/yhqYOIEpBEM
+
 # Overview
 Recip(EZ) is a website that provides a welcoming and engaging community for home cooks, which allows users to share and view recipes from other creators/community
 members
