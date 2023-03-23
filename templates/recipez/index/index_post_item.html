@@ -36,8 +36,8 @@
                 <li class="list-group-item" style="border-radius: 10px;">AverageRating: {{ recipe.average_rating }}</li>
                 <li class="list-group-item" style="border-radius: 10px; margin-bottom: 10px;">Vegan: {{ recipe.is_vegan }}</li>
             </ul>
-                <div class="container d-flex flex-start text-center">
-                    <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-success">Read More</a>
+                <div class="container d-flex justify-content-center">
+                    <a href="{% url 'recipez:show_recipe' recipe.id %}" class="btn btn-success btn-lg">Read More</a>
                 </div>
             
         </div>
