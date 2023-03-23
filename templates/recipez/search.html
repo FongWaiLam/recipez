@@ -6,67 +6,93 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Search Result</h1>
-        <h2>Users containing this name:</h2>
+    <section class="my-md-5 shadow container bg-white rounded border border-info p-5">
+    <h3 class="display-3 text-center">Search Result</h3>
         {% if author_list %}
-            <ul>
-            {% for author in author_list %}
-                {{ author.username }}
-                Avatar:<img src="{{ MEDIA_URL }}{{ author.user_profile.avatar }}" width="50" height="50" alt="Avatar"> <br>
-            {% endfor %}
-            </ul>>
+        <div class="container-fluid py-2 mb-4">
+            <h2 class="font-weight-light">Users</h2>
+            <div class="d-flex flex-row flex-nowrap">
+                <div class="card-group">
+                    {% for author in author_list %}
+                        <div class="card bg-dark text-white border-light"> 
+                            <img class="card-img-top" src="{{ MEDIA_URL }}{{ author.user_profile.avatar }}" width="50" height="150" alt="Avatar">
+                            <div class="card-body"> <h5 class="card-title">{{ author.username }}</h5> </div>
+                            <div class="card-footer">
+                                {% if author.is_active %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                  </svg>
+                                  active
+                                {% else %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg>
+                                inactive
+                                {% endif %}
+                            </div>    
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         {% else %}
-            <strong>There are no users containing this name.</strong>
+            <strong>There are no users containing this name.</strong> <br>
         {% endif %}
 
-        <br> <br> <br> <br>
-
-        <h2>Recipes containing this name:</h2>
         {% if recipe_list_by_RecipeName %}
-            <ul>
-            {% for recipe in recipe_list_by_RecipeName %}
-                <li>
-                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
-                    Category: {{ recipe.category }} <br>
-                    Region: {{ recipe.region }} <br>
-                    Difficulty: {{ recipe.difficulty }} <br>
-                    CookingDuration: {{ recipe.cooking_duration }} <br>
-                    Likes: {{ recipe.likes }} <br>
-                    AverageRating: {{ recipe.average_rating }} <br>
-                    Vegan: {{ recipe.is_vegan }} <br>
-                    CreationTime: {{ recipe.creation_time }} <br>
-                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
-                </li>
-            {% endfor %}
-            </ul>
+            <div class="container-fluid py-2 mb-4">
+                <h2 class="font-weight-light text-center">Recipes</h2>
+                <div class="d-flex flex-row flex-nowrap">
+                    {% for recipe in recipe_list_by_RecipeName %}
+                    <div class="card mx-auto card-body bg-dark text-white border-light"> 
+                        <img class="card-img-top" src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="{{recipe.id}}" width="50" height="150">
+                        <h5 class="card-title my-md-2 text-center"><a href="{% url 'recipez:show_recipe' recipe.id %}" class="nav-link btn btn-outline-success">{{ recipe.name }}</a></h5>
+                        <ul class="list-group border-success">
+                            <li class="list-group-item">Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"></li>
+                            <li class="list-group-item">Category: {{ recipe.category }}</li>
+                            <li class="list-group-item">Region: {{ recipe.region }}</li>
+                            <li class="list-group-item">Difficulty: {{ recipe.difficulty }}</li>
+                            <li class="list-group-item">CookingDuration: {{ recipe.cooking_duration }}</li>
+                            <li class="list-group-item">Likes: {{ recipe.likes }}</li>
+                            <li class="list-group-item">AverageRating: {{ recipe.average_rating }}</li>
+                            <li class="list-group-item">Vegan: {{ recipe.is_vegan }}</li>
+                            <li class="list-group-item">CreationTime: {{ recipe.creation_time }}</li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         {% else %}
-            <strong>There are no recipes containing this name.</strong>
+            <strong>There are no recipes containing this name.</strong> <br>
         {% endif %}
 
-        <br> <br> <br> <br>
-
-        <h2>Recipes containing this ingredient:</h2>
         {% if recipe_list_by_Ingredient %}
-            <ul>
-            {% for recipe in recipe_list_by_Ingredient %}
-                <li>
-                    <a href="{% url 'recipez:show_recipe' recipe.id %}">{{ recipe.name }}</a> <br>
-                    Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"> <br>
-                    Category: {{ recipe.category }} <br>
-                    Region: {{ recipe.region }} <br>
-                    Difficulty: {{ recipe.difficulty }} <br>
-                    CookingDuration: {{ recipe.cooking_duration }} <br>
-                    Likes: {{ recipe.likes }} <br>
-                    AverageRating: {{ recipe.average_rating }} <br>
-                    Vegan: {{ recipe.is_vegan }} <br>
-                    CreationTime: {{ recipe.creation_time }} <br>
-                    RecipePhoto:<img src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="Photo"> <br> <br> <br>
-                </li>
-            {% endfor %}
-            </ul>>
+            <div class="container-fluid py-2 mb-4">
+                <h2 class="font-weight-light text-center">Containing Ingredient</h2>
+                <div class="d-flex flex-row flex-nowrap">
+                {% for recipe in recipe_list_by_Ingredient %}
+                    <div class="card mx-auto card-body bg-dark text-white border-light"> 
+                        <img class="card-img-top" src="{{ MEDIA_URL }}{{ recipe.photo }}" alt="{{recipe.id}}" width="50" height="150">
+                        <h5 class="card-title my-md-2 text-center"><a href="{% url 'recipez:show_recipe' recipe.id %}" class="nav-link btn btn-outline-success">{{ recipe.name }}</a></h5>
+                        <ul class="list-group border-success">
+                            <li class="list-group-item">Author: {{ recipe.user.user.username }}<img src="{{ MEDIA_URL }}{{ recipe.user.avatar }}" width="30" height="30" alt="Avatar"></li>
+                            <li class="list-group-item">Category: {{ recipe.category }}</li>
+                            <li class="list-group-item">Region: {{ recipe.region }}</li>
+                            <li class="list-group-item">Difficulty: {{ recipe.difficulty }}</li>
+                            <li class="list-group-item">CookingDuration: {{ recipe.cooking_duration }}</li>
+                            <li class="list-group-item">Likes: {{ recipe.likes }}</li>
+                            <li class="list-group-item">AverageRating: {{ recipe.average_rating }}</li>
+                            <li class="list-group-item">Vegan: {{ recipe.is_vegan }}</li>
+                            <li class="list-group-item">CreationTime: {{ recipe.creation_time }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
         {% else %}
-            <strong>There are no recipes containing this ingredient.</strong>
+            <strong>There are no recipes containing this ingredient.</strong> <br>
         {% endif %}
 
         </div>
@@ -74,5 +100,6 @@
         <div class="container text-center mb-4 p-2">
             <span><a href="{% url 'recipez:index' %}" class="btn btn-secondary btn-lg">Go Back</a></span>
         </div>
+    </section>
 {% endblock %}
 
