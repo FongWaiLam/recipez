@@ -46,27 +46,35 @@
                             <small><b>Category:</b>&nbsp{{ recipe.category }}</small>
                             <small><b>Region:</b>&nbsp{{ recipe.region }}</small>
                             <small><b>Vegan:</b>&nbsp{{ recipe.is_vegan }}<br></small><br><br>
+
+                            <b>Ingredients:</b>&nbsp<br><br>
+                                {% if ingredients %}
+                                    {% for ingredient in ingredients %}
+                                        {{ ingredient.name_and_amount }}
+                                    {% endfor %}
+                                {% else %}
+                                    No Ingredients.
+                                {% endif %}<br><br>
+
                             <p><b>Methodology:</b>&nbsp<br><br>{{ recipe.detail }}</p>
-                            </p>
                             <!-- Recipe Content -->
                             <div class="small d-flex justify-content-start">
 
                                 <!-- Add likes -->
                                 {{ recipe.likes }}
-                                <a href="{% url 'recipez:like_recipe' recipe.id %}">{{ is_liked }}</a>&nbsp;&nbsp;&nbsp;
+                                <button><a href="{% url 'recipez:like_recipe' recipe.id %}">{{ is_liked }}</a></button>&nbsp;&nbsp;&nbsp;
+
+                                <!-- Add to bookmark -->
+                                <button><a href="{% url 'recipez:add_bookmark' recipe.id %}">{{ is_bookmark }}</a></button>&nbsp;&nbsp;&nbsp;
 
                                 <!-- Share recipe -->
-                                <button onclick="copyUrl()">Share</button>&nbsp;&nbsp;&nbsp;
-
+                                <button onclick="copyUrl()">Share</button>
                                 <script>
                                     function copyUrl() {
                                         navigator.clipboard.writeText(this.location.href);
                                         alert("Copied to clipboard!");
                                     }
                                 </script>
-
-                                <!-- Add to bookmark -->
-                                <a href="{% url 'recipez:add_bookmark' recipe.id %}">{{ is_bookmark }}</a>
 
                             </div>
                         </div>
@@ -89,8 +97,8 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                 {% endif %}
-                                                <p><b>{{ comment.username }}</b>&nbsp&nbsp{{ comment.creation_time }}
-                                                </p> <br>
+                                                <p><b>{{ comment.username }}</b>&nbsp&nbsp{{ comment.creation_time }}</p>
+                                                <p>{{ comment.rating }}</p>
                                                 <p>{{ comment.detail }}</p>
                                             </div>
                                         </div>
