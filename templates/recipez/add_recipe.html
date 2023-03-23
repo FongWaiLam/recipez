@@ -2,130 +2,69 @@
 {% load static %}
 
 {% block title_block %}
-Add recipe
+    Add recipe
+{% endblock %}
+
+{% block head_block %}
+<script type="text/javascript" src="{% static 'js/recipe.js' %}"></script>
 {% endblock %}
 
 {% block body_block %}
-<h1>Add recipe</h1>
 
-<div class="panel-body">
-    <form class="row g-3" method="post" action="{% url 'recipez:add_recipe' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in recipe_form %}
-        <div class="form-group">
-            <label>{{ field.label }}</label>
-            {{ field }}
-            <span style="color: red">{{ field.errors.0 }}</span>
+    <section class="h-100">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <div class="card my-4">
+                        <div class="row g-0">
+                            <div class="col-lg-4 col-xl-6 d-none d-xl-block position-relative">
+                                <h2 class="m-5 position-absolute w-100 bg-dark text-white p-3" style="z-index: 1;">Write a New
+                                    Recipe</h2>
+                                <img src="https://cdn.pixabay.com/photo/2015/08/25/03/50/background-906135_960_720.jpg"
+                                     alt="Image by kerdkanno on Freepik" class="img-fluid"
+                                     style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; object-fit: cover; height: 100%; filter: brightness(65%);"/>
+                            </div>
+                            <div class="col-lg-4 col-xl-6">
+                                <div class="card-body p-md-5 bg-dark text-white">
+                                    <div class="panel-body">
+                                    <div class="form-outline w-100">
+                                        <form class="row g-3" method="post" action="{% url 'recipez:add_recipe' %}"
+                                              enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {% for field in recipe_form %}
+                                                <div class="form-group">
+
+                                                    <label>{{ field.label }}</label><br>{{ field }}
+
+                                                    <span style="color: red">{{ field.errors.0 }}</span>
+                                                </div>
+                                            {% endfor %}
+                                            <div id="ingredient-form">
+                                                <button type="button" class="btn btn-block btn-outline-success" onClick="addNewIngredient()">New Ingredient
+                                                </button>
+                                                <script>
+                                                </script>
+                                            </div>
+                                            <input type="hidden" name="ingredient_set-TOTAL_FORMS"
+                                                   id="id_ingredient_set-TOTAL_FORMS"
+                                                   value="{{ ingredient_forms|length }}">
+                                            <div class="col-12">
+                                                <button type="submit" onclick="submitIngredient()" class="col-md-8">Submit</button>
+                                                <a href="{{request.get_full_path}}" class="btn btn-outline-danger">Cancel</a>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% endfor %}
-        <div id="ingredient-form">
-            <button type="button" onClick="addNewIngredient()">add a new ingredient</button>
-            <script>
-                var ingredientCounter = 0
-                ;
-                function addNewIngredient() {
-                    var ingredientForm = document.getElementById("ingredient-form");
-                    var newIngredientGroup = document.createElement("div");
-                    newIngredientGroup.setAttribute("class", "form-group");
-                    var newIngredientLabel = document.createElement("label");
-                    newIngredientLabel.innerHTML = "ingredient " + (++ingredientCounter);
-                    newIngredientGroup.appendChild(newIngredientLabel);
-                    var newIngredientInput = document.createElement("input");
-                    newIngredientInput.setAttribute("type", "text");
-                    newIngredientInput.setAttribute("name", "ingredient_set-" +
-                        (ingredientCounter - 1) + "-ingredient");
-                    newIngredientInput.setAttribute("class", "form-control");
-                    newIngredientGroup.appendChild(newIngredientInput);
-                    var newIngredientError = document.createElement("span");
-                    newIngredientError.setAttribute("style", "color: red");
-                    newIngredientGroup.appendChild(newIngredientError);
-                    ingredientForm.insertBefore(newIngredientGroup,
-                        ingredientForm.lastChild);
-                }
-                function submitIngredient(){
-                    document.getElementById("id_ingredient_set-TOTAL_FORMS").setAttribute("value",ingredientCounter.toString())
-                }
-            </script>
-        </div>
-        <input type="hidden" name="ingredient_set-TOTAL_FORMS"
-               id="id_ingredient_set-TOTAL_FORMS" value="{{ ingredient_forms|length }}">
-        <div class="col-12">
-            <button type="submit" onclick="submitIngredient()">Submit</button>
-            <button type="reset">Cancel</button>
-        </div>
-    </form>
-</div>
+    </section>
 {% endblock %}
-
-<!--<div class="panel-body">-->
-<!--    <form class="row g-3" method="post" action="{% url 'recipez:add_recipe' %}">-->
-<!--        {% csrf_token %}-->
-<!--        {% for field in recipe_form %}-->
-<!--        <div class="form-group">-->
-<!--            <label>{{ field.label }}</label>-->
-<!--            {{ field }}-->
-<!--            <span style="color: red">{{ field.errors.0 }}</span>-->
-<!--        </div>-->
-<!--        {% endfor %}-->
-<!--        <div id="ingredient-form">-->
-<!--&lt;!&ndash;            <button onclick="addNewIngredient()">add a new ingredient</button>&ndash;&gt;-->
-<!--            {% for ingredient_form in ingredient_forms %}-->
-<!--            <div class="form-group">-->
-<!--                <label>{{ 'ingredient ' }}{{ forloop.counter }}</label>-->
-<!--                {{ ingredient_form.ingredient }}-->
-<!--                <span style="color: red">{{ ingredient_form.errors.0 }}</span>-->
-<!--            </div>-->
-<!--            {% endfor %}-->
-<!--            <button type="button" onClick="addNewIngredient()">add a new ingredient</button>-->
-<!--            <script>-->
-<!--                var ingredientCounter = {{ingredient_form | length}};-->
-<!--                function addNewIngredient() {-->
-<!--                    // event.preventDefault();-->
-<!--                    var ingredientForm = document.getElementById("ingredient-form");-->
-<!--                    var newIngredientGroup = document.createElement("div");-->
-<!--                    newIngredientGroup.setAttribute("class", "form-group");-->
-
-<!--                    var newIngredientLabel = document.createElement("label");-->
-<!--                    newIngredientLabel.innerHTML = "ingredient " + (++ingredientCounter);-->
-<!--                    newIngredientGroup.appendChild(newIngredientLabel);-->
-
-<!--                    var newIngredientInput = document.createElement("input");-->
-<!--                    newIngredientInput.setAttribute("type", "text");-->
-<!--                    newIngredientInput.setAttribute("name", "ingredient_" + ingredientCounter);-->
-<!--                    newIngredientInput.setAttribute("class", "form-control");-->
-<!--                    newIngredientGroup.appendChild(newIngredientInput);-->
-
-<!--                    var newIngredientError = document.createElement("span");-->
-<!--                    newIngredientError.setAttribute("style", "color: red");-->
-<!--                    newIngredientGroup.appendChild(newIngredientError);-->
-
-<!--                    // Add a new IngredientForm dynamically-->
-<!--                    var newIngredientForm = document.createElement("form");-->
-<!--                    newIngredientForm.setAttribute("method", "post");-->
-<!--                    newIngredientForm.setAttribute("action", "{% url 'recipez:add_recipe' %}");-->
-<!--                    newIngredientForm.style.display = "none";-->
-<!--                    var newIngredientFormHtml = `-->
-<!--                        {% csrf_token %}-->
-<!--                        <input type="hidden" name="recipe_id" value="{{ recipe_form.instance.id }}">-->
-<!--                        <input type="text" name="ingredient" value="">-->
-<!--                        <button type="submit">Add</button>-->
-<!--`                   ;-->
-<!--                    newIngredientForm.innerHTML = ingredientFormHtml;-->
-<!--                    newIngredientGroup.appendChild(newIngredientForm);-->
-<!--                    // ingredientForm.insertBefore(newIngredientGroup, ingredientForm.lastChild);-->
-
-<!--                    // add new ingredient to DOM-->
-<!--                    var newIngredientsDiv = document.getElementById("new-ingredients");-->
-<!--                    newIngredientsDiv.appendChild(newIngredientGroup);-->
-<!--                }-->
-<!--            </script>-->
-<!--        </div>-->
-<!--        <div class="col-12">-->
-<!--            <button type="submit">Submit</button>-->
-<!--            <button type="cancel">Cancel</button>-->
-<!--        </div>-->
-<!--    </form>-->
-<!--</div>-->
 
 
 

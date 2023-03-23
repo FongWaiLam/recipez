@@ -9,12 +9,12 @@
         <div class="container-fluid py-2 col-sm-12">
             {% if user.is_authenticated %}
             <div class="card w-65 bg-dark text-light">
-                <div class="card-header ps-4"> <p class="lead">Hi {{ user.username }}!</p>  </div>
+                <div class="card-header ps-4"> <p class="lead">Hi {{ user.username|capfirst }}!</p>  </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="d-flex col-sm-2">
-                            <a class="navbar-brand" href="{% url 'recipez:user_profile' %}">
-                                <img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="80" height="60" alt="Avatar" style="border-radius: 80%;">
+                            <a class="navbar-brand" href="{% url 'recipez:user_profile' user.username %}">
+                                <img src="{{ MEDIA_URL }}{{ user.user_profile.avatar }}" width="70" height="60" alt="Avatar" style="border-radius: 80%;">
                             </a>
                         </div>
                         <div class="d-flex col-lg-8"> <button href class="btn btn-outline-warning" style="width: 80%; height: 80%; align-items: center;"> 
@@ -55,44 +55,5 @@
             </div>
         </div>
      </div>
-
-     <script>
-
-        $(document).ready(function () {
-            window.recipe_index = "{% url 'recipez:index' %}";
-
-            function paginate(window) {
-                var page = 1;
-                var block_request = false;
-                var end_pagination = false;
-
-                $(window).scroll(function () {
-                    var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
-
-                    if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
-                        block_request = true;
-                        page += 1;
-
-                        $.ajax({
-                            type: 'GET',
-                            url: window.recipe_index,
-                            data: {
-                                "page": page
-                            },
-                            success: function (data) {
-                                if (data.end_pagination === true) {
-                                    end_pagination = true;
-                                } else {
-                                    block_request = false;
-                                }
-                                $('.recipe-list').append(data.content);
-                            }
-                        })
-                    }
-                });
-            }
-            paginate(window);
-        })
-    </script>
 {% endblock %}
 

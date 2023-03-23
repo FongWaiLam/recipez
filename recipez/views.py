@@ -1,29 +1,28 @@
 # Import modules and functions
-from django.forms import formset_factory
-from django.shortcuts import render, redirect
-from recipez import models
-from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm
-from django.template.loader import render_to_string
-from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.core import paginator
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from recipez.models import Recipe, UserProfile, Ingredient, Comment
 from django.contrib.auth.models import User
+from django.core import paginator
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.urls import reverse
+
+from recipez.forms import UserForm, UserProfileForm, CommentForm, RecipeModelForm
 from recipez.functions import search_by, is_ajax
+from recipez.models import Recipe, UserProfile, Ingredient, Comment
+
 
 # Create your views here.
 
 # Home Page
 def index(
-    request, template='recipez/index.html', extra_context=None):
-
+    request, template='recipez/index/index.html', extra_context=None):
     if request.method == 'POST':
         search_content = request.POST.get('search_content')
         context_dict = search_by(search_content)
-    
+        return render(request, 'recipez/search.html', context=context_dict)
     RECIPE_PER_PAGE = 3
     page = int(request.GET.get('page', 1))
 
@@ -36,13 +35,14 @@ def index(
         recipe_page = paginator.Page([], page, p)
 
     if not is_ajax(request):
-        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None, 'recipe_list_by_RecipeName': recipe_page}
+        context_dict = {'author_list': None, 'recipe_list_by_Ingredient': None,
+                        'recipe_list_by_RecipeName': recipe_page}
         best_pages = Recipe.objects.order_by('-likes')[:3]
         context_dict['best_of_today'] = best_pages
         return render(request,
-                    'recipez/index/index.html',
-                    context=context_dict
-                    )
+                      'recipez/index/index.html',
+                      context=context_dict
+                      )
 
     elif is_ajax(request):
         content = ''
@@ -60,7 +60,7 @@ def index(
             "content": content,
             "end_pagination": True if page >= p.num_pages else False,
         })
-            
+
 
 # Recipe Detail Page
 def show_recipe(request, recipe_id):
@@ -93,8 +93,6 @@ def show_recipe(request, recipe_id):
         context_dict['comments'] = None
         context_dict['all_users'] = None
 
-
-
     return render(request, 'recipez/recipe.html', context=context_dict)
 
 
@@ -104,51 +102,53 @@ def add_recipe(request):
         recipe_form = RecipeModelForm(request.POST)
         if recipe_form.is_valid():
             recipe = recipe_form.save(commit=False)
-            recipe.user=request.user.user_profile
+            recipe.user = request.user.user_profile
             if 'photo' in request.FILES:
                 recipe.photo = request.FILES['photo']
             recipe.save()
             print("recipe saved")
             sum_ingredients = int(request.POST.get('ingredient_set-TOTAL_FORMS'))
-            for i in range(0,sum_ingredients):
-                ingredient_name=request.POST.get('ingredient_set-'+str(i)+'-ingredient')
+            for i in range(0, sum_ingredients):
+                ingredient_name = request.POST.get('ingredient_set-' + str(i) + '-ingredient')
                 print(ingredient_name)
-                ingredient=Ingredient.objects.get_or_create(name_and_amount=ingredient_name)[0]
+                ingredient = Ingredient.objects.get_or_create(name_and_amount=ingredient_name)[0]
                 print(ingredient)
                 ingredient.recipes.add(recipe)
                 ingredient.save()
             print("ingredient saved")
-            messages.success(request, "You have successfully added a new recipe!" )
+            messages.success(request, "You have successfully added a new recipe!")
             return redirect(reverse('recipez:index'))
 
     else:
         recipe_form = RecipeModelForm()
     context = {
-        'recipe_form':recipe_form,
+        'recipe_form': recipe_form,
     }
     return render(request, 'recipez/add_recipe.html', context)
+
 
 # User Profile Page
 def user_profile(request, user_name):
     user = User.objects.get(username=user_name)
     # userProfile = user.user_profile
-    
-    avatar = user.user_profile.avatar # Get the user's avatar
-    
-    post_recipes = user.user_profile.recipes.all() # Get the user's all posted recipes
-    saved_recipes_id = user.user_profile.bookmark # Get the user's saved recipes (list of recipe_id)
-    
+
+    avatar = user.user_profile.avatar  # Get the user's avatar
+
+    post_recipes = user.user_profile.recipes.all()  # Get the user's all posted recipes
+    saved_recipes_id = user.user_profile.bookmark  # Get the user's saved recipes (list of recipe_id)
+
     saved_recipes = []
-    for item_id in saved_recipes_id:
-        saved_recipes.append(Recipe.objects.get(id = item_id))
+    if saved_recipes_id:
+        for item_id in saved_recipes_id:
+            saved_recipes.append(Recipe.objects.get(id = item_id))
     
     context_dict = {
         'user_name': user_name,
         'user_avatar': avatar,
         'post_recipes': post_recipes,
         'saved_recipes': saved_recipes
-                    }
-    
+    }
+
     return render(request, 'recipez/user_profile.html', context=context_dict)
 
 
@@ -165,14 +165,14 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
                 if not remember_me:
-                    request.session.set_expiry(0) # set session expire time to 0
-                messages.success(request, "You have been successfully logged in!" )    
+                    request.session.set_expiry(0)  # set session expire time to 0
+                messages.success(request, "You have been successfully logged in!")
                 return redirect(reverse('recipez:index'))
             else:
                 return HttpResponse("Your Recipez account is disabled.")
         else:
             # print(f"Invalid login details: {username}, {password}") # Not required, only for debugging
-            messages.error(request, f"Your login details are incorrect, {username}" )    
+            messages.error(request, f"Your login details are incorrect, {username}")
             return redirect(reverse('recipez:login'))
 
     else:
@@ -204,12 +204,12 @@ def register(request):
             registered = True
         else:
             print(user_form.errors, profile_form.errors)
-        
+
         if registered:
-            messages.success(request, "You have been successfully registered! Please log in." )    
+            messages.success(request, "You have been successfully registered! Please log in.")
             return redirect(reverse('recipez:login'))
         else:
-            messages.error(request, "Please check your registration details." )    
+            messages.error(request, "Please check your registration details.")
             return redirect(reverse('recipez:register'))
     else:
         user_form = UserForm()
@@ -226,9 +226,8 @@ def register(request):
 @login_required
 def user_logout(request):
     logout(request)
-    messages.success(request, "Successfully logged out!" )    
+    messages.success(request, "Successfully logged out!")
     return redirect(reverse('recipez:index'))
-
 
 # Help Page (About us and Contact us)
 def help(request):

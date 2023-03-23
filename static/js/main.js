@@ -1,5 +1,9 @@
 $(document).ready(function() {
-  
+
+    //Enable Pagination
+    window.recipe_index = $('.navbar-brand').attr('href');
+    paginate(window);
+    
     var scrollLink = $('.scroll');
     
     // Smooth scrolling
@@ -53,12 +57,45 @@ $(document).ready(function() {
       document.body.scrollIntoView({ behavior: "smooth" });
     }
 
-    const getAlert = document.getElementById("alert");
-    console.log(getAlert);
-
+    // Function for user click to close the alert
     $("#closeAlert").click(function() {
       $("#alert").hide();
     });
 
   })
+
+  // Function of AJAX Pagination for Recipe Index
+  function paginate(window) {
+      var page = 1;
+      var block_request = false;
+      var end_pagination = false;
+
+      $(window).scroll(function () {
+          var margin = $(document).height() - $(window).height() - 300; // Saman told me to do this
+
+          if ($(window).scrollTop() > margin && end_pagination === false && block_request === false) {
+              block_request = true;
+              page += 1;
+
+              $.ajax({
+                  type: 'GET',
+                  url: window.recipe_index,
+                  data: {
+                      "page": page
+                  },
+                  success: function (data) {
+                      if (data.end_pagination === true) {
+                          end_pagination = true;
+                      } else {
+                          block_request = false;
+                      }
+                      $('.recipe-list').append(data.content);
+                  }
+              })
+          }
+      });
+  }
+
+
+
   

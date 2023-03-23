@@ -10,8 +10,8 @@
         <div class="container my-5 py-5">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-12 col-lg-10 col-xl-8">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="card text-center">
+                        <div class="card-header">
                             <div class="d-flex flex-start align-items-center">
                                 <!-- Recipe Creator -->
                                 <img alt="{{ recipe.user.username }}'s profile image"
@@ -26,6 +26,9 @@
                                     </p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-body">
+
 
                             <!-- Recipe Content -->
                             <p class="mt-3 mb-4">
@@ -46,8 +49,13 @@
                                 <a href="#!" class="d-flex align-items-center me-3">
                                     <p class="mb-0">Like</p>
                                 </a>
-                                <a href="#!" class="d-flex align-items-center me-3">
-                                    <p class="mb-0">Share</p><br><br>
+                                <button onclick="copyUrl()">Share</button>
+                                <script>
+                                    function copyUrl() {
+                                        navigator.clipboard.writeText(this.location.href);
+                                        alert("Copied to clipboard!");
+                                    }
+                                </script>
                                 </a>
                             </div>
                         </div>
